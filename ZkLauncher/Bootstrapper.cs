@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xaml.Behaviors;
+using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,9 @@ namespace ZkLauncher
             // シングルトンクラスとして登録したい時
             containerRegistry.RegisterSingleton<IDisplayEmentsCollection?, DisplayElemetCollection>();
 
-            containerRegistry.RegisterDialogWindow<ViewerWindow>();
+            containerRegistry.RegisterDialogWindow<BaseDialogWindow>();
             containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
+            containerRegistry.RegisterDialog<ucSettingLauncher, ucSettingLauncherViewModel>();
         }
 
         protected override void ConfigureViewModelLocator()

@@ -13,23 +13,11 @@ namespace ZkLauncher.ViewModels.UserControl
 {
     public class ucViewerPanelViewModel : BindableBase, IDialogAware
     {
+        #region IDialogAware overwrite
         private DelegateCommand<string>? _closeDialogCommand;
         public DelegateCommand<string> CloseDialogCommand =>
             _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
 
-        private string? _message;
-        public string? Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
-
-        private string _title = "Notification";
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
 
         public DialogCloseListener RequestClose { get; }
 
@@ -64,6 +52,22 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             Message = parameters.GetValue<string>("message");
         }
+        #endregion
+
+        private string? _message;
+        public string? Message
+        {
+            get { return _message; }
+            set { SetProperty(ref _message, value); }
+        }
+
+        private string _title = "Notification";
+        public string Title
+        {
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
+        }
+
 
         #region 表示要素
         /// <summary>

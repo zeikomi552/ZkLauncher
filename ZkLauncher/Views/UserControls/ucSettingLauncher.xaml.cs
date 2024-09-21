@@ -10,18 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ZkLauncher.Views
+namespace ZkLauncher.Views.UserControls
 {
     /// <summary>
-    /// ViewerWindow.xaml の相互作用ロジック
+    /// ucSettingLauncher.xaml の相互作用ロジック
     /// </summary>
-    public partial class ViewerWindow : Window, IDialogWindow
+    public partial class ucSettingLauncher : UserControl
     {
-        public IDialogResult? Result { get; set; }
-
-        public ViewerWindow()
+        public ucSettingLauncher()
         {
             InitializeComponent();
         }

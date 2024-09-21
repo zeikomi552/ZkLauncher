@@ -37,20 +37,14 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="regionManager">RegionManager</param>
         public MainWindowViewModel(IRegionManager regionManager, IDisplayEmentsCollection displayElements)
         {
-
             this.DisplayElements = displayElements;
             regionManager.RegisterViewWithRegion("ControlPanel", typeof(ucControlPanel));
-            //regionManager.RegisterViewWithRegion("DependensyPropertyRegion", typeof(ucDependencyProperty));
-            //regionManager.RegisterViewWithRegion("ConverterRegion", typeof(ucConverter));
-            //regionManager.RegisterViewWithRegion("ActionRegion", typeof(ucAction));
-            //regionManager.RegisterViewWithRegion("BehaviorRegion", typeof(ucBehavior));
         }
     }
 }

@@ -41,6 +41,9 @@ namespace ZkLauncher.ViewModels.UserControl
             this.DisplayElements = displayElements;
 
         }
+
+
+
         private string _title = "Prism Application";
         public string Title
         {
