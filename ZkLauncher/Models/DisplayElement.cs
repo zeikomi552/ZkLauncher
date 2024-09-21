@@ -10,6 +10,32 @@ namespace ZkLauncher.Models
 {
     public class DisplayElement : BindableBase
     {
+        #region タイトル
+        /// <summary>
+        /// タイトル
+        /// </summary>
+        String _Title = string.Empty;
+        /// <summary>
+        /// タイトル
+        /// </summary>
+        public String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                if (_Title == null || !_Title.Equals(value))
+                {
+                    _Title = value;
+                    RaisePropertyChanged("Title");
+                }
+            }
+        }
+        #endregion
+
+
         #region URI
         /// <summary>
         /// URI

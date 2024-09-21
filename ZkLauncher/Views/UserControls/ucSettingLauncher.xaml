@@ -13,6 +13,7 @@
         </Grid.RowDefinitions>
         <DataGrid AutoGenerateColumns="False" Margin="5,5,5,5" ItemsSource="{Binding DisplayElements.Elements}">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="URI" Binding="{Binding URI, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="ImangePath" Binding="{Binding ImagePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
