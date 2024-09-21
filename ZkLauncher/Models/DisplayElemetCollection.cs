@@ -58,5 +58,37 @@ namespace ZkLauncher.Models
             }
         }
         #endregion
+
+        /// <summary>
+        /// 最初の値を取得する
+        /// </summary>
+        /// <returns>最初の値 存在しない場合はnull</returns>
+        public DisplayElement? First()
+        {
+            if (this.Elements != null && this.Elements.Count > 0)
+            {
+                return this.Elements.First();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SelectFirst()
+        {
+            if (this.Elements != null && this.Elements.Count > 0)
+            {
+                this.SelectedItem = this.Elements.First();
+            }
+        }
+
+        public void SelectLast()
+        {
+            if (this.Elements != null && this.Elements.Count > 0)
+            {
+                this.SelectedItem = this.Elements.Last();
+            }
+        }
     }
 }

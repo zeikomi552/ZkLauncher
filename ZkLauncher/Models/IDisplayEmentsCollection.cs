@@ -28,5 +28,9 @@ namespace ZkLauncher.Models
             get;set;
         }
         #endregion
+
+        public DisplayElement? First();
+        public void SelectFirst();
+        public void SelectLast();
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,6 +60,46 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region WebView2用オブジェクト
+        /// <summary>
+        /// WebView2用オブジェクト
+        /// </summary>
+        WebView2? _WebView2Object;
+        /// <summary>
+        /// WebView2用オブジェクト
+        /// </summary>
+        public WebView2? WebView2Object
+        {
+            get
+            {
+                return _WebView2Object;
+            }
+            set
+            {
+                if (_WebView2Object == null || !_WebView2Object.Equals(value))
+                {
+                    _WebView2Object = value;
+                }
+            }
+        }
+        #endregion
 
+
+
+        #region フレーズの翻訳
+        /// <summary>
+        /// フレーズの翻訳
+        /// </summary>
+        /// <param name="wv2">WebView2コントロール</param>
+        public void Navigate(params object?[] param)
+        {
+            // nullチェック
+            if (WebView2Object != null && WebView2Object.CoreWebView2 != null)
+            {
+                // URLを開く
+                WebView2Object.CoreWebView2.Navigate(string.Format(this.URI, param));
+            }
+        }
+        #endregion
     }
 }
