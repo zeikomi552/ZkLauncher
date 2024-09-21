@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZkLauncher.Models;
 
 namespace ZkLauncher.ViewModels.UserControl
 {
@@ -45,5 +46,35 @@ namespace ZkLauncher.ViewModels.UserControl
 
         }
         #endregion
+
+        #region 表示要素
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        IDisplayEmentsCollection? _DisplayElements;
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        public IDisplayEmentsCollection? DisplayElements
+        {
+            get
+            {
+                return _DisplayElements;
+            }
+            set
+            {
+                if (_DisplayElements == null || !_DisplayElements.Equals(value))
+                {
+                    _DisplayElements = value;
+                    RaisePropertyChanged("DisplayElements");
+                }
+            }
+        }
+        #endregion
+
+        public ucSettingLauncherViewModel(IDisplayEmentsCollection displayElements)
+        {
+            this.DisplayElements = displayElements;
+        }
     }
 }

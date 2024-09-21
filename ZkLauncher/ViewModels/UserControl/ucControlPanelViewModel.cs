@@ -51,15 +51,36 @@ namespace ZkLauncher.ViewModels.UserControl
             set { SetProperty(ref _title, value); }
         }
 
-        private DelegateCommand? _showDialogCommand;
+        private DelegateCommand? _showViewerCommand;
         public DelegateCommand? ShowDialogCommand =>
-            _showDialogCommand ?? (_showDialogCommand = new DelegateCommand(ShowDialog));
+            _showViewerCommand ?? (_showViewerCommand = new DelegateCommand(ShowViewerDialog));
 
-        private void ShowDialog()
+        private void ShowViewerDialog()
         {
             var message = "This is a message that should be shown in the dialog.";
             //using the dialog service as-is
             _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
+            {
+                if (r.Result == ButtonResult.None)
+                    Title = "Result is None";
+                else if (r.Result == ButtonResult.OK)
+                    Title = "Result is OK";
+                else if (r.Result == ButtonResult.Cancel)
+                    Title = "Result is Cancel";
+                else
+                    Title = "I Don't know what you did!?";
+            });
+        }
+
+        private DelegateCommand? _showSettingLauncherCommand;
+        public DelegateCommand? ShowSettingLauncherCommand =>
+            _showSettingLauncherCommand ?? (_showSettingLauncherCommand = new DelegateCommand(ShowSettingLauncher));
+
+        private void ShowSettingLauncher()
+        {
+            var message = "This is a message that should be shown in the dialog.";
+            //using the dialog service as-is
+            _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters($"message={message}"), r =>
             {
                 if (r.Result == ButtonResult.None)
                     Title = "Result is None";
