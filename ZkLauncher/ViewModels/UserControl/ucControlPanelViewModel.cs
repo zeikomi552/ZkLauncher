@@ -48,15 +48,15 @@ namespace ZkLauncher.ViewModels.UserControl
             set { SetProperty(ref _title, value); }
         }
 
-        private DelegateCommand _showDialogCommand;
-        public DelegateCommand ShowDialogCommand =>
+        private DelegateCommand? _showDialogCommand;
+        public DelegateCommand? ShowDialogCommand =>
             _showDialogCommand ?? (_showDialogCommand = new DelegateCommand(ShowDialog));
 
         private void ShowDialog()
         {
             var message = "This is a message that should be shown in the dialog.";
             //using the dialog service as-is
-            _dialogService.ShowDialog("ucViewerPanel", new DialogParameters($"message={message}"), r =>
+            _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
             {
                 if (r.Result == ButtonResult.None)
                     Title = "Result is None";
