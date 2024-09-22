@@ -90,6 +90,7 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region 最初の値を取得する
         /// <summary>
         /// 最初の値を取得する
         /// </summary>
@@ -105,7 +106,12 @@ namespace ZkLauncher.Models
                 return null;
             }
         }
+        #endregion
 
+        #region 最初の項目の選択
+        /// <summary>
+        /// 最初の項目の選択
+        /// </summary>
         public void SelectFirst()
         {
             if (this.Elements != null && this.Elements.Count > 0)
@@ -113,7 +119,12 @@ namespace ZkLauncher.Models
                 this.SelectedItem = this.Elements.First();
             }
         }
+        #endregion
 
+        #region 最後の項目の選択
+        /// <summary>
+        /// 最後の項目の選択
+        /// </summary>
         public void SelectLast()
         {
             if (this.Elements != null && this.Elements.Count > 0)
@@ -121,7 +132,13 @@ namespace ZkLauncher.Models
                 this.SelectedItem = this.Elements.Last();
             }
         }
+        #endregion
 
+        #region 表示要素のセット
+        /// <summary>
+        /// 表示要素のセット
+        /// </summary>
+        /// <param name="elements">表示要素</param>
         public void SetElements(List<DisplayElement> elements)
         {
             this.Elements.Clear();
@@ -130,6 +147,7 @@ namespace ZkLauncher.Models
                 this.Elements.Add(tmp);
             }
         }
+        #endregion
 
         #region ディレクトリ名
         /// <summary>
