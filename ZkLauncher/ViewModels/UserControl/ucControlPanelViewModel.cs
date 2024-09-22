@@ -68,30 +68,7 @@ namespace ZkLauncher.ViewModels.UserControl
         }
 
 
-        #region Viewer表示画面の呼び出し
-        private DelegateCommand? _showViewerCommand;
-        public DelegateCommand? ShowDialogCommand =>
-            _showViewerCommand ?? (_showViewerCommand = new DelegateCommand(ShowViewerDialog));
-        /// <summary>
-        /// Viewer表示画面の呼び出し
-        /// </summary>
-        private void ShowViewerDialog()
-        {
-            var message = "This is a message that should be shown in the dialog.";
-            //using the dialog service as-is
-            _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
-            {
-                if (r.Result == ButtonResult.None)
-                    Title = "Result is None";
-                else if (r.Result == ButtonResult.OK)
-                    Title = "Result is OK";
-                else if (r.Result == ButtonResult.Cancel)
-                    Title = "Result is Cancel";
-                else
-                    Title = "I Don't know what you did!?";
-            });
-        }
-        #endregion
+
 
         #region ランチャー設定画面の呼び出し
         private DelegateCommand? _showSettingLauncherCommand;
