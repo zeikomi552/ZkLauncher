@@ -11,7 +11,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="False" Margin="5,5,5,5" ItemsSource="{Binding DisplayElements.Elements}">
+        <DataGrid AutoGenerateColumns="False" Margin="5,5,5,5" ItemsSource="{Binding Config.Item.Elements}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="URI" Binding="{Binding URI, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

@@ -32,5 +32,11 @@ namespace ZkLauncher.Models
         public DisplayElement? First();
         public void SelectFirst();
         public void SelectLast();
+
+        public void SetElements(List<DisplayElement> elements);
+
+        public void LoadConfig();
+
+        public void SaveConfig();
     }
 }

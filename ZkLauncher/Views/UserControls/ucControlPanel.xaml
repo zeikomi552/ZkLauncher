@@ -16,7 +16,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <ListBox ItemsSource="{Binding DisplayElements.Elements}">
+            <ListBox ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.Template>
                     <ControlTemplate TargetType="{x:Type ListBox}">
                         <Border BorderThickness="5">
@@ -32,7 +32,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Image Source="{Binding ImagePath, Converter={StaticResource URLStringToImageSourceConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Image Width="400" Height="200" Source="{Binding ImagePath, Converter={StaticResource URLStringToImageSourceConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}" />
                         </Grid>
                     </DataTemplate>

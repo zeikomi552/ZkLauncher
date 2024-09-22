@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
 
 namespace ZkLauncher.ViewModels.UserControl
@@ -20,7 +22,10 @@ namespace ZkLauncher.ViewModels.UserControl
             ButtonResult result = ButtonResult.None;
 
             if (parameter?.ToLower() == "true")
+            {
+                this.Config.SaveXML();
                 result = ButtonResult.OK;
+            }
             else if (parameter?.ToLower() == "false")
                 result = ButtonResult.Cancel;
 
@@ -47,34 +52,48 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region 表示要素
+        #region コンフィグデータ
         /// <summary>
-        /// 表示要素
+        /// 
         /// </summary>
-        IDisplayEmentsCollection? _DisplayElements;
+        ConfigManager<DisplayElemetCollection> _Config = new ConfigManager<DisplayElemetCollection>("Config", "Setting.conf", new DisplayElemetCollection());
         /// <summary>
-        /// 表示要素
+        /// 
         /// </summary>
-        public IDisplayEmentsCollection? DisplayElements
+        public ConfigManager<DisplayElemetCollection> Config
         {
             get
             {
-                return _DisplayElements;
+                return _Config;
             }
             set
             {
-                if (_DisplayElements == null || !_DisplayElements.Equals(value))
+                if (_Config == null || !_Config.Equals(value))
                 {
-                    _DisplayElements = value;
-                    RaisePropertyChanged("DisplayElements");
+                    _Config = value;
+                    RaisePropertyChanged("Config");
                 }
             }
         }
         #endregion
 
-        public ucSettingLauncherViewModel(IDisplayEmentsCollection displayElements)
+        #region コンストラクタ
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="displayElements">表示要素</param>
+        public ucSettingLauncherViewModel()
         {
-            this.DisplayElements = displayElements;
+            // ファイルの存在確認
+            if (!File.Exists(this.Config.ConfigFile))
+            {
+                this.Config.SaveXML();
+            }
+            else
+            {
+                this.Config.LoadXML();
+            }
         }
+        #endregion
     }
 }

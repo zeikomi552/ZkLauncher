@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ZkLauncher.Models
 {
@@ -94,6 +95,7 @@ namespace ZkLauncher.Models
         /// <summary>
         /// WebView2用オブジェクト
         /// </summary>
+        [XmlIgnore]
         public WebView2? WebView2Object
         {
             get

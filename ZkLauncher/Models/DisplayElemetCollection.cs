@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using ZkLauncher.Common.Utilities;
 
 namespace ZkLauncher.Models
 {
@@ -90,5 +93,79 @@ namespace ZkLauncher.Models
                 this.SelectedItem = this.Elements.Last();
             }
         }
+
+        public void SetElements(List<DisplayElement> elements)
+        {
+            this.Elements.Clear();
+            foreach (var tmp in elements)
+            {
+                this.Elements.Add(tmp);
+            }
+        }
+
+        #region ディレクトリ名
+        /// <summary>
+        /// ディレクトリ名
+        /// </summary>
+        const string ConfigDir = "Config";
+        #endregion
+
+        #region Configファイル名
+        /// <summary>
+        /// Configファイル名
+        /// </summary>
+        const string ConfigFile = "Setting.conf";
+        #endregion
+
+        #region Configファイルの読み込み
+        /// <summary>
+        /// Configファイルの読み込み
+        /// </summary>
+        public void LoadConfig()
+        {
+            try
+            {
+                ConfigManager<DisplayElemetCollection> conf = new ConfigManager<DisplayElemetCollection>(ConfigDir, ConfigFile, new DisplayElemetCollection());
+
+                // ファイルの存在確認
+                if (!File.Exists(conf.ConfigFile))
+                {
+                    conf.SaveXML(); // XMLのセーブ
+                }
+                else
+                {
+                    conf.LoadXML(); // XMLのロード
+                }
+
+                // 要素のセット
+                SetElements(conf.Item!.Elements.ToList<DisplayElement>());
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region Configファイルの保存処理
+        /// <summary>
+        /// Configファイルの保存処理
+        /// </summary>
+        public void SaveConfig()
+        {
+            try
+            {
+                ConfigManager<DisplayElemetCollection> conf = new ConfigManager<DisplayElemetCollection>(ConfigDir, ConfigFile, new DisplayElemetCollection());
+
+                // 値の受け渡し
+                conf.Item = this;
+                conf.SaveXML(); // XMLのセーブ
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
     }
 }

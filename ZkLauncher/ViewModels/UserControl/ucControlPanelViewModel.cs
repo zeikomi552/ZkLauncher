@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
 
 namespace ZkLauncher.ViewModels.UserControl
@@ -34,12 +36,21 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+
+
         private IDialogService? _dialogService;
         public ucControlPanelViewModel(IDialogService dialogService, IDisplayEmentsCollection displayElements)
         {
-            _dialogService = dialogService;
-            this.DisplayElements = displayElements;
+            try
+            {
+                _dialogService = dialogService;
+                this.DisplayElements = displayElements;
+                this.DisplayElements.LoadConfig();
+            }
+            catch
+            {
 
+            }
         }
 
 
@@ -85,7 +96,9 @@ namespace ZkLauncher.ViewModels.UserControl
                 if (r.Result == ButtonResult.None)
                     Title = "Result is None";
                 else if (r.Result == ButtonResult.OK)
-                    Title = "Result is OK";
+                {
+                    this.DisplayElements!.LoadConfig();
+                }
                 else if (r.Result == ButtonResult.Cancel)
                     Title = "Result is Cancel";
                 else
