@@ -157,18 +157,12 @@ namespace ZkLauncher.ViewModels.UserControl
                 var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
                 await wnd.WebView2Ctrl.EnsureCoreWebView2Async(webView2Environment);
 
-                this.DisplayElements!.Elements.Add(new DisplayElement()
-                {
-                    ImagePath = "test",
-                    URI = "https://github.com/zeikomi552/ZkLauncher",
-                    WebView2Object = wnd.WebView2Ctrl
-                });
 
                 // 最初の要素を選択
-                this.DisplayElements.SelectFirst();
+                this.DisplayElements!.SelectFirst();
 
                 // 1つめのURLを表示
-                this.DisplayElements.SelectedItem.Navigate();
+                this.DisplayElements.SelectedItem.Navigate(wnd.WebView2Ctrl);
             }
             catch (Exception ex)
             {

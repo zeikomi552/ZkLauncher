@@ -13,6 +13,6 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="ControlPanel" />
+        <ContentControl prism:RegionManager.RegionName="ViewerPanel" />
     </Grid>
 </Window>

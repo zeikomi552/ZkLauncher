@@ -119,13 +119,13 @@ namespace ZkLauncher.Models
         /// フレーズの翻訳
         /// </summary>
         /// <param name="wv2">WebView2コントロール</param>
-        public void Navigate(params object?[] param)
+        public void Navigate(WebView2 web, params object?[] param)
         {
             // nullチェック
-            if (WebView2Object != null && WebView2Object.CoreWebView2 != null)
+            if (web != null && web.CoreWebView2 != null)
             {
                 // URLを開く
-                WebView2Object.CoreWebView2.Navigate(string.Format(this.URI, param));
+                web.CoreWebView2.Navigate(string.Format(this.URI, param));
             }
         }
         #endregion

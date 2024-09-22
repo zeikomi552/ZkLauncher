@@ -30,6 +30,7 @@ namespace ZkLauncher
 
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>();
             containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
+            containerRegistry.RegisterDialog<ucControlPanel, ucControlPanelViewModel>();
             containerRegistry.RegisterDialog<ucSettingLauncher, ucSettingLauncherViewModel>();
         }
 
@@ -37,7 +38,7 @@ namespace ZkLauncher
         {
             base.ConfigureViewModelLocator();
 
-            ViewModelLocationProvider.Register<ucControlPanel, ucControlPanelViewModel>();
+            ViewModelLocationProvider.Register<ucViewerPanel, ucViewerPanelViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
