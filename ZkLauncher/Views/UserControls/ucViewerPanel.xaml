@@ -23,10 +23,34 @@
 
         <Grid Height="50" Grid.Row="1">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Margin="5" Content="←"/>
-                <Button Margin="5" Content="Pose"/>
-                <Button Margin="5" Content="loop"/>
-                <Button Margin="5" Content="→"/>
+                <Button Margin="5" Content="←">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Margin="5" Content="Pose">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Margin="5" Content="loop">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Margin="5" Content="→">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

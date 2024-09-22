@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
 using ZkLauncher.Views;
@@ -114,6 +116,10 @@ namespace ZkLauncher.ViewModels.UserControl
                 {
                     try
                     {
+                        // タイマーのセット
+                        SetupTimer();
+
+                        // ブラウザの初期化
                         InitializeAsync(wnd);
                     }
                     catch
@@ -123,8 +129,6 @@ namespace ZkLauncher.ViewModels.UserControl
                     }
                 }
 
-                //// 合成音声の初期化
-                //this.Story.InitVoice();
             }
             catch (Exception ex)
             {
@@ -173,5 +177,116 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
+        // タイマのインスタンス
+        private DispatcherTimer _timer;
+
+        // タイマを設定する
+        private void SetupTimer()
+        {
+            // タイマのインスタンスを生成
+            _timer = new DispatcherTimer(); // 優先度はDispatcherPriority.Background
+                                            // インターバルを設定
+            _timer.Interval = new TimeSpan(0, 0, 30);
+            // タイマメソッドを設定
+            _timer.Tick += new EventHandler(LoopExecute);
+        }
+
+        // タイマを停止
+        private void StopTimer(object sender, CancelEventArgs e)
+        {
+            _timer.Stop();
+        }
+        // タイマメソッド
+        private void LoopExecute(object sender, EventArgs e)
+        {
+            try
+            {
+                this.DisplayElements!.NextNavigate();
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void Next()
+        {
+            try
+            {
+                this.DisplayElements!.NextNavigate();
+            }
+            catch
+            {
+                
+            }
+        }
+
+        public void Prev()
+        {
+            try
+            {
+                this.DisplayElements!.PrevNavigate();
+            }
+            catch
+            {
+
+            }
+        }
+        #region ループフラグ
+        /// <summary>
+        /// ループフラグ
+        /// </summary>
+        bool _LoopF = false;
+        /// <summary>
+        /// ループフラグ
+        /// </summary>
+        public bool LoopF
+        {
+            get
+            {
+                return _LoopF;
+            }
+            set
+            {
+                if (!_LoopF.Equals(value))
+                {
+                    _LoopF = value;
+                    RaisePropertyChanged("LoopF");
+                }
+            }
+        }
+        #endregion
+
+
+        public void Loop()
+        {
+            try
+            {
+                this.LoopF = true;
+
+                // タイマを開始
+                _timer.Start();
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void Pose()
+        {
+            try
+            {
+                this.LoopF = false;
+
+                // タイマを開始
+                _timer.Stop();
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
