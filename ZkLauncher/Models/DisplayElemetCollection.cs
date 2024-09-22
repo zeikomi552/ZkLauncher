@@ -213,5 +213,99 @@ namespace ZkLauncher.Models
             }
         }
         #endregion
+
+        #region 選択要素をViewに表示
+        /// <summary>
+        /// 選択要素をViewに表示
+        /// </summary>
+        public void SelecctedNavigate()
+        {
+            try
+            {
+                if (this.Elements == null || this.Elements.Count <= 0)
+                    return;
+
+                if (this.SelectedItem == null)
+                    this.SelectFirst();
+
+                this.SelectedItem!.Navigate(this.WebView2Object!);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region 次の要素をViewに表示
+        /// <summary>
+        /// 次の要素をViewに表示
+        /// </summary>
+        public void NextNavigate()
+        {
+            try
+            {
+                if (this.Elements == null || this.Elements.Count <= 0)
+                    return;
+
+                if (this.SelectedItem == null)
+                    this.SelectFirst();
+
+
+                int index = this.Elements.IndexOf(this.SelectedItem!);
+
+                if (this.Elements.Count > index + 1)
+                {
+                    this.SelectedItem = this.Elements.ElementAt(index + 1);
+                    this.SelectedItem.Navigate(this.WebView2Object!);
+                }
+                else
+                {
+                    this.SelectFirst();
+                    this.SelectedItem!.Navigate(this.WebView2Object!);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+        #endregion
+
+        #region 前の要素をViewに表示
+        /// <summary>
+        /// 前の要素をViewに表示
+        /// </summary>
+        public void PrevNavigate()
+        {
+            try
+            {
+                if (this.Elements == null || this.Elements.Count <= 0)
+                    return;
+
+                if (this.SelectedItem == null)
+                    this.SelectFirst();
+
+                int index = this.Elements.IndexOf(this.SelectedItem!);
+
+                if (index - 1 >= 0)
+                {
+                    this.SelectedItem = this.Elements.ElementAt(index - 1);
+                    this.SelectedItem!.Navigate(this.WebView2Object!);
+                }
+                else
+                {
+                    this.SelectLast();
+                    this.SelectedItem!.Navigate(this.WebView2Object!);
+
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
     }
 }

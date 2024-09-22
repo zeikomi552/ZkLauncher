@@ -50,7 +50,9 @@ namespace ZkLauncher.ViewModels
             regionManager.RegisterViewWithRegion("ViewerPanel", typeof(ucViewerPanel));
         }
 
-
+        /// <summary>
+        /// 初期化処理
+        /// </summary>
         public void Init()
         {
             try

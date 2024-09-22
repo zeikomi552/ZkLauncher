@@ -14,16 +14,20 @@
     </b:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <Wpf:WebView2 Margin="5" x:Name="WebView2Ctrl"/>
 
 
-        <TextBlock Text="{Binding Message}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" TextWrapping="Wrap" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="1" />
-
-        <Wpf:WebView2 x:Name="WebView2Ctrl"/>
-
+        <Grid Height="50" Grid.Row="1">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Margin="5" Content="←"/>
+                <Button Margin="5" Content="Pose"/>
+                <Button Margin="5" Content="loop"/>
+                <Button Margin="5" Content="→"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

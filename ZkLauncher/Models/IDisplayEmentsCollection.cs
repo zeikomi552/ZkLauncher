@@ -41,5 +41,9 @@ namespace ZkLauncher.Models
         public void LoadConfig();
 
         public void SaveConfig();
+
+        public void SelecctedNavigate();
+        public void NextNavigate();
+        public void PrevNavigate();
     }
 }
