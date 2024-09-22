@@ -1,12 +1,13 @@
-﻿<Window x:Class="ZkLauncher.Views.MainWindow"
+﻿<mah:MetroWindow x:Class="ZkLauncher.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:ZkLauncher" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        xmlns:prism="http://prismlibrary.com/"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:prism="http://prismlibrary.com/" TitleCharacterCasing="Normal"
+        Title="Viewer" Height="450" Width="800">
     <b:Interaction.Triggers>
         <b:EventTrigger>
             <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
@@ -15,4 +16,4 @@
     <Grid>
         <ContentControl prism:RegionManager.RegionName="ViewerPanel" />
     </Grid>
-</Window>
+</mah:MetroWindow>

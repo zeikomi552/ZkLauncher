@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ZkLauncher.Views
     /// <summary>
     /// BaseDialogWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class BaseDialogWindow : Window, IDialogWindow
+    public partial class BaseDialogWindow : MetroWindow, IDialogWindow
     {
         public IDialogResult? Result { get; set; }
         public BaseDialogWindow()
