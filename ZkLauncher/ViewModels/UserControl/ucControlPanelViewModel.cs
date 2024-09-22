@@ -39,6 +39,11 @@ namespace ZkLauncher.ViewModels.UserControl
 
 
         private IDialogService? _dialogService;
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="dialogService"></param>
+        /// <param name="displayElements"></param>
         public ucControlPanelViewModel(IDialogService dialogService, IDisplayEmentsCollection displayElements)
         {
             try
@@ -62,10 +67,14 @@ namespace ZkLauncher.ViewModels.UserControl
             set { SetProperty(ref _title, value); }
         }
 
+
+        #region Viewer表示画面の呼び出し
         private DelegateCommand? _showViewerCommand;
         public DelegateCommand? ShowDialogCommand =>
             _showViewerCommand ?? (_showViewerCommand = new DelegateCommand(ShowViewerDialog));
-
+        /// <summary>
+        /// Viewer表示画面の呼び出し
+        /// </summary>
         private void ShowViewerDialog()
         {
             var message = "This is a message that should be shown in the dialog.";
@@ -82,11 +91,16 @@ namespace ZkLauncher.ViewModels.UserControl
                     Title = "I Don't know what you did!?";
             });
         }
+        #endregion
 
+        #region ランチャー設定画面の呼び出し
         private DelegateCommand? _showSettingLauncherCommand;
         public DelegateCommand? ShowSettingLauncherCommand =>
             _showSettingLauncherCommand ?? (_showSettingLauncherCommand = new DelegateCommand(ShowSettingLauncher));
 
+        /// <summary>
+        /// ランチャー設定画面の呼び出し
+        /// </summary>
         private void ShowSettingLauncher()
         {
             var message = "This is a message that should be shown in the dialog.";
@@ -105,7 +119,12 @@ namespace ZkLauncher.ViewModels.UserControl
                     Title = "I Don't know what you did!?";
             });
         }
+        #endregion
 
+        #region 選択要素の変更
+        /// <summary>
+        /// 選択要素の変更
+        /// </summary>
         public void SelectionChanged()
         {
             try
@@ -117,5 +136,6 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
+        #endregion
     }
 }
