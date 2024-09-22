@@ -30,20 +30,18 @@
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                 </Button>
-                <Button Margin="5" Content="Pose">
+                
+                
+                <ToggleButton Margin="5" Content="loop">
                     <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="Click">
+                        <b:EventTrigger EventName="Checked">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
+                        </b:EventTrigger>
+                        <b:EventTrigger EventName="Unchecked">
                             <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
-                </Button>
-                <Button Margin="5" Content="loop">
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
-                </Button>
+                </ToggleButton>
                 <Button Margin="5" Content="→">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">

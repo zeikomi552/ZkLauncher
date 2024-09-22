@@ -189,7 +189,7 @@ namespace ZkLauncher.ViewModels.UserControl
                                             // インターバルを設定
             _timer.Interval = new TimeSpan(0, 0, 30);
             // タイマメソッドを設定
-            _timer.Tick += new EventHandler(LoopExecute);
+            _timer.Tick += new EventHandler(LoopExecute!);
         }
 
         // タイマを停止
@@ -263,8 +263,6 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.LoopF = true;
-
                 // タイマを開始
                 _timer.Start();
             }
@@ -278,8 +276,6 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.LoopF = false;
-
                 // タイマを開始
                 _timer.Stop();
             }
