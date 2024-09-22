@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace ZkLauncher.Models
 {
     public interface IDisplayEmentsCollection
     {
+        public WebView2? WebView2Object { get;set;}
+
         #region 表示要素
         /// <summary>
         /// 表示要素

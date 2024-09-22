@@ -153,16 +153,19 @@ namespace ZkLauncher.ViewModels.UserControl
                 // カレントディレクトリの作成
                 PathManager.CreateDirectory(browserExecutableFolder);
 
+                this.DisplayElements!.WebView2Object = wnd.WebView2Ctrl;
+
+
                 // 環境の作成
                 var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
-                await wnd.WebView2Ctrl.EnsureCoreWebView2Async(webView2Environment);
+                await this.DisplayElements!.WebView2Object.EnsureCoreWebView2Async(webView2Environment);
 
 
                 // 最初の要素を選択
                 this.DisplayElements!.SelectFirst();
 
                 // 1つめのURLを表示
-                this.DisplayElements.SelectedItem.Navigate(wnd.WebView2Ctrl);
+                this.DisplayElements.SelectedItem.Navigate(this.DisplayElements!.WebView2Object);
             }
             catch (Exception ex)
             {

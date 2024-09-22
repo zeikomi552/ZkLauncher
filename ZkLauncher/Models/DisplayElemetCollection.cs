@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -6,12 +7,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using ZkLauncher.Common.Utilities;
 
 namespace ZkLauncher.Models
 {
     public class DisplayElemetCollection : BindableBase, IDisplayEmentsCollection
     {
+
+        #region WebView2用オブジェクト
+        /// <summary>
+        /// WebView2用オブジェクト
+        /// </summary>
+        WebView2? _WebView2Object;
+        /// <summary>
+        /// WebView2用オブジェクト
+        /// </summary>
+        [XmlIgnore]
+        public WebView2? WebView2Object
+        {
+            get
+            {
+                return _WebView2Object;
+            }
+            set
+            {
+                if (_WebView2Object == null || !_WebView2Object.Equals(value))
+                {
+                    _WebView2Object = value;
+                }
+            }
+        }
+        #endregion
+
         #region 表示要素
         /// <summary>
         /// 表示要素

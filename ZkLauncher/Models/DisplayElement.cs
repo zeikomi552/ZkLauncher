@@ -87,33 +87,6 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-        #region WebView2用オブジェクト
-        /// <summary>
-        /// WebView2用オブジェクト
-        /// </summary>
-        WebView2? _WebView2Object;
-        /// <summary>
-        /// WebView2用オブジェクト
-        /// </summary>
-        [XmlIgnore]
-        public WebView2? WebView2Object
-        {
-            get
-            {
-                return _WebView2Object;
-            }
-            set
-            {
-                if (_WebView2Object == null || !_WebView2Object.Equals(value))
-                {
-                    _WebView2Object = value;
-                }
-            }
-        }
-        #endregion
-
-
-
         #region フレーズの翻訳
         /// <summary>
         /// フレーズの翻訳
