@@ -105,5 +105,17 @@ namespace ZkLauncher.ViewModels.UserControl
                     Title = "I Don't know what you did!?";
             });
         }
+
+        public void SelectionChanged()
+        {
+            try
+            {
+                this.DisplayElements!.SelectedItem.Navigate();
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
