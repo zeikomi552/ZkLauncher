@@ -1,4 +1,5 @@
-﻿using Microsoft.Xaml.Behaviors;
+﻿using DryIoc.ImTools;
+using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ZkLauncher.Models;
+using ZkLauncher.Views;
 using ZkLauncher.Views.UserControls;
 
 namespace ZkLauncher.ViewModels
@@ -37,17 +39,45 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
+        #region 配置
+        /// <summary>
+        /// 配置
+        /// </summary>
+        IWindowPositionConfig? _WindowPosition;
+        /// <summary>
+        /// 配置
+        /// </summary>
+        public IWindowPositionConfig? WindowPosition
+        {
+            get
+            {
+                return _WindowPosition;
+            }
+            set
+            {
+                if (_WindowPosition == null || !_WindowPosition.Equals(value))
+                {
+                    _WindowPosition = value;
+                    RaisePropertyChanged("WindowPosition");
+                }
+            }
+        }
+        #endregion
+
+
+
         private IDialogService? _dialogService;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="regionManager">RegionManager</param>
-        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager, IDisplayEmentsCollection displayElements)
+        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager, IDisplayEmentsCollection displayElements, IWindowPositionConfig widowpos)
         {
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
             this.DisplayElements.LoadConfig();
+            this.WindowPosition = widowpos;
 
             regionManager.RegisterViewWithRegion("ControlPanel", typeof(ucViewerPanel));
         }
@@ -55,10 +85,19 @@ namespace ZkLauncher.ViewModels
         /// <summary>
         /// 初期化処理
         /// </summary>
-        public void Init()
+        public void Init(object sender, RoutedEventArgs e)
         {
             try
             {
+                MainWindow? wnd = sender as MainWindow;
+
+                if (wnd != null)
+                {
+                    wnd.SaveWindowPosition = true;
+                }
+
+
+
                 ShowControlPanelDialog();
             }
             catch

@@ -69,7 +69,30 @@ namespace ZkLauncher.ViewModels.UserControl
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
-
+        #region 配置
+        /// <summary>
+        /// 配置
+        /// </summary>
+        IWindowPositionConfig? _WindowPosition;
+        /// <summary>
+        /// 配置
+        /// </summary>
+        public IWindowPositionConfig? WindowPosition
+        {
+            get
+            {
+                return _WindowPosition;
+            }
+            set
+            {
+                if (_WindowPosition == null || !_WindowPosition.Equals(value))
+                {
+                    _WindowPosition = value;
+                    RaisePropertyChanged("WindowPosition");
+                }
+            }
+        }
+        #endregion
 
         #region 表示要素
         /// <summary>
@@ -96,9 +119,10 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements)
+        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements, IWindowPositionConfig widowpos)
         {
             this.DisplayElements = displayElements;
+            this.WindowPosition = widowpos;
         }
 
         #region 初期化処理

@@ -27,6 +27,7 @@ namespace ZkLauncher
 
             // シングルトンクラスとして登録したい時
             containerRegistry.RegisterSingleton<IDisplayEmentsCollection?, DisplayElemetCollection>();
+            containerRegistry.RegisterSingleton<IWindowPositionConfig?, WindowPositionConfig>();
 
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>();
             containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
