@@ -47,7 +47,9 @@ namespace ZkLauncher.ViewModels
         {
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
-            regionManager.RegisterViewWithRegion("ViewerPanel", typeof(ucViewerPanel));
+            this.DisplayElements.LoadConfig();
+
+            regionManager.RegisterViewWithRegion("ControlPanel", typeof(ucViewerPanel));
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                ShowViewerDialog();
+                ShowControlPanelDialog();
             }
             catch
             {
@@ -67,7 +69,7 @@ namespace ZkLauncher.ViewModels
 
         #region Viewer表示画面の呼び出し
         private DelegateCommand? _showViewerCommand;
-        public DelegateCommand? ShowDialogCommand =>
+        public DelegateCommand? ShowViewerCommand =>
             _showViewerCommand ?? (_showViewerCommand = new DelegateCommand(ShowViewerDialog));
         /// <summary>
         /// Viewer表示画面の呼び出し
@@ -76,17 +78,56 @@ namespace ZkLauncher.ViewModels
         {
             var message = "This is a message that should be shown in the dialog.";
             //using the dialog service as-is
+            _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
+            {
+                string test = string.Empty;
+            });
+        }
+        #endregion
+
+        #region Viewer表示画面の呼び出し
+        private DelegateCommand? _showControlPanelCommand;
+        public DelegateCommand? ShowControlPanelCommand =>
+            _showControlPanelCommand ?? (_showViewerCommand = new DelegateCommand(ShowControlPanelDialog));
+        /// <summary>
+        /// Viewer表示画面の呼び出し
+        /// </summary>
+        private void ShowControlPanelDialog()
+        {
+            var message = "This is a message that should be shown in the dialog.";
+            //using the dialog service as-is
             _dialogService.Show("ucControlPanel", new DialogParameters($"message={message}"), r =>
             {
                 string test = string.Empty;
-                if (r.Result == ButtonResult.None)
-                    test = "Result is None";
-                else if (r.Result == ButtonResult.OK)
-                    test = "Result is OK";
-                else if (r.Result == ButtonResult.Cancel)
-                    test = "Result is Cancel";
-                else
-                    test = "I Don't know what you did!?";
+            });
+        }
+        #endregion
+
+        #region ランチャー設定画面の呼び出し
+        private DelegateCommand? _showSettingLauncherCommand;
+        public DelegateCommand? ShowSettingLauncherCommand =>
+            _showSettingLauncherCommand ?? (_showSettingLauncherCommand = new DelegateCommand(ShowSettingLauncher));
+
+        /// <summary>
+        /// ランチャー設定画面の呼び出し
+        /// </summary>
+        private void ShowSettingLauncher()
+        {
+            var message = "This is a message that should be shown in the dialog.";
+            //using the dialog service as-is
+            _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters($"message={message}"), r =>
+            {
+                string test = string.Empty;
+                //if (r.Result == ButtonResult.None)
+                //    test = "Result is None";
+                //else if (r.Result == ButtonResult.OK)
+                //{
+                //    this.DisplayElements!.LoadConfig();
+                //}
+                //else if (r.Result == ButtonResult.Cancel)
+                //    test = "Result is Cancel";
+                //else
+                //    test = "I Don't know what you did!?";
             });
         }
         #endregion

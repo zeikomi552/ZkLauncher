@@ -109,33 +109,7 @@ namespace ZkLauncher.ViewModels.UserControl
 
 
 
-        #region ランチャー設定画面の呼び出し
-        private DelegateCommand? _showSettingLauncherCommand;
-        public DelegateCommand? ShowSettingLauncherCommand =>
-            _showSettingLauncherCommand ?? (_showSettingLauncherCommand = new DelegateCommand(ShowSettingLauncher));
-
-        /// <summary>
-        /// ランチャー設定画面の呼び出し
-        /// </summary>
-        private void ShowSettingLauncher()
-        {
-            var message = "This is a message that should be shown in the dialog.";
-            //using the dialog service as-is
-            _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters($"message={message}"), r =>
-            {
-                if (r.Result == ButtonResult.None)
-                    Title = "Result is None";
-                else if (r.Result == ButtonResult.OK)
-                {
-                    this.DisplayElements!.LoadConfig();
-                }
-                else if (r.Result == ButtonResult.Cancel)
-                    Title = "Result is Cancel";
-                else
-                    Title = "I Don't know what you did!?";
-            });
-        }
-        #endregion
+        
 
         #region 選択要素の変更
         /// <summary>

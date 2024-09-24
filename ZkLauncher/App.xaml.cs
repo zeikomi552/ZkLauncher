@@ -15,6 +15,14 @@ namespace ZkLauncher
 
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();
+
+            //var icon = GetResourceStream(new Uri("icon.ico", UriKind.Relative)).Stream;
+            //var notifyIcon = new System.Windows.Forms.NotifyIcon
+            //{
+            //    Visible = true,
+            //    Icon = new System.Drawing.Icon(icon),
+            //    Text = "タスクトレイ常駐アプリのテストです"
+            //};
         }
     }
 
