@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:ZkLauncher.Views"
-        mc:Ignorable="d" TitleCharacterCasing="Normal"
-        Title="BaseDialogWindow" Height="450" Width="800">
+        mc:Ignorable="d" TitleCharacterCasing="Normal">
     <Grid>
         
     </Grid>

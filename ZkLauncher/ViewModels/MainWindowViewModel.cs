@@ -51,8 +51,6 @@ namespace ZkLauncher.ViewModels
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
             this.DisplayElements.LoadConfig();
-
-            regionManager.RegisterViewWithRegion("ControlPanel", typeof(ucViewerPanel));
         }
 
         /// <summary>
@@ -63,6 +61,7 @@ namespace ZkLauncher.ViewModels
             try
             {
                 ShowControlPanelDialog();
+                ShowViewerDialog();
             }
             catch
             {
@@ -80,6 +79,7 @@ namespace ZkLauncher.ViewModels
         private void ShowViewerDialog()
         {
             var message = "This is a message that should be shown in the dialog.";
+
             //using the dialog service as-is
             _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
             {

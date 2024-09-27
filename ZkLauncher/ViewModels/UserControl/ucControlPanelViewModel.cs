@@ -12,6 +12,13 @@ namespace ZkLauncher.ViewModels.UserControl
     public class ucControlPanelViewModel : BindableBase, IDialogAware
     {
         #region IDialogAware Overwrite
+
+        public string Title
+        {
+            get { return "Control Panel"; }
+        }
+
+
         private DelegateCommand<string>? _closeDialogCommand;
         public DelegateCommand<string> CloseDialogCommand =>
             _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
@@ -99,17 +106,9 @@ namespace ZkLauncher.ViewModels.UserControl
 
 
 
-        private string _title = "Prism Application";
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
 
 
 
-
-        
 
         #region 選択要素の変更
         /// <summary>
