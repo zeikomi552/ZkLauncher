@@ -1,9 +1,12 @@
 ﻿using Microsoft.Web.WebView2.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -35,7 +38,6 @@ namespace ZkLauncher.Models
             }
         }
         #endregion
-
 
         #region URI
         /// <summary>
@@ -82,14 +84,24 @@ namespace ZkLauncher.Models
                 {
                     _ImagePath = value;
                     RaisePropertyChanged("ImagePath");
+                    RaisePropertyChanged("FileName");
                 }
             }
         }
         #endregion
 
-        #region フレーズの翻訳
+        public string FileName
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(ImagePath);
+            }
+        }
+
+
+        #region 画面遷移
         /// <summary>
-        /// フレーズの翻訳
+        ///  画面遷移
         /// </summary>
         /// <param name="wv2">WebView2コントロール</param>
         public void Navigate(WebView2 web, params object?[] param)
@@ -100,6 +112,30 @@ namespace ZkLauncher.Models
                 // URLを開く
                 web.CoreWebView2.Navigate(string.Format(this.URI, param));
             }
+        }
+        #endregion
+
+        #region ファイル選択ダイアログの表示
+        /// <summary>
+        /// ファイル選択ダイアログの表示
+        /// </summary>
+        public void SelectedFile()
+        {
+            try
+            {
+                // ダイアログのインスタンスを生成
+                var dialog = new OpenFileDialog();
+
+                // ファイルの種類を設定
+                dialog.Filter = "画像ファイル (*.png)|*.png";
+
+                // ダイアログを表示する
+                if (dialog.ShowDialog() == true)
+                {
+                    this.ImagePath = dialog.FileName;
+                }
+            }
+            catch { }
         }
         #endregion
     }
