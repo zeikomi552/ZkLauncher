@@ -7,18 +7,22 @@
         xmlns:local="clr-namespace:ZkLauncher" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:prism="http://prismlibrary.com/" TitleCharacterCasing="Normal" Height="450" Width="800" WindowStyle="None" Visibility="Hidden">
-    <b:Interaction.Triggers>
-        <b:EventTrigger>
-            <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
-        </b:EventTrigger>
-    </b:Interaction.Triggers>
     <Grid>
+        <b:Interaction.Triggers>
+            <b:EventTrigger>
+                <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
+            </b:EventTrigger>
+            <b:EventTrigger>
+                <b:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
         <tb:TaskbarIcon IconSource="/Common/imanges/app.ico" ToolTipText="hello world" >
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Name="OpenViewer" Header="Viewer" Command="{Binding ShowViewerCommand}"/>
                     <MenuItem Name="OpenControlPanel" Header="Control Panel" Command="{Binding ShowControlPanelCommand}"/>
                     <MenuItem Name="OpenSetting" Header="Setting" Command="{Binding ShowSettingLauncherCommand}"/>
+                    <MenuItem Name="Exit" Header="Exit" Command="{Binding AppShutdownCommand}"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>

@@ -60,8 +60,6 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                ShowControlPanelDialog();
-                ShowViewerDialog();
             }
             catch
             {
@@ -91,7 +89,7 @@ namespace ZkLauncher.ViewModels
         #region Viewer表示画面の呼び出し
         private DelegateCommand? _showControlPanelCommand;
         public DelegateCommand? ShowControlPanelCommand =>
-            _showControlPanelCommand ?? (_showViewerCommand = new DelegateCommand(ShowControlPanelDialog));
+            _showControlPanelCommand ?? (_showControlPanelCommand = new DelegateCommand(ShowControlPanelDialog));
         /// <summary>
         /// Viewer表示画面の呼び出し
         /// </summary>
@@ -132,6 +130,20 @@ namespace ZkLauncher.ViewModels
                 //else
                 //    test = "I Don't know what you did!?";
             });
+        }
+        #endregion
+
+        #region アプリケーション終了コマンド
+        private DelegateCommand? _AppShutdownCommand;
+        public DelegateCommand? AppShutdownCommand =>
+            _AppShutdownCommand ?? (_AppShutdownCommand = new DelegateCommand(AppShutdown));
+
+        /// <summary>
+        /// ランチャー設定画面の呼び出し
+        /// </summary>
+        private void AppShutdown()
+        {
+            Environment.Exit(0); // 正常終了
         }
         #endregion
     }
