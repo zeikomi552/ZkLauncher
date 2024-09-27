@@ -119,16 +119,10 @@ namespace ZkLauncher.ViewModels
             _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters($"message={message}"), r =>
             {
                 string test = string.Empty;
-                //if (r.Result == ButtonResult.None)
-                //    test = "Result is None";
-                //else if (r.Result == ButtonResult.OK)
-                //{
-                //    this.DisplayElements!.LoadConfig();
-                //}
-                //else if (r.Result == ButtonResult.Cancel)
-                //    test = "Result is Cancel";
-                //else
-                //    test = "I Don't know what you did!?";
+                if (r.Result == ButtonResult.OK)
+                {
+                    this.DisplayElements!.LoadConfig();
+                }
             });
         }
         #endregion
