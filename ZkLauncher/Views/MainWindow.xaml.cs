@@ -22,8 +22,8 @@ namespace ZkLauncher.Views
         {
             InitializeComponent();
 
-            // ウィンドウのサイズを復元
-            RecoverWindowBounds();
+            //// ウィンドウのサイズを復元
+            //RecoverWindowBounds();
         }
 
         protected override void OnClosing(CancelEventArgs e)

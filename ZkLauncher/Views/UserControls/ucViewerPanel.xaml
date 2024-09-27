@@ -9,10 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
-            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
-            <Setter Property="ResizeMode" Value="NoResize"/>
-            <Setter Property="ShowInTaskbar" Value="False"/>
-            <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+            <Setter Property="Title" Value="{Binding Title}"/>
         </Style>
     </prism:Dialog.WindowStyle>
     <b:Interaction.Triggers>

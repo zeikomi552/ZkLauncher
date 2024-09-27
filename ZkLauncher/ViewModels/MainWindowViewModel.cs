@@ -51,8 +51,6 @@ namespace ZkLauncher.ViewModels
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
             this.DisplayElements.LoadConfig();
-
-            regionManager.RegisterViewWithRegion("ControlPanel", typeof(ucViewerPanel));
         }
 
         /// <summary>
@@ -62,7 +60,6 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                ShowControlPanelDialog();
             }
             catch
             {
@@ -80,6 +77,7 @@ namespace ZkLauncher.ViewModels
         private void ShowViewerDialog()
         {
             var message = "This is a message that should be shown in the dialog.";
+
             //using the dialog service as-is
             _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
             {
@@ -91,7 +89,7 @@ namespace ZkLauncher.ViewModels
         #region Viewer表示画面の呼び出し
         private DelegateCommand? _showControlPanelCommand;
         public DelegateCommand? ShowControlPanelCommand =>
-            _showControlPanelCommand ?? (_showViewerCommand = new DelegateCommand(ShowControlPanelDialog));
+            _showControlPanelCommand ?? (_showControlPanelCommand = new DelegateCommand(ShowControlPanelDialog));
         /// <summary>
         /// Viewer表示画面の呼び出し
         /// </summary>
@@ -132,6 +130,20 @@ namespace ZkLauncher.ViewModels
                 //else
                 //    test = "I Don't know what you did!?";
             });
+        }
+        #endregion
+
+        #region アプリケーション終了コマンド
+        private DelegateCommand? _AppShutdownCommand;
+        public DelegateCommand? AppShutdownCommand =>
+            _AppShutdownCommand ?? (_AppShutdownCommand = new DelegateCommand(AppShutdown));
+
+        /// <summary>
+        /// ランチャー設定画面の呼び出し
+        /// </summary>
+        private void AppShutdown()
+        {
+            Environment.Exit(0); // 正常終了
         }
         #endregion
     }

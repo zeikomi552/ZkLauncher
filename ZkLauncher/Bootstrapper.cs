@@ -37,12 +37,11 @@ namespace ZkLauncher
         protected override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-
-            ViewModelLocationProvider.Register<ucViewerPanel, ucViewerPanelViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            base.ConfigureModuleCatalog(moduleCatalog);
         }
     }
 }
