@@ -12,6 +12,11 @@ namespace ZkLauncher.ViewModels.UserControl
     public class ucSettingLauncherViewModel : BindableBase, IDialogAware
     {
         #region IDialogAware Overwrite
+
+        public string Title
+        {
+            get { return "Setting"; }
+        }
         private DelegateCommand<string>? _closeDialogCommand;
         public DelegateCommand<string> CloseDialogCommand =>
             _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));

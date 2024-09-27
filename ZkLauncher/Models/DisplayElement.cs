@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ZkLauncher.Common.Utilities;
 
 namespace ZkLauncher.Models
 {
@@ -76,27 +77,39 @@ namespace ZkLauncher.Models
         {
             get
             {
-                return _ImagePath;
+                string dir = PathManager.GetApplicationFolder();
+                return Path.Combine(dir, "Config", "Images", FileName);
+            }
+        }
+        #endregion
+
+        #region ファイル名
+        /// <summary>
+        /// ファイル名
+        /// </summary>
+        string _FileName = string.Empty;
+        /// <summary>
+        /// ファイル名
+        /// </summary>
+        public string FileName
+        {
+            get
+            {
+                return _FileName;
             }
             set
             {
-                if (_ImagePath == null || !_ImagePath.Equals(value))
+                if (_FileName == null || !_FileName.Equals(value))
                 {
-                    _ImagePath = value;
-                    RaisePropertyChanged("ImagePath");
+                    _FileName = value;
                     RaisePropertyChanged("FileName");
+                    RaisePropertyChanged("ImagePath");
                 }
             }
         }
         #endregion
 
-        public string FileName
-        {
-            get
-            {
-                return Path.GetFileNameWithoutExtension(ImagePath);
-            }
-        }
+
 
 
         #region 画面遷移
@@ -132,7 +145,11 @@ namespace ZkLauncher.Models
                 // ダイアログを表示する
                 if (dialog.ShowDialog() == true)
                 {
-                    this.ImagePath = dialog.FileName;
+                    this.FileName = Path.GetFileName(dialog.FileName);
+
+                    PathManager.CreateCurrentDirectory(this.ImagePath);
+                    // ファイルの移動（同じ名前のファイルがある場合は上書き）
+                    File.Copy(dialog.FileName, this.ImagePath, true);
                 }
             }
             catch { }
