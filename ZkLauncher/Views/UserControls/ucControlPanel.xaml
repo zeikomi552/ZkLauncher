@@ -74,9 +74,6 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <Button Command="{Binding ShowSettingLauncherCommand}" Content="Setting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
-            </StackPanel>
         </Grid>
 
     </Grid>

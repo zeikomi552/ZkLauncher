@@ -39,32 +39,6 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
-        #region 配置
-        /// <summary>
-        /// 配置
-        /// </summary>
-        IWindowPositionConfig? _WindowPosition;
-        /// <summary>
-        /// 配置
-        /// </summary>
-        public IWindowPositionConfig? WindowPosition
-        {
-            get
-            {
-                return _WindowPosition;
-            }
-            set
-            {
-                if (_WindowPosition == null || !_WindowPosition.Equals(value))
-                {
-                    _WindowPosition = value;
-                    RaisePropertyChanged("WindowPosition");
-                }
-            }
-        }
-        #endregion
-
-
 
         private IDialogService? _dialogService;
 
@@ -72,12 +46,11 @@ namespace ZkLauncher.ViewModels
         /// コンストラクタ
         /// </summary>
         /// <param name="regionManager">RegionManager</param>
-        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager, IDisplayEmentsCollection displayElements, IWindowPositionConfig widowpos)
+        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager, IDisplayEmentsCollection displayElements)
         {
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
             this.DisplayElements.LoadConfig();
-            this.WindowPosition = widowpos;
 
             regionManager.RegisterViewWithRegion("ControlPanel", typeof(ucViewerPanel));
         }
@@ -89,15 +62,6 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                MainWindow? wnd = sender as MainWindow;
-
-                if (wnd != null)
-                {
-                    wnd.SaveWindowPosition = true;
-                }
-
-
-
                 ShowControlPanelDialog();
             }
             catch
