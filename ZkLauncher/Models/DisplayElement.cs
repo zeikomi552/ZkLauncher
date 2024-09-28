@@ -15,6 +15,9 @@ namespace ZkLauncher.Models
 {
     public class DisplayElement : BindableBase
     {
+        private string _Id = Guid.NewGuid().ToString();
+        public string Id { get { return _Id; } set { _Id = value; } }
+
         #region タイトル
         /// <summary>
         /// タイトル
@@ -95,16 +98,7 @@ namespace ZkLauncher.Models
         {
             get
             {
-                return _FileName;
-            }
-            set
-            {
-                if (_FileName == null || !_FileName.Equals(value))
-                {
-                    _FileName = value;
-                    RaisePropertyChanged("FileName");
-                    RaisePropertyChanged("ImagePath");
-                }
+                return "IMG_" + Id + ".png";
             }
         }
         #endregion
@@ -142,8 +136,6 @@ namespace ZkLauncher.Models
                 // ダイアログを表示する
                 if (dialog.ShowDialog() == true)
                 {
-                    this.FileName = Path.GetFileName(dialog.FileName);
-
                     PathManager.CreateCurrentDirectory(this.ImagePath);
                     // ファイルの移動（同じ名前のファイルがある場合は上書き）
                     File.Copy(dialog.FileName, this.ImagePath, true);

@@ -1,13 +1,18 @@
 ﻿using Prism.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
+using Clipboard = System.Windows.Clipboard;
+using DialogResult = Prism.Dialogs.DialogResult;
 
 namespace ZkLauncher.ViewModels.UserControl
 {
@@ -112,19 +117,51 @@ namespace ZkLauncher.ViewModels.UserControl
             try
             {
                 //クリップボードに文字列データがあるか確認
-                if (Clipboard.ContainsText())
+                if (System.Windows.Clipboard.ContainsText())
                 {
-                    string text = Clipboard.GetText();
+                    string text = System.Windows.Clipboard.GetText();
 
                     if (text.Contains("http://") || text.Contains("https://"))
                     {
                         this.DisplayElements!.Add(new DisplayElement() { Title = "リンク", URI = text });
+                        this.DisplayElements.SaveConfig();
+                    }
+                }
+                //クリップボードにBitmapデータがあるか調べる（調べなくても良い）
+                else if (System.Windows.Clipboard.ContainsImage())
+                {
+
+                    if (this.DisplayElements!.SelectedItem != null)
+                    {
+                        //クリップボードにあるデータの取得
+                        var bmp = Clipboard.GetImage();
+                        if (bmp != null)
+                        {
+                            PathManager.CreateCurrentDirectory(this.DisplayElements.SelectedItem.ImagePath);
+                            SaveBitmapSourceToPng(bmp, this.DisplayElements.SelectedItem.ImagePath);
+                        }
+                        this.DisplayElements.SaveConfig();
+                        this.DisplayElements.LoadConfig();
+                    }
+                    else
+                    {
+                        ShowMessage.ShowNoticeOK("画像登録対象が選択されていません。", "通知");
                     }
                 }
             }
             catch
             {
 
+            }
+        }
+
+        public static void SaveBitmapSourceToPng(BitmapSource bitmapSource, string filePath)
+        {
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                System.Windows.Media.Imaging.BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bitmapSource));
+                encoder.Save(fileStream);
             }
         }
 
