@@ -49,5 +49,6 @@ namespace ZkLauncher.Models
         public void Remove(DisplayElement delete_item);
 
         public void Add(DisplayElement item);
+        public bool AddClipboardElement();
     }
 }

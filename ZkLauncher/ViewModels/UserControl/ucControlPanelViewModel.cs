@@ -119,46 +119,10 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                //クリップボードに文字列データがあるか確認
-                if (System.Windows.Clipboard.ContainsText())
+                if (this.DisplayElements!.AddClipboardElement())
                 {
-                    string text = System.Windows.Clipboard.GetText();
-
-                    if (text.Contains("http://") || text.Contains("https://"))
-                    {
-                        this.DisplayElements!.Add(new DisplayElement() { Title = "リンク", URI = text });
-                        this.DisplayElements.SaveConfig();
-                    }
-                    else
-                    {
-                        text = text.Replace("\"", "");
-                        if (File.Exists(text) && System.IO.Path.GetExtension(text).ToLower().Equals(".pdf"))
-                        {
-                            this.DisplayElements!.Add(new DisplayElement() { Title = "ファイル", URI = text });
-                            this.DisplayElements.SaveConfig();
-                        }
-                    }
-                }
-                //クリップボードにBitmapデータがあるか調べる（調べなくても良い）
-                else if (System.Windows.Clipboard.ContainsImage())
-                {
-
-                    if (this.DisplayElements!.SelectedItem != null)
-                    {
-                        //クリップボードにあるデータの取得
-                        var bmp = Clipboard.GetImage();
-                        if (bmp != null)
-                        {
-                            PathManager.CreateCurrentDirectory(this.DisplayElements.SelectedItem.ImagePath);
-                            SaveBitmapSourceToPng(bmp, this.DisplayElements.SelectedItem.ImagePath);
-                        }
-                        this.DisplayElements.SaveConfig();
-                        this.DisplayElements.LoadConfig();
-                    }
-                    else
-                    {
-                        ShowMessage.ShowNoticeOK("画像登録対象が選択されていません。", "通知");
-                    }
+                    this.DisplayElements.SaveConfig();
+                    this.DisplayElements.LoadConfig();
                 }
             }
             catch
@@ -168,22 +132,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region BitmapSourceのファイル保存処理
-        /// <summary>
-        /// BitmapSourceのファイル保存処理
-        /// </summary>
-        /// <param name="bitmapSource">BitmapSource</param>
-        /// <param name="filePath">ファイルパス</param>
-        public static void SaveBitmapSourceToPng(BitmapSource bitmapSource, string filePath)
-        {
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                System.Windows.Media.Imaging.BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bitmapSource));
-                encoder.Save(fileStream);
-            }
-        }
-        #endregion
 
         #region リンクの削除処理
         /// <summary>
@@ -197,12 +145,7 @@ namespace ZkLauncher.ViewModels.UserControl
                 {
                     if (ShowMessage.ShowQuestionYesNo("選択しているリンクを削除します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
                     {
-                        // イメージファイルが存在する場合は削除
-                        if (File.Exists(this.DisplayElements.SelectedItem.ImagePath))
-                        {
-                            File.Delete(this.DisplayElements.SelectedItem.ImagePath);
-                        }
-                        this.DisplayElements.Elements.Remove(this.DisplayElements.SelectedItem);
+                        this.DisplayElements.Remove(this.DisplayElements.SelectedItem);
                         this.DisplayElements.SaveConfig();
                     }
                 }
