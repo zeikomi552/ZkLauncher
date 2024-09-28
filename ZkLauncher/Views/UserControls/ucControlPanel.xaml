@@ -5,12 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
              xmlns:Converters="clr-namespace:ZkLauncher.Common.Converters" x:Class="ZkLauncher.Views.UserControls.ucControlPanel"
+             xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/"
              d:DesignHeight="450" d:DesignWidth="800">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
+            <Setter Property="hlp:DragWindowHelper.DragEnable" Value="True"/>
             <Setter Property="Title" Value="{Binding Title}"/>
+            <Setter Property="ResizeMode" Value="CanResize"/>
+            <Setter Property="WindowStyle" Value="None"/>
         </Style>
     </prism:Dialog.WindowStyle>
 

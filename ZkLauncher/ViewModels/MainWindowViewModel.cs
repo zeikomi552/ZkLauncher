@@ -76,28 +76,23 @@ namespace ZkLauncher.ViewModels
         /// </summary>
         private void ShowViewerDialog()
         {
-            var message = "This is a message that should be shown in the dialog.";
-
-            //using the dialog service as-is
-            _dialogService.Show("ucViewerPanel", new DialogParameters($"message={message}"), r =>
+            _dialogService.Show("ucViewerPanel", new DialogParameters(), r =>
             {
                 string test = string.Empty;
             });
         }
         #endregion
 
-        #region Viewer表示画面の呼び出し
+        #region ControlPanel表示画面の呼び出し
         private DelegateCommand? _showControlPanelCommand;
         public DelegateCommand? ShowControlPanelCommand =>
             _showControlPanelCommand ?? (_showControlPanelCommand = new DelegateCommand(ShowControlPanelDialog));
         /// <summary>
-        /// Viewer表示画面の呼び出し
+        ///ControlPanel画面の呼び出し
         /// </summary>
         private void ShowControlPanelDialog()
         {
-            var message = "This is a message that should be shown in the dialog.";
-            //using the dialog service as-is
-            _dialogService.Show("ucControlPanel", new DialogParameters($"message={message}"), r =>
+            _dialogService.Show("ucControlPanel", new DialogParameters(/*$"message={message}"*/), r =>
             {
                 string test = string.Empty;
             });
@@ -114,9 +109,7 @@ namespace ZkLauncher.ViewModels
         /// </summary>
         private void ShowSettingLauncher()
         {
-            var message = "This is a message that should be shown in the dialog.";
-            //using the dialog service as-is
-            _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters($"message={message}"), r =>
+            _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters(/*$"message={message}"*/), r =>
             {
                 string test = string.Empty;
                 if (r.Result == ButtonResult.OK)

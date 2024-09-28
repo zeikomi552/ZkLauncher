@@ -175,7 +175,7 @@ namespace ZkLauncher.ViewModels.UserControl
         #endregion
 
         // タイマのインスタンス
-        private DispatcherTimer _timer;
+        private DispatcherTimer? _timer;
 
         // タイマを設定する
         private void SetupTimer()
@@ -188,12 +188,27 @@ namespace ZkLauncher.ViewModels.UserControl
             _timer.Tick += new EventHandler(LoopExecute!);
         }
 
-        // タイマを停止
+        #region タイマーの停止
+        /// <summary>
+        /// タイマーの停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StopTimer(object sender, CancelEventArgs e)
         {
-            _timer.Stop();
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
         }
-        // タイマメソッド
+        #endregion
+
+        #region タイマーメソッド
+        /// <summary>
+        /// タイマーメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoopExecute(object sender, EventArgs e)
         {
             try
@@ -205,7 +220,12 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
+        #endregion
 
+        #region 次へ画面(URL)遷移
+        /// <summary>
+        /// 次へ画面(URL)遷移
+        /// </summary>
         public void Next()
         {
             try
@@ -217,7 +237,12 @@ namespace ZkLauncher.ViewModels.UserControl
                 
             }
         }
+        #endregion
 
+        #region 直前へ画面(URL)遷移
+        /// <summary>
+        /// 直前へ画面(URL)遷移
+        /// </summary>
         public void Prev()
         {
             try
@@ -229,6 +254,8 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
+        #endregion
+
         #region ループフラグ
         /// <summary>
         /// ループフラグ
@@ -254,31 +281,46 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
+        #region ループ処理の開始
+        /// <summary>
+        /// ループ処理の開始
+        /// </summary>
         public void Loop()
         {
             try
             {
-                // タイマを開始
-                _timer.Start();
+                if (_timer != null)
+                {
+                    // タイマを開始
+                    _timer.Start();
+                }
             }
             catch
             {
 
             }
         }
+        #endregion
 
+        #region ループの一時停止
+        /// <summary>
+        /// ループの一時停止
+        /// </summary>
         public void Pose()
         {
             try
             {
-                // タイマを開始
-                _timer.Stop();
+                if (_timer != null)
+                {
+                    // タイマを開始
+                    _timer.Stop();
+                }
             }
             catch
             {
 
             }
         }
+        #endregion
     }
 }

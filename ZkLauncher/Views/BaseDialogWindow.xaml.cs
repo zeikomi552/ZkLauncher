@@ -19,7 +19,7 @@ namespace ZkLauncher.Views
     /// <summary>
     /// BaseDialogWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class BaseDialogWindow : MetroWindow, IDialogWindow
+    public partial class BaseDialogWindow : Window, IDialogWindow
     {
         public IDialogResult? Result { get; set; }
         public BaseDialogWindow()
