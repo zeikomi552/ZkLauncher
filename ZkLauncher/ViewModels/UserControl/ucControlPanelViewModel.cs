@@ -1,11 +1,18 @@
-﻿using System;
+﻿using Prism.Dialogs;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
+using Clipboard = System.Windows.Clipboard;
+using DialogResult = Prism.Dialogs.DialogResult;
 
 namespace ZkLauncher.ViewModels.UserControl
 {
@@ -104,10 +111,55 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
 
+        #region 登録処理
+        /// <summary>
+        /// 登録処理
+        /// </summary>
+        public void ContextMenu_Regist()
+        {
+            try
+            {
+                if (this.DisplayElements!.AddClipboardElement())
+                {
+                    this.DisplayElements.SaveConfig();
+                    this.DisplayElements.LoadConfig();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        #endregion
 
 
+        #region リンクの削除処理
+        /// <summary>
+        /// リンクの削除処理
+        /// </summary>
+        public void ContextMenu_Delete()
+        {
+            try
+            {
+                if (this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
+                {
+                    if (ShowMessage.ShowQuestionYesNo("選択しているリンクを削除します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
+                    {
+                        this.DisplayElements.Remove(this.DisplayElements.SelectedItem);
+                        this.DisplayElements.SaveConfig();
+                    }
+                }
+                else
+                {
+                    ShowMessage.ShowNoticeOK("削除対象が選択されていません。", "通知");
+                }
+            }
+            catch
+            {
 
-
+            }
+        }
+        #endregion
 
 
         #region 選択要素の変更

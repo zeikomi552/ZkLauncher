@@ -45,5 +45,10 @@ namespace ZkLauncher.Models
         public void SelecctedNavigate();
         public void NextNavigate();
         public void PrevNavigate();
+
+        public void Remove(DisplayElement delete_item);
+
+        public void Add(DisplayElement item);
+        public bool AddClipboardElement();
     }
 }

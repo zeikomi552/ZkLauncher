@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using ZkLauncher.Common.Utilities;
@@ -304,6 +306,102 @@ namespace ZkLauncher.Models
             catch
             {
                 throw;
+            }
+        }
+        #endregion
+
+        #region 要素の削除処理
+        /// <summary>
+        /// 要素の削除処理
+        /// </summary>
+        public void Remove(DisplayElement delete_item)
+        {
+            // イメージファイルが存在する場合は削除
+            if (File.Exists(delete_item.ImagePath))
+            {
+                File.Delete(delete_item.ImagePath);
+            }
+            this.Elements.Remove(delete_item);
+        }
+        #endregion
+
+        #region 要素の追加
+        /// <summary>
+        /// 要素の追加
+        /// </summary>
+        /// <param name="item">追加要素</param>
+        public void Add(DisplayElement item)
+        {
+            this.Elements.Add(item);
+        }
+        #endregion
+
+
+        #region クリップボード上の要素の追加
+        /// <summary>
+        /// クリップボード上の要素の追加
+        /// </summary>
+        public bool AddClipboardElement()
+        {
+            bool regist = false;
+            //クリップボードに文字列データがあるか確認
+            if (System.Windows.Clipboard.ContainsText())
+            {
+                string text = System.Windows.Clipboard.GetText();
+
+                if (text.Contains("http://") || text.Contains("https://"))
+                {
+                    this.Add(new DisplayElement() { Title = "リンク", URI = text });
+                    regist = true;
+                }
+                else
+                {
+                    text = text.Replace("\"", "");
+                    if (File.Exists(text) && System.IO.Path.GetExtension(text).ToLower().Equals(".pdf"))
+                    {
+                        this.Add(new DisplayElement() { Title = "ファイル", URI = text });
+                        regist = true;
+                    }
+                }
+            }
+            //クリップボードにBitmapデータがあるか調べる（調べなくても良い）
+            else if (System.Windows.Clipboard.ContainsImage())
+            {
+
+                if (this.SelectedItem != null)
+                {
+                    //クリップボードにあるデータの取得
+                    var bmp = Clipboard.GetImage();
+                    if (bmp != null)
+                    {
+                        PathManager.CreateCurrentDirectory(this.SelectedItem.ImagePath);
+                        SaveBitmapSourceToPng(bmp, this.SelectedItem.ImagePath);
+                        regist = true;
+                    }
+                }
+                else
+                {
+                    ShowMessage.ShowNoticeOK("画像登録対象が選択されていません。", "通知");
+                }
+            }
+            return regist;
+        }
+        #endregion
+
+
+        #region BitmapSourceのファイル保存処理
+        /// <summary>
+        /// BitmapSourceのファイル保存処理
+        /// </summary>
+        /// <param name="bitmapSource">BitmapSource</param>
+        /// <param name="filePath">ファイルパス</param>
+        private static void SaveBitmapSourceToPng(BitmapSource bitmapSource, string filePath)
+        {
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                System.Windows.Media.Imaging.BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bitmapSource));
+                encoder.Save(fileStream);
             }
         }
         #endregion
