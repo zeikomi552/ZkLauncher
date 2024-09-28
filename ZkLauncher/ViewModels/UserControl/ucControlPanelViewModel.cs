@@ -111,7 +111,10 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
 
-
+        #region 登録処理
+        /// <summary>
+        /// 登録処理
+        /// </summary>
         public void ContextMenu_Regist()
         {
             try
@@ -125,6 +128,15 @@ namespace ZkLauncher.ViewModels.UserControl
                     {
                         this.DisplayElements!.Add(new DisplayElement() { Title = "リンク", URI = text });
                         this.DisplayElements.SaveConfig();
+                    }
+                    else
+                    {
+                        text = text.Replace("\"", "");
+                        if (File.Exists(text) && System.IO.Path.GetExtension(text).ToLower().Equals(".pdf"))
+                        {
+                            this.DisplayElements!.Add(new DisplayElement() { Title = "ファイル", URI = text });
+                            this.DisplayElements.SaveConfig();
+                        }
                     }
                 }
                 //クリップボードにBitmapデータがあるか調べる（調べなくても良い）
@@ -154,7 +166,14 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
+        #endregion
 
+        #region BitmapSourceのファイル保存処理
+        /// <summary>
+        /// BitmapSourceのファイル保存処理
+        /// </summary>
+        /// <param name="bitmapSource">BitmapSource</param>
+        /// <param name="filePath">ファイルパス</param>
         public static void SaveBitmapSourceToPng(BitmapSource bitmapSource, string filePath)
         {
             using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -164,7 +183,9 @@ namespace ZkLauncher.ViewModels.UserControl
                 encoder.Save(fileStream);
             }
         }
+        #endregion
 
+        #region リンクの削除処理
         /// <summary>
         /// リンクの削除処理
         /// </summary>
@@ -195,7 +216,7 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
-
+        #endregion
 
 
         #region 選択要素の変更
