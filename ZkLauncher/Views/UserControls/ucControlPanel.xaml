@@ -30,6 +30,24 @@
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="登録" Name="Register" >
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="ContextMenu_Regist"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </MenuItem>
+                        <MenuItem Header="削除" Name="Remove" >
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="ContextMenu_Delete"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
                 <ListBox.Template>
                     <ControlTemplate TargetType="{x:Type ListBox}">
                         <Border BorderThickness="5">
@@ -51,7 +69,8 @@
                                 <Image Margin="5" Width="300" Height="200"
                                    Source="{Binding ImagePath, Converter={StaticResource URLStringToImageSourceConverter}}">
                                 </Image>
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}" FontSize="20" />
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}" FontSize="20">
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Prism.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
 
@@ -105,8 +107,57 @@ namespace ZkLauncher.ViewModels.UserControl
         }
 
 
+        public void ContextMenu_Regist()
+        {
+            try
+            {
+                //クリップボードに文字列データがあるか確認
+                if (Clipboard.ContainsText())
+                {
+                    string text = Clipboard.GetText();
 
+                    if (text.Contains("http://") || text.Contains("https://"))
+                    {
+                        this.DisplayElements!.Add(new DisplayElement() { Title = "リンク", URI = text });
+                    }
+                }
+            }
+            catch
+            {
 
+            }
+        }
+
+        /// <summary>
+        /// リンクの削除処理
+        /// </summary>
+        public void ContextMenu_Delete()
+        {
+            try
+            {
+                if (this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
+                {
+                    if (ShowMessage.ShowQuestionYesNo("選択しているリンクを削除します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
+                    {
+                        // イメージファイルが存在する場合は削除
+                        if (File.Exists(this.DisplayElements.SelectedItem.ImagePath))
+                        {
+                            File.Delete(this.DisplayElements.SelectedItem.ImagePath);
+                        }
+                        this.DisplayElements.Elements.Remove(this.DisplayElements.SelectedItem);
+                        this.DisplayElements.SaveConfig();
+                    }
+                }
+                else
+                {
+                    ShowMessage.ShowNoticeOK("削除対象が選択されていません。", "通知");
+                }
+            }
+            catch
+            {
+
+            }
+        }
 
 
 

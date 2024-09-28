@@ -109,9 +109,6 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-
-
-
         #region 画面遷移
         /// <summary>
         ///  画面遷移

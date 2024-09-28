@@ -307,5 +307,31 @@ namespace ZkLauncher.Models
             }
         }
         #endregion
+
+        #region 要素の削除処理
+        /// <summary>
+        /// 要素の削除処理
+        /// </summary>
+        public void Remove(DisplayElement delete_item)
+        {
+            // イメージファイルが存在する場合は削除
+            if (File.Exists(delete_item.ImagePath))
+            {
+                File.Delete(delete_item.ImagePath);
+            }
+            this.Elements.Remove(delete_item);
+        }
+        #endregion
+
+        #region 要素の追加
+        /// <summary>
+        /// 要素の追加
+        /// </summary>
+        /// <param name="item">追加要素</param>
+        public void Add(DisplayElement item)
+        {
+            this.Elements.Add(item);
+        }
+        #endregion
     }
 }
