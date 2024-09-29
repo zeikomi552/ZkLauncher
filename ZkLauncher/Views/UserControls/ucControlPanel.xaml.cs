@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ZkLauncher.Views.UserControls
 {
@@ -23,6 +24,13 @@ namespace ZkLauncher.Views.UserControls
         public ucControlPanel()
         {
             InitializeComponent();
+            myMediaElement.Play();
+        }
+
+        private void myMediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            myMediaElement.Position = new TimeSpan(0, 0, 1);
+            myMediaElement.Play();
         }
     }
 }

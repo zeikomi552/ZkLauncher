@@ -16,6 +16,31 @@ namespace ZkLauncher.Models
 {
     public class DisplayElemetCollection : BindableBase, IDisplayEmentsCollection
     {
+        #region コントロールパネル背景用メディアファイル
+        /// <summary>
+        /// コントロールパネル背景用メディアファイル
+        /// </summary>
+        string _ControlBackgroundMediaPath = string.Empty;
+        /// <summary>
+        /// コントロールパネル背景用メディアファイル
+        /// </summary>
+        public string ControlBackgroundMediaPath
+        {
+            get
+            {
+                return _ControlBackgroundMediaPath;
+            }
+            set
+            {
+                if (_ControlBackgroundMediaPath == null || !_ControlBackgroundMediaPath.Equals(value))
+                {
+                    _ControlBackgroundMediaPath = value;
+                    RaisePropertyChanged("ControlBackgroundMediaPath");
+                }
+            }
+        }
+        #endregion
+
 
         #region WebView2用オブジェクト
         /// <summary>
@@ -141,13 +166,14 @@ namespace ZkLauncher.Models
         /// 表示要素のセット
         /// </summary>
         /// <param name="elements">表示要素</param>
-        public void SetElements(List<DisplayElement> elements)
+        public void SetElements(DisplayElemetCollection item)
         {
             this.Elements.Clear();
-            foreach (var tmp in elements)
+            foreach (var tmp in item.Elements)
             {
                 this.Elements.Add(tmp);
             }
+            this.ControlBackgroundMediaPath = item.ControlBackgroundMediaPath;
         }
         #endregion
 
@@ -186,7 +212,8 @@ namespace ZkLauncher.Models
                 }
 
                 // 要素のセット
-                SetElements(conf.Item!.Elements.ToList<DisplayElement>());
+                SetElements(conf.Item!);
+                this.ControlBackgroundMediaPath = conf.Item.ControlBackgroundMediaPath;
             }
             catch
             {

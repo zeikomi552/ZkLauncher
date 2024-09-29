@@ -22,6 +22,8 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        public string ControlBackgroundMediaPath {  get; set; }
+
         #region 選択要素
         /// <summary>
         /// 選択要素
@@ -36,7 +38,7 @@ namespace ZkLauncher.Models
         public void SelectFirst();
         public void SelectLast();
 
-        public void SetElements(List<DisplayElement> elements);
+        public void SetElements(DisplayElemetCollection item);
 
         public void LoadConfig();
 
