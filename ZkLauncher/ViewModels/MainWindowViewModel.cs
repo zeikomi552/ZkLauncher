@@ -91,8 +91,8 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                _showViewerCommand.Execute();
-                _showControlPanelCommand.Execute();
+                _showViewerCommand!.Execute();
+                _showControlPanelCommand!.Execute();
             }
             catch
             {

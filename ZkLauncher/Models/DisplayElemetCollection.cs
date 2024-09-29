@@ -240,7 +240,7 @@ namespace ZkLauncher.Models
 
                 // 要素のセット
                 SetElements(conf.Item!);
-                this.ControlBackgroundMediaPath = conf.Item.ControlBackgroundMediaPath;
+                this.ControlBackgroundMediaPath = conf.Item!.ControlBackgroundMediaPath;
             }
             catch
             {
