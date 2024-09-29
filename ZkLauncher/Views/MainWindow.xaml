@@ -6,16 +6,17 @@
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:ZkLauncher" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" xmlns:tb="http://www.hardcodet.net/taskbar"
-        xmlns:prism="http://prismlibrary.com/" TitleCharacterCasing="Normal" Height="450" Width="800" WindowStyle="None" Visibility="Hidden">
+        xmlns:prism="http://prismlibrary.com/" TitleCharacterCasing="Normal" Height="1" Width="1" WindowStyle="None" Visibility="Hidden">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
+            <b:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
+        </b:EventTrigger>
+        <!--<b:EventTrigger EventName="Initialized  ">
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+        </b:EventTrigger>-->
+    </b:Interaction.Triggers>
     <Grid>
-        <b:Interaction.Triggers>
-            <b:EventTrigger>
-                <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
-            </b:EventTrigger>
-            <b:EventTrigger>
-                <b:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
-            </b:EventTrigger>
-        </b:Interaction.Triggers>
         <tb:TaskbarIcon IconSource="/Common/imanges/app.ico" ToolTipText="hello world" >
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>

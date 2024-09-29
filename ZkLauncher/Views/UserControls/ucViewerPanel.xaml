@@ -5,11 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
              xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
-             mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/"        
+             mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
              d:DesignHeight="450" d:DesignWidth="800">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
+            <Setter Property="hlp:DragWindowHelper.DragEnable" Value="True"/>
             <Setter Property="Title" Value="{Binding Title}"/>
+            <Setter Property="ResizeMode" Value="CanResize"/>
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="Top" Value="{Binding WindowPosition.ViewerPosition.Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Left" Value="{Binding WindowPosition.ViewerPosition.Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Width" Value="{Binding WindowPosition.ViewerPosition.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Height" Value="{Binding WindowPosition.ViewerPosition.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Style>
     </prism:Dialog.WindowStyle>
     <b:Interaction.Triggers>

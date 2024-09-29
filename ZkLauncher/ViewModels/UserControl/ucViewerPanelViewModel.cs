@@ -92,10 +92,43 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements)
+        #region ウィンドウ位置
+        /// <summary>
+        /// ウィンドウ位置
+        /// </summary>
+        IWindowPostionCollection? _WindowPosition;
+        /// <summary>
+        /// ウィンドウ位置
+        /// </summary>
+        public IWindowPostionCollection? WindowPosition
+        {
+            get
+            {
+                return _WindowPosition;
+            }
+            set
+            {
+                if (_WindowPosition == null || !_WindowPosition.Equals(value))
+                {
+                    _WindowPosition = value;
+                    RaisePropertyChanged("WindowPosition");
+                }
+            }
+        }
+        #endregion
+
+        #region コンストラクタ
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="displayElements">表示要素</param>
+        /// <param name="windowPosition">ウィンドウ位置</param>
+        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition )
         {
             this.DisplayElements = displayElements;
+            this.WindowPosition = windowPosition;
         }
+        #endregion
 
         #region 初期化処理
         /// <summary>
@@ -175,7 +208,7 @@ namespace ZkLauncher.ViewModels.UserControl
         #endregion
 
         // タイマのインスタンス
-        private DispatcherTimer _timer;
+        private DispatcherTimer? _timer;
 
         // タイマを設定する
         private void SetupTimer()
@@ -188,12 +221,27 @@ namespace ZkLauncher.ViewModels.UserControl
             _timer.Tick += new EventHandler(LoopExecute!);
         }
 
-        // タイマを停止
+        #region タイマーの停止
+        /// <summary>
+        /// タイマーの停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StopTimer(object sender, CancelEventArgs e)
         {
-            _timer.Stop();
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
         }
-        // タイマメソッド
+        #endregion
+
+        #region タイマーメソッド
+        /// <summary>
+        /// タイマーメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoopExecute(object sender, EventArgs e)
         {
             try
@@ -205,7 +253,12 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
+        #endregion
 
+        #region 次へ画面(URL)遷移
+        /// <summary>
+        /// 次へ画面(URL)遷移
+        /// </summary>
         public void Next()
         {
             try
@@ -217,7 +270,12 @@ namespace ZkLauncher.ViewModels.UserControl
                 
             }
         }
+        #endregion
 
+        #region 直前へ画面(URL)遷移
+        /// <summary>
+        /// 直前へ画面(URL)遷移
+        /// </summary>
         public void Prev()
         {
             try
@@ -229,6 +287,8 @@ namespace ZkLauncher.ViewModels.UserControl
 
             }
         }
+        #endregion
+
         #region ループフラグ
         /// <summary>
         /// ループフラグ
@@ -254,31 +314,46 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
+        #region ループ処理の開始
+        /// <summary>
+        /// ループ処理の開始
+        /// </summary>
         public void Loop()
         {
             try
             {
-                // タイマを開始
-                _timer.Start();
+                if (_timer != null)
+                {
+                    // タイマを開始
+                    _timer.Start();
+                }
             }
             catch
             {
 
             }
         }
+        #endregion
 
+        #region ループの一時停止
+        /// <summary>
+        /// ループの一時停止
+        /// </summary>
         public void Pose()
         {
             try
             {
-                // タイマを開始
-                _timer.Stop();
+                if (_timer != null)
+                {
+                    // タイマを開始
+                    _timer.Stop();
+                }
             }
             catch
             {
 
             }
         }
+        #endregion
     }
 }
