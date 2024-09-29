@@ -8,10 +8,15 @@
     <UseWPF>true</UseWPF>
     <Authors>Zeikomi552</Authors>
     <Company>Zeikomi</Company>
+    <ApplicationIcon>Common\Imanges\app.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Common\Imanges\app.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Common\Imanges\app.ico" />
   </ItemGroup>
 
   <ItemGroup>
