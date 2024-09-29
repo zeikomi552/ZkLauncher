@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Threading;
+using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
 using ZkLauncher.Views;
 using ZkLauncher.Views.UserControls;
@@ -39,6 +42,30 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
+        #region ウィンドウ位置
+        /// <summary>
+        /// ウィンドウ位置
+        /// </summary>
+        IWindowPostionCollection? _WindowPosition;
+        /// <summary>
+        /// ウィンドウ位置
+        /// </summary>
+        public IWindowPostionCollection? WindowPosition
+        {
+            get
+            {
+                return _WindowPosition;
+            }
+            set
+            {
+                if (_WindowPosition == null || !_WindowPosition.Equals(value))
+                {
+                    _WindowPosition = value;
+                    RaisePropertyChanged("WindowPosition");
+                }
+            }
+        }
+        #endregion
 
         private IDialogService? _dialogService;
 
@@ -46,11 +73,15 @@ namespace ZkLauncher.ViewModels
         /// コンストラクタ
         /// </summary>
         /// <param name="regionManager">RegionManager</param>
-        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager, IDisplayEmentsCollection displayElements)
+        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager,
+            IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition)
         {
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
             this.DisplayElements.LoadConfig();
+
+            this.WindowPosition = windowPosition;
+            this.WindowPosition.LoadConfig();
         }
 
         /// <summary>
@@ -60,6 +91,8 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
+                _showViewerCommand.Execute();
+                _showControlPanelCommand.Execute();
             }
             catch
             {
@@ -76,10 +109,17 @@ namespace ZkLauncher.ViewModels
         /// </summary>
         private void ShowViewerDialog()
         {
-            _dialogService.Show("ucViewerPanel", new DialogParameters(), r =>
+            try
             {
-                string test = string.Empty;
-            });
+                _dialogService.Show("ucViewerPanel", new DialogParameters(), r =>
+                {
+                    string test = string.Empty;
+                }, "Viewer");
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
         }
         #endregion
 
@@ -92,10 +132,17 @@ namespace ZkLauncher.ViewModels
         /// </summary>
         private void ShowControlPanelDialog()
         {
-            _dialogService.Show("ucControlPanel", new DialogParameters(/*$"message={message}"*/), r =>
+            try
             {
-                string test = string.Empty;
-            });
+                _dialogService.Show("ucControlPanel", new DialogParameters(/*$"message={message}"*/), r =>
+                {
+                    string test = string.Empty;
+                }, "ControlPanel");
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
         }
         #endregion
 
@@ -109,14 +156,22 @@ namespace ZkLauncher.ViewModels
         /// </summary>
         private void ShowSettingLauncher()
         {
-            _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters(/*$"message={message}"*/), r =>
+            try
             {
-                string test = string.Empty;
-                if (r.Result == ButtonResult.OK)
+                _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters(/*$"message={message}"*/), r =>
                 {
-                    this.DisplayElements!.LoadConfig();
-                }
-            });
+                    string test = string.Empty;
+                    if (r.Result == ButtonResult.OK)
+                    {
+                        this.DisplayElements!.LoadConfig();
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+
         }
         #endregion
 
@@ -130,7 +185,19 @@ namespace ZkLauncher.ViewModels
         /// </summary>
         private void AppShutdown()
         {
-            Environment.Exit(0); // 正常終了
+            try
+            {
+                if (this.WindowPosition != null)
+                {
+                    this.WindowPosition.SaveConfig();
+                }
+                Environment.Exit(0); // 正常終了
+            }
+            catch(Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+
         }
         #endregion
     }

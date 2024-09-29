@@ -15,6 +15,11 @@
             <Setter Property="Title" Value="{Binding Title}"/>
             <Setter Property="ResizeMode" Value="CanResize"/>
             <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="Top" Value="{Binding WindowPosition.ControlPanelPosition.Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Left" Value="{Binding WindowPosition.ControlPanelPosition.Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Width" Value="{Binding WindowPosition.ControlPanelPosition.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Height" Value="{Binding WindowPosition.ControlPanelPosition.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
         </Style>
     </prism:Dialog.WindowStyle>
 

@@ -92,10 +92,43 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements)
+        #region ウィンドウ位置
+        /// <summary>
+        /// ウィンドウ位置
+        /// </summary>
+        IWindowPostionCollection? _WindowPosition;
+        /// <summary>
+        /// ウィンドウ位置
+        /// </summary>
+        public IWindowPostionCollection? WindowPosition
+        {
+            get
+            {
+                return _WindowPosition;
+            }
+            set
+            {
+                if (_WindowPosition == null || !_WindowPosition.Equals(value))
+                {
+                    _WindowPosition = value;
+                    RaisePropertyChanged("WindowPosition");
+                }
+            }
+        }
+        #endregion
+
+        #region コンストラクタ
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="displayElements">表示要素</param>
+        /// <param name="windowPosition">ウィンドウ位置</param>
+        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition )
         {
             this.DisplayElements = displayElements;
+            this.WindowPosition = windowPosition;
         }
+        #endregion
 
         #region 初期化処理
         /// <summary>
