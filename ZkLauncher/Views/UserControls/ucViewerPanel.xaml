@@ -24,44 +24,62 @@
             <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
         </b:EventTrigger>
     </b:Interaction.Triggers>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <Wpf:WebView2 Margin="20" x:Name="WebView2Ctrl"/>
-
-
-        <Grid Height="50" Grid.Row="1">
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Margin="5" Content="←">
+    <Grid Background="{DynamicResource MahApps.Brushes.Control.Background}">
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="背景登録" Name="RegistBackground" >
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="RegistBackground"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
-                </Button>
-                
-                
-                <ToggleButton Margin="5" Content="loop">
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="Checked">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
-                        </b:EventTrigger>
-                        <b:EventTrigger EventName="Unchecked">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
-                </ToggleButton>
-                <Button Margin="5" Content="→">
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
-                </Button>
-            </StackPanel>
+                </MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ViewerBackgroundMediaPath}" LoadedBehavior="Manual" MediaEnded="myMediaElement_MediaEnded">
+            
+        </MediaElement>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Wpf:WebView2 Margin="100,20,100,0" x:Name="WebView2Ctrl"/>
+
+
+            <Grid Height="50" Grid.Row="1">
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button Margin="5" Content="←">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </Button>
+
+
+                    <ToggleButton Margin="5" Content="loop">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Checked">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
+                            </b:EventTrigger>
+                            <b:EventTrigger EventName="Unchecked">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </ToggleButton>
+                    <Button Margin="5" Content="→">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

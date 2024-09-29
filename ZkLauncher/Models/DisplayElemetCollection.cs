@@ -41,6 +41,32 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region Viewer背景用メディアファイル
+        /// <summary>
+        /// Viewer背景用メディアファイル
+        /// </summary>
+        string _ViewerBackgroundMediaPath = string.Empty;
+        /// <summary>
+        /// Viewer背景用メディアファイル
+        /// </summary>
+        public string ViewerBackgroundMediaPath
+        {
+            get
+            {
+                return _ViewerBackgroundMediaPath;
+            }
+            set
+            {
+                if (_ViewerBackgroundMediaPath == null || !_ViewerBackgroundMediaPath.Equals(value))
+                {
+                    _ViewerBackgroundMediaPath = value;
+                    RaisePropertyChanged("ViewerBackgroundMediaPath");
+                }
+            }
+        }
+        #endregion
+
+
 
         #region WebView2用オブジェクト
         /// <summary>
@@ -174,6 +200,7 @@ namespace ZkLauncher.Models
                 this.Elements.Add(tmp);
             }
             this.ControlBackgroundMediaPath = item.ControlBackgroundMediaPath;
+            this.ViewerBackgroundMediaPath = item.ViewerBackgroundMediaPath;
         }
         #endregion
 

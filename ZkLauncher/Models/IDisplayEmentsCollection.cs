@@ -22,8 +22,10 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region 背景画像
         public string ControlBackgroundMediaPath {  get; set; }
-
+        public string ViewerBackgroundMediaPath { get; set; }
+        #endregion
         #region 選択要素
         /// <summary>
         /// 選択要素

@@ -355,5 +355,55 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
+        #region 背景の保存先ディレクトリ
+        /// <summary>
+        /// 背景の保存先ディレクトリ
+        /// </summary>
+        private string BackgroundDirectory
+        {
+            get
+            {
+                // アプリケーションフォルダの取得
+                var dir = Path.Combine(PathManager.GetApplicationFolder(), "Config", "Background");
+                PathManager.CreateDirectory(dir);
+
+                return dir;
+            }
+        }
+        #endregion
+
+        #region 背景の登録
+        /// <summary>
+        /// 背景の登録
+        /// </summary>
+        public void RegistBackground()
+        {
+            try
+            {
+                // ダイアログのインスタンスを生成
+                var dialog = new Microsoft.Win32.OpenFileDialog();
+
+                // ファイルの種類を設定
+                dialog.Filter = "メディアファイル (*.mp4;*.wav;*.jpg;*.png)|*.mp4;*.wav;*.jpg;*.png|全てのファイル (*.*)|*.*";
+
+                // ダイアログを表示する
+                if (dialog.ShowDialog() == true)
+                {
+                    var path = Path.Combine(BackgroundDirectory, "Viewer" + Path.GetExtension(dialog.FileName));
+
+                    // ファイルの移動（同じ名前のファイルがある場合は上書き）
+                    File.Copy(dialog.FileName, path, true);
+                    this.DisplayElements!.ViewerBackgroundMediaPath = path;
+                    this.DisplayElements.SaveConfig();
+                    this.DisplayElements.LoadConfig();
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
     }
 }
