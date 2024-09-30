@@ -181,7 +181,7 @@ namespace ZkLauncher.ViewModels
             _AppShutdownCommand ?? (_AppShutdownCommand = new DelegateCommand(AppShutdown));
 
         /// <summary>
-        /// ランチャー設定画面の呼び出し
+        /// アプリケーションの終了
         /// </summary>
         private void AppShutdown()
         {
@@ -194,6 +194,29 @@ namespace ZkLauncher.ViewModels
                 Environment.Exit(0); // 正常終了
             }
             catch(Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+
+        }
+        #endregion
+
+        #region 位置調整コマンド
+        private DelegateCommand? _AjustPositionCommand;
+        public DelegateCommand? AjustPositionCommand =>
+            _AjustPositionCommand ?? (_AjustPositionCommand = new DelegateCommand(AjustPosition));
+
+        /// <summary>
+        /// 位置調整
+        /// </summary>
+        private void AjustPosition()
+        {
+            try
+            {
+                // 位置情報の再読み込み
+                WindowPosition!.LoadConfig();
+            }
+            catch (Exception e)
             {
                 ShowMessage.ShowErrorOK(e.Message, "Error");
             }
