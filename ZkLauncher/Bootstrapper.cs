@@ -37,7 +37,6 @@ namespace ZkLauncher
         protected override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.Register<ucWebView2Container, ucWebView2ContainerViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
