@@ -12,6 +12,9 @@ using ZkLauncher.Common.Utilities;
 namespace ZkLauncher.Common.Helper
 {
     #region 説明
+    /// <summary>
+    /// ItemsControl(ListBox, ListView, DataGrid)の選択時にスクロールを合わせる添付プロパティ
+    /// </summary>
     public class ItemsControlTopRowHelper
     {
         public static readonly DependencyProperty SelectedItemProperty
@@ -31,11 +34,11 @@ namespace ZkLauncher.Common.Helper
         {
             switch (d)
             {
-                case ListBox vl:
+                case ListBox lb:
                     {
-                        if (vl.SelectedIndex >= 0)
+                        if (lb.SelectedIndex >= 0)
                         {
-                            ScrollbarUtility.TopRow(vl);
+                            ScrollbarUtility.TopRow(lb);
                         }
                         break;
                     }
