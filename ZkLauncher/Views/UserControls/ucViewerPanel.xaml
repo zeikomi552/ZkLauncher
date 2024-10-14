@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:behavior="clr-namespace:ZkLauncher.Common.Behavior"
              xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
              xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
@@ -26,7 +27,7 @@
     </b:Interaction.Triggers>
 
     <Grid Background="{DynamicResource MahApps.Brushes.Control.Background}">
-        <Grid.ContextMenu>
+        <!--<Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="背景登録" Name="RegistBackground" >
                     <b:Interaction.Triggers>
@@ -36,17 +37,85 @@
                     </b:Interaction.Triggers>
                 </MenuItem>
             </ContextMenu>
-        </Grid.ContextMenu>
-        <MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ViewerBackgroundMediaPath}" LoadedBehavior="Manual" MediaEnded="myMediaElement_MediaEnded">
-            
-        </MediaElement>
+        </Grid.ContextMenu>-->
+        <!--<MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ViewerBackgroundMediaPath}" LoadedBehavior="Manual" MediaEnded="myMediaElement_MediaEnded"/>-->
+
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <!--<ContentControl prism:RegionManager.RegionName="ContentRegion" />-->
+            <!--<local:ucWebView2Container Margin="5"/>-->
 
-            <Wpf:WebView2 Margin="100,20,100,0" x:Name="WebView2Ctrl"/>
+            <!--<Wpf:WebView2 Margin="100,20,100,0" x:Name="WebView2Ctrl"/>-->
+
+
+
+
+
+
+            <ListBox Margin="5" ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding DisplayElements.SelectedItem}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+                <ListBox.Template>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border BorderThickness="5">
+                            <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                                <ItemsPresenter Margin="5" />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="grid" Margin="5" Background="Red">
+                            <Border Height="{Binding ActualHeight, ElementName=scroll}" Width="{Binding ActualWidth, ElementName=scroll}" x:Name="bdr">
+                                <Wpf:WebView2 Margin="0,0,0,50">
+                                    <b:Interaction.Behaviors>
+                                        <behavior:WebView2Behavior URL="{Binding URI}"/>
+                                    </b:Interaction.Behaviors>
+                                </Wpf:WebView2>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ContentControl}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Margin" Value="10" />
+
+                        <!-- 追加したStykle その3 -->
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="WhiteSmoke" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+
+
+
 
 
             <Grid Height="50" Grid.Row="1">

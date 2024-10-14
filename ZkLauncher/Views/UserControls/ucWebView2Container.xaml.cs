@@ -16,20 +16,13 @@ using System.Windows.Shapes;
 namespace ZkLauncher.Views.UserControls
 {
     /// <summary>
-    /// ucViewerPanel.xaml の相互作用ロジック
+    /// ucWebView2Container.xaml の相互作用ロジック
     /// </summary>
-    public partial class ucViewerPanel : UserControl
+    public partial class ucWebView2Container : UserControl
     {
-        public ucViewerPanel()
+        public ucWebView2Container()
         {
             InitializeComponent();
-            //myMediaElement.Play();
         }
-
-        //private void myMediaElement_MediaEnded(object sender, RoutedEventArgs e)
-        //{
-        //    myMediaElement.Position = new TimeSpan(0, 0, 1);
-        //    myMediaElement.Play();
-        //}
     }
 }

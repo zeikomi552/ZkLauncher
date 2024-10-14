@@ -36,7 +36,7 @@ namespace ZkLauncher.ViewModels.UserControl
             else if (parameter?.ToLower() == "false")
                 result = ButtonResult.Cancel;
 
-            RaiseRequestClose(new DialogResult(result));
+            RaiseRequestClose(new Prism.Dialogs.DialogResult(result));
         }
 
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
@@ -123,10 +123,12 @@ namespace ZkLauncher.ViewModels.UserControl
         /// </summary>
         /// <param name="displayElements">表示要素</param>
         /// <param name="windowPosition">ウィンドウ位置</param>
-        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition )
+        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements,
+            IWindowPostionCollection windowPosition, IRegionManager regionManager)
         {
             this.DisplayElements = displayElements;
             this.WindowPosition = windowPosition;
+            //regionManager.RegisterViewWithRegion("ContentRegion", typeof(ucWebView2Container));
         }
         #endregion
 
@@ -149,7 +151,7 @@ namespace ZkLauncher.ViewModels.UserControl
                         SetupTimer();
 
                         // ブラウザの初期化
-                        InitializeAsync(wnd);
+                        //InitializeAsync(wnd);
                     }
                     catch
                     {
@@ -166,46 +168,46 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region キャッシュの保存先ディレクトリ
-        /// <summary>
-        /// キャッシュの保存先ディレクトリ
-        /// </summary>
-        private string _WebViewDir = "EBWebView";
-        #endregion
+        //#region キャッシュの保存先ディレクトリ
+        ///// <summary>
+        ///// キャッシュの保存先ディレクトリ
+        ///// </summary>
+        //private string _WebViewDir = "EBWebView";
+        //#endregion
 
-        #region 初期化処理(WebView2の配布)
-        /// <summary>
-        /// 初期化処理(WebView2の配布)
-        /// </summary>
-        private async void InitializeAsync(ucViewerPanel wnd)
-        {
-            try
-            {
-                var browserExecutableFolder = Path.Combine(PathManager.GetApplicationFolder(), _WebViewDir);
+        //#region 初期化処理(WebView2の配布)
+        ///// <summary>
+        ///// 初期化処理(WebView2の配布)
+        ///// </summary>
+        //private async void InitializeAsync(ucViewerPanel wnd)
+        //{
+        //    try
+        //    {
+        //        var browserExecutableFolder = Path.Combine(PathManager.GetApplicationFolder(), _WebViewDir);
 
-                // カレントディレクトリの作成
-                PathManager.CreateDirectory(browserExecutableFolder);
+        //        // カレントディレクトリの作成
+        //        PathManager.CreateDirectory(browserExecutableFolder);
 
-                this.DisplayElements!.WebView2Object = wnd.WebView2Ctrl;
-
-
-                // 環境の作成
-                var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
-                await this.DisplayElements!.WebView2Object.EnsureCoreWebView2Async(webView2Environment);
+        //        this.DisplayElements!.WebView2Object = wnd.WebView2Ctrl;
 
 
-                // 最初の要素を選択
-                this.DisplayElements!.SelectFirst();
+        //        // 環境の作成
+        //        var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
+        //        await this.DisplayElements!.WebView2Object.EnsureCoreWebView2Async(webView2Environment);
 
-                // 1つめのURLを表示
-                this.DisplayElements.SelectedItem.Navigate(this.DisplayElements!.WebView2Object);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage.ShowErrorOK(ex.Message, "Error");
-            }
-        }
-        #endregion
+
+        //        // 最初の要素を選択
+        //        this.DisplayElements!.SelectFirst();
+
+        //        // 1つめのURLを表示
+        //        this.DisplayElements.SelectedItem.Navigate(this.DisplayElements!.WebView2Object);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ShowMessage.ShowErrorOK(ex.Message, "Error");
+        //    }
+        //}
+        //#endregion
 
         // タイマのインスタンス
         private DispatcherTimer? _timer;
