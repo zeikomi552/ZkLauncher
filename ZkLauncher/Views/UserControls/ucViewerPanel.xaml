@@ -50,69 +50,10 @@
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-
-                <ListBox Margin="5" ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding DisplayElements.SelectedItem}" hlp:ItemsControlTopRowHelper.SelectedItem="{Binding DisplayElements.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <ListBox.Template>
-                        <ControlTemplate TargetType="{x:Type ListBox}">
-                            <Border BorderThickness="5">
-                                <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                                    <ItemsPresenter Margin="5" />
-                                </ScrollViewer>
-                            </Border>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid x:Name="grid" Margin="5">
-                                <Border Height="{Binding ActualHeight, ElementName=scroll}" Width="{Binding ActualWidth, ElementName=scroll}" x:Name="bdr">
-                                    <Wpf:WebView2 Margin="50, 0, 20, 50">
-                                        <b:Interaction.Behaviors>
-                                            <behavior:WebView2Behavior URL="{Binding URI}"/>
-                                        </b:Interaction.Behaviors>
-                                    </Wpf:WebView2>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="OverridesDefaultStyle" Value="True" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ContentControl}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Margin" Value="10" />
-
-                            <!-- 追加したStykle その3 -->
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="WhiteSmoke" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
-
-
-
-
-
-                <Grid Height="auto" Grid.Row="1" Cursor="">
-
+                <Grid Height="auto">
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button Margin="5" Content="←">
                             <b:Interaction.Triggers>
@@ -145,6 +86,59 @@
                         </Button>
                     </StackPanel>
                 </Grid>
+
+                <ListBox Grid.Row="1" Margin="5" ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding DisplayElements.SelectedItem}" hlp:ItemsControlTopRowHelper.SelectedItem="{Binding DisplayElements.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Border BorderThickness="1" BorderBrush="AliceBlue">
+                                <ScrollViewer Margin="5" x:Name="scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="grid" Margin="5">
+                                <Border Margin="5" Height="{Binding ActualHeight, ElementName=scroll}" Width="{Binding ActualWidth, ElementName=scroll}" x:Name="bdr">
+                                    <Wpf:WebView2 Margin="10,5,10,50">
+                                        <b:Interaction.Behaviors>
+                                            <behavior:WebView2Behavior URL="{Binding URI}"/>
+                                        </b:Interaction.Behaviors>
+                                    </Wpf:WebView2>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Margin" Value="10" />
+
+                            <!-- 追加したStykle その3 -->
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{x:Null}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
             </Grid>
         </Grid>
     </Border>

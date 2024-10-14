@@ -11,10 +11,8 @@
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
             <b:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
-        </b:EventTrigger>
-        <!--<b:EventTrigger EventName="Initialized  ">
             <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
-        </b:EventTrigger>-->
+        </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
         <tb:TaskbarIcon IconSource="/Common/imanges/app.ico" ToolTipText="hello world" >
