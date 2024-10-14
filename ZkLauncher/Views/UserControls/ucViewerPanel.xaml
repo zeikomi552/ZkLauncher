@@ -55,7 +55,7 @@
                 </Grid.RowDefinitions>
 
                 <ListBox Margin="5" ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding DisplayElements.SelectedItem}" hlp:ItemsControlTopRowHelper.SelectedItem="{Binding DisplayElements.SelectedItem}">
+                     SelectedItem="{Binding DisplayElements.SelectedItem}" hlp:ItemsControlTopRowHelper.SelectedItem="{Binding DisplayElements.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ListBox.Template>
                         <ControlTemplate TargetType="{x:Type ListBox}">
                             <Border BorderThickness="5">
@@ -72,9 +72,9 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid x:Name="grid" Margin="5" Background="Red">
+                            <Grid x:Name="grid" Margin="5">
                                 <Border Height="{Binding ActualHeight, ElementName=scroll}" Width="{Binding ActualWidth, ElementName=scroll}" x:Name="bdr">
-                                    <Wpf:WebView2 Margin="0,0,0,50">
+                                    <Wpf:WebView2 Margin="50, 0, 20, 50">
                                         <b:Interaction.Behaviors>
                                             <behavior:WebView2Behavior URL="{Binding URI}"/>
                                         </b:Interaction.Behaviors>
@@ -111,7 +111,7 @@
 
 
 
-                <Grid Height="50" Grid.Row="1">
+                <Grid Height="auto" Grid.Row="1" Cursor="">
 
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button Margin="5" Content="←">
@@ -123,16 +123,19 @@
                         </Button>
 
 
-                        <ToggleButton Margin="5" Content="loop">
-                            <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="Checked">
-                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
-                                </b:EventTrigger>
-                                <b:EventTrigger EventName="Unchecked">
-                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
-                                </b:EventTrigger>
-                            </b:Interaction.Triggers>
-                        </ToggleButton>
+                        <Grid Cursor="">
+                            <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Checked">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
+                                    </b:EventTrigger>
+                                    <b:EventTrigger EventName="Unchecked">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </ToggleButton>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding DisplayElements.WaitSecond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>
+                        </Grid>
                         <Button Margin="5" Content="→">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">

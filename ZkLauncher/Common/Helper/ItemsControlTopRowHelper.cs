@@ -20,9 +20,9 @@ namespace ZkLauncher.Common.Helper
         public static readonly DependencyProperty SelectedItemProperty
             = DependencyProperty.RegisterAttached("SelectedItem", typeof(object), typeof(ItemsControlTopRowHelper), new PropertyMetadata(null, SelectedItemChanged));
 
-        public static bool GetSelectedItem(DependencyObject obj)
+        public static object GetSelectedItem(DependencyObject obj)
         {
-            return (bool)obj.GetValue(SelectedItemProperty);
+            return (object)obj.GetValue(SelectedItemProperty);
         }
 
         public static void SetSelectedItem(DependencyObject obj, object value)
@@ -38,7 +38,9 @@ namespace ZkLauncher.Common.Helper
                     {
                         if (lb.SelectedIndex >= 0)
                         {
-                            ScrollbarUtility.TopRow(lb);
+                            var oldidx = lb.Items.IndexOf(e.OldValue);
+                            var newidx = lb.Items.IndexOf(e.NewValue);
+                            ScrollbarUtility.TopRow(oldidx, newidx, lb);
                         }
                         break;
                     }

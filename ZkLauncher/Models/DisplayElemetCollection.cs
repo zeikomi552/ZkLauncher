@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using ZkLauncher.Common.Utilities;
@@ -118,6 +120,8 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        public DisplayElement? SelectedItemBk { get; set; } = null;
+
         #region 選択要素
         /// <summary>
         /// 選択要素
@@ -136,6 +140,7 @@ namespace ZkLauncher.Models
             {
                 if (_SelectedItem == null || !_SelectedItem.Equals(value))
                 {
+                    this.SelectedItemBk = _SelectedItem;
                     _SelectedItem = value;
                     RaisePropertyChanged("SelectedItem");
                 }
@@ -285,6 +290,9 @@ namespace ZkLauncher.Models
                     this.SelectFirst();
 
                 this.SelectedItem!.Navigate(this.WebView2Object!);
+
+                // 待ち時間の初期化
+                InitWaitTime();
             }
             catch
             {
@@ -320,6 +328,9 @@ namespace ZkLauncher.Models
                     this.SelectFirst();
                     this.SelectedItem!.Navigate(this.WebView2Object!);
                 }
+
+                // 待ち時間の初期化
+                InitWaitTime();
             }
             catch
             {
@@ -356,6 +367,8 @@ namespace ZkLauncher.Models
                     this.SelectedItem!.Navigate(this.WebView2Object!);
 
                 }
+                // 待ち時間の初期化
+                InitWaitTime();
             }
             catch
             {
@@ -457,6 +470,106 @@ namespace ZkLauncher.Models
                 encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bitmapSource));
                 encoder.Save(fileStream);
             }
+        }
+        #endregion
+
+
+        #region 残り待ち時間
+        /// <summary>
+        /// 残り待ち時間
+        /// </summary>
+        int _WaitSecond = 30;
+        /// <summary>
+        /// 残り待ち時間
+        /// </summary>
+        public int WaitSecond
+        {
+            get
+            {
+                return _WaitSecond;
+            }
+            set
+            {
+                if (!_WaitSecond.Equals(value))
+                {
+                    _WaitSecond = value;
+                    RaisePropertyChanged("WaitSecond");
+                }
+            }
+        }
+        #endregion
+
+        // タイマのインスタンス
+        private DispatcherTimer? _timer;
+
+        // タイマを設定する
+        public void SetupTimer()
+        {
+            // タイマのインスタンスを生成
+            _timer = new DispatcherTimer(); // 優先度はDispatcherPriority.Background
+                                            // インターバルを設定
+            _timer.Interval = new TimeSpan(0, 0, 1);
+            // タイマメソッドを設定
+            _timer.Tick += new EventHandler(LoopExecute!);
+        }
+
+        #region タイマーの開始処理
+        /// <summary>
+        /// タイマーの開始処理
+        /// </summary>
+        public void StartTimer()
+        {
+            if (_timer != null)
+            {
+                _timer.Start();
+            }
+        }
+        #endregion
+        
+        #region タイマーの停止
+        /// <summary>
+        /// タイマーの停止
+        /// </summary>
+        public void StopTimer()
+        {
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
+        }
+        #endregion
+
+        #region タイマーメソッド
+        /// <summary>
+        /// タイマーメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoopExecute(object sender, EventArgs e)
+        {
+            try
+            {
+                this.WaitSecond--;
+                if (this.WaitSecond <= 0)
+                {
+                    this.NextNavigate();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        #endregion
+
+
+        #region 待ち時間の初期化
+        /// <summary>
+        /// 待ち時間の初期化
+        /// </summary>
+        private void InitWaitTime()
+        {
+            this.WaitSecond = 30;
         }
         #endregion
     }

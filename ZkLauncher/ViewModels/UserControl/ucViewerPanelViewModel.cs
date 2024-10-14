@@ -148,10 +148,7 @@ namespace ZkLauncher.ViewModels.UserControl
                     try
                     {
                         // タイマーのセット
-                        SetupTimer();
-
-                        // ブラウザの初期化
-                        //InitializeAsync(wnd);
+                        this.DisplayElements!.SetupTimer();
                     }
                     catch
                     {
@@ -168,53 +165,7 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        // タイマのインスタンス
-        private DispatcherTimer? _timer;
 
-        // タイマを設定する
-        private void SetupTimer()
-        {
-            // タイマのインスタンスを生成
-            _timer = new DispatcherTimer(); // 優先度はDispatcherPriority.Background
-                                            // インターバルを設定
-            _timer.Interval = new TimeSpan(0, 0, 30);
-            // タイマメソッドを設定
-            _timer.Tick += new EventHandler(LoopExecute!);
-        }
-
-        #region タイマーの停止
-        /// <summary>
-        /// タイマーの停止
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StopTimer(object sender, CancelEventArgs e)
-        {
-            if (_timer != null)
-            {
-                _timer.Stop();
-            }
-        }
-        #endregion
-
-        #region タイマーメソッド
-        /// <summary>
-        /// タイマーメソッド
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LoopExecute(object sender, EventArgs e)
-        {
-            try
-            {
-                this.DisplayElements!.NextNavigate();
-            }
-            catch
-            {
-
-            }
-        }
-        #endregion
 
         #region 次へ画面(URL)遷移
         /// <summary>
@@ -224,7 +175,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.DisplayElements!.NextNavigate();
+                this.DisplayElements?.NextNavigate();
             }
             catch
             {
@@ -241,7 +192,8 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.DisplayElements!.PrevNavigate();
+                this.DisplayElements?.PrevNavigate();
+
             }
             catch
             {
@@ -283,11 +235,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                if (_timer != null)
-                {
-                    // タイマを開始
-                    _timer.Start();
-                }
+                this.DisplayElements?.StartTimer();
             }
             catch
             {
@@ -304,11 +252,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                if (_timer != null)
-                {
-                    // タイマを開始
-                    _timer.Stop();
-                }
+                this.DisplayElements?.StopTimer();
             }
             catch
             {
@@ -366,5 +310,6 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
     }
 }
