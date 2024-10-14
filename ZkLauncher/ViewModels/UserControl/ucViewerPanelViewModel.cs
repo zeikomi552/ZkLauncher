@@ -165,8 +165,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
-
         #region 次へ画面(URL)遷移
         /// <summary>
         /// 次へ画面(URL)遷移
@@ -311,5 +309,16 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        public void Reload()
+        {
+            try
+            {
+                this.DisplayElements?.ReloadURL();
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
     }
 }

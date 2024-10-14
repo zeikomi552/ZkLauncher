@@ -68,33 +68,6 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-
-
-        #region WebView2用オブジェクト
-        /// <summary>
-        /// WebView2用オブジェクト
-        /// </summary>
-        WebView2? _WebView2Object;
-        /// <summary>
-        /// WebView2用オブジェクト
-        /// </summary>
-        [XmlIgnore]
-        public WebView2? WebView2Object
-        {
-            get
-            {
-                return _WebView2Object;
-            }
-            set
-            {
-                if (_WebView2Object == null || !_WebView2Object.Equals(value))
-                {
-                    _WebView2Object = value;
-                }
-            }
-        }
-        #endregion
-
         #region 表示要素
         /// <summary>
         /// 表示要素
@@ -279,7 +252,7 @@ namespace ZkLauncher.Models
         /// <summary>
         /// 選択要素をViewに表示
         /// </summary>
-        public void SelecctedNavigate()
+        public void SelectedNavigate()
         {
             try
             {
@@ -288,8 +261,6 @@ namespace ZkLauncher.Models
 
                 if (this.SelectedItem == null)
                     this.SelectFirst();
-
-                this.SelectedItem!.Navigate(this.WebView2Object!);
 
                 // 待ち時間の初期化
                 InitWaitTime();
@@ -321,12 +292,10 @@ namespace ZkLauncher.Models
                 if (this.Elements.Count > index + 1)
                 {
                     this.SelectedItem = this.Elements.ElementAt(index + 1);
-                    this.SelectedItem.Navigate(this.WebView2Object!);
                 }
                 else
                 {
                     this.SelectFirst();
-                    this.SelectedItem!.Navigate(this.WebView2Object!);
                 }
 
                 // 待ち時間の初期化
@@ -359,14 +328,32 @@ namespace ZkLauncher.Models
                 if (index - 1 >= 0)
                 {
                     this.SelectedItem = this.Elements.ElementAt(index - 1);
-                    this.SelectedItem!.Navigate(this.WebView2Object!);
                 }
                 else
                 {
                     this.SelectLast();
-                    this.SelectedItem!.Navigate(this.WebView2Object!);
 
                 }
+                // 待ち時間の初期化
+                InitWaitTime();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region URLのリロード処理
+        /// <summary>
+        /// URLのリロード処理
+        /// </summary>
+        public void ReloadURL()
+        {
+            try
+            {
+                this.SelectedItem!.Navigate();
+
                 // 待ち時間の初期化
                 InitWaitTime();
             }

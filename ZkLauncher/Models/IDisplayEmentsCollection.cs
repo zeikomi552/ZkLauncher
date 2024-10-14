@@ -10,8 +10,6 @@ namespace ZkLauncher.Models
 {
     public interface IDisplayEmentsCollection
     {
-        public WebView2? WebView2Object { get;set;}
-
         #region 表示要素
         /// <summary>
         /// 表示要素
@@ -49,7 +47,7 @@ namespace ZkLauncher.Models
 
         public void SaveConfig();
 
-        public void SelecctedNavigate();
+        public void SelectedNavigate();
         public void NextNavigate();
         public void PrevNavigate();
 
@@ -61,6 +59,8 @@ namespace ZkLauncher.Models
         public void SetupTimer();
         public void StopTimer();
         public void StartTimer();
+
+        public void ReloadURL();
 
     }
 }

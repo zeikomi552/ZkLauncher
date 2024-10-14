@@ -47,8 +47,6 @@ namespace ZkLauncher.Common.Behavior
             }
         }
 
-
-
         protected override void OnAttached()
         {
             base.OnAttached();

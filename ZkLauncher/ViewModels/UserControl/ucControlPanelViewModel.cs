@@ -249,7 +249,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.DisplayElements!.SelecctedNavigate();
+                this.DisplayElements!.SelectedNavigate();
             }
             catch
             {

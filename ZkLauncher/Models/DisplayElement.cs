@@ -18,6 +18,31 @@ namespace ZkLauncher.Models
         private string _Id = Guid.NewGuid().ToString();
         public string Id { get { return _Id; } set { _Id = value; } }
 
+        #region WebView2用オブジェクト
+        /// <summary>
+        /// WebView2用オブジェクト
+        /// </summary>
+        WebView2? _WebView2Object;
+        /// <summary>
+        /// WebView2用オブジェクト
+        /// </summary>
+        [XmlIgnore]
+        public WebView2? WebView2Object
+        {
+            get
+            {
+                return _WebView2Object;
+            }
+            set
+            {
+                if (_WebView2Object == null || !_WebView2Object.Equals(value))
+                {
+                    _WebView2Object = value;
+                }
+            }
+        }
+        #endregion
+
         #region タイトル
         /// <summary>
         /// タイトル
@@ -108,13 +133,13 @@ namespace ZkLauncher.Models
         ///  画面遷移
         /// </summary>
         /// <param name="wv2">WebView2コントロール</param>
-        public void Navigate(WebView2 web, params object?[] param)
+        public void Navigate(params object?[] param)
         {
             // nullチェック
-            if (web != null && web.CoreWebView2 != null)
+            if (this.WebView2Object != null && this.WebView2Object.CoreWebView2 != null)
             {
                 // URLを開く
-                web.CoreWebView2.Navigate(string.Format(this.URI, param));
+                this.WebView2Object.CoreWebView2.Navigate(string.Format(this.URI, param));
             }
         }
         #endregion

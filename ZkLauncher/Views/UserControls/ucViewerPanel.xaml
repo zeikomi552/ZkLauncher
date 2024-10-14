@@ -77,6 +77,13 @@
                             </ToggleButton>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding DisplayElements.WaitSecond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>
                         </Grid>
+                        <Button Margin="5" Content="Reload">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Reload"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </Button>
                         <Button Margin="5" Content="→">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
@@ -107,9 +114,9 @@
                         <DataTemplate>
                             <Grid x:Name="grid" Margin="5">
                                 <Border Margin="5" Height="{Binding ActualHeight, ElementName=scroll}" Width="{Binding ActualWidth, ElementName=scroll}" x:Name="bdr">
-                                    <Wpf:WebView2 Margin="10,5,10,50">
+                                    <Wpf:WebView2 Margin="10,5,10,50" x:Name="webv2">
                                         <b:Interaction.Behaviors>
-                                            <behavior:WebView2Behavior URL="{Binding URI}"/>
+                                            <behavior:WebView2Behavior URL="{Binding URI}" WebView2Ctl="{Binding WebView2Object, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </b:Interaction.Behaviors>
                                     </Wpf:WebView2>
                                 </Border>
