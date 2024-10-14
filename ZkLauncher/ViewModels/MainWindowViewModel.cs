@@ -79,6 +79,7 @@ namespace ZkLauncher.ViewModels
             _dialogService = dialogService;
             this.DisplayElements = displayElements;
             this.DisplayElements.LoadConfig();
+            this.DisplayElements.SelectFirst();
 
             this.WindowPosition = windowPosition;
             this.WindowPosition.LoadConfig();
@@ -91,8 +92,8 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                _showViewerCommand!.Execute();
-                _showControlPanelCommand!.Execute();
+                //_showViewerCommand!.Execute();
+                //_showControlPanelCommand!.Execute();
             }
             catch
             {

@@ -24,13 +24,13 @@ namespace ZkLauncher.Views.UserControls
         public ucControlPanel()
         {
             InitializeComponent();
-            myMediaElement.Play();
+            //myMediaElement.Play();
         }
 
-        private void myMediaElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            myMediaElement.Position = new TimeSpan(0, 0, 1);
-            myMediaElement.Play();
-        }
+        //private void myMediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        //{
+        //    myMediaElement.Position = new TimeSpan(0, 0, 1);
+        //    myMediaElement.Play();
+        //}
     }
 }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:behavior="clr-namespace:ZkLauncher.Common.Behavior"
              xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
              xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
@@ -25,8 +26,15 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
 
-    <Grid Background="{DynamicResource MahApps.Brushes.Control.Background}">
-        <Grid.ContextMenu>
+    <Border BorderThickness="5">
+        <Border.BorderBrush>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFC2C3C9"/>
+                <GradientStop Color="#FF002EFF" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid Background="{DynamicResource MahApps.Brushes.Control.Background}">
+            <!--<Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="背景登録" Name="RegistBackground" >
                     <b:Interaction.Triggers>
@@ -36,50 +44,108 @@
                     </b:Interaction.Triggers>
                 </MenuItem>
             </ContextMenu>
-        </Grid.ContextMenu>
-        <MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ViewerBackgroundMediaPath}" LoadedBehavior="Manual" MediaEnded="myMediaElement_MediaEnded">
-            
-        </MediaElement>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Wpf:WebView2 Margin="100,20,100,0" x:Name="WebView2Ctrl"/>
+        </Grid.ContextMenu>-->
+            <!--<MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ViewerBackgroundMediaPath}" LoadedBehavior="Manual" MediaEnded="myMediaElement_MediaEnded"/>-->
 
 
-            <Grid Height="50" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Button Margin="5" Content="←">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Click">
-                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </Button>
+                <ListBox Margin="5" ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding DisplayElements.SelectedItem}" hlp:ItemsControlTopRowHelper.SelectedItem="{Binding DisplayElements.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Border BorderThickness="5">
+                                <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                                    <ItemsPresenter Margin="5" />
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="grid" Margin="5">
+                                <Border Height="{Binding ActualHeight, ElementName=scroll}" Width="{Binding ActualWidth, ElementName=scroll}" x:Name="bdr">
+                                    <Wpf:WebView2 Margin="50, 0, 20, 50">
+                                        <b:Interaction.Behaviors>
+                                            <behavior:WebView2Behavior URL="{Binding URI}"/>
+                                        </b:Interaction.Behaviors>
+                                    </Wpf:WebView2>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Margin" Value="10" />
+
+                            <!-- 追加したStykle その3 -->
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="WhiteSmoke" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
 
 
-                    <ToggleButton Margin="5" Content="loop">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Checked">
-                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
-                            </b:EventTrigger>
-                            <b:EventTrigger EventName="Unchecked">
-                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </ToggleButton>
-                    <Button Margin="5" Content="→">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Click">
-                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </Button>
-                </StackPanel>
+
+
+
+                <Grid Height="auto" Grid.Row="1" Cursor="">
+
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button Margin="5" Content="←">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </Button>
+
+
+                        <Grid Cursor="">
+                            <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Checked">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>
+                                    </b:EventTrigger>
+                                    <b:EventTrigger EventName="Unchecked">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Pose"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </ToggleButton>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding DisplayElements.WaitSecond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>
+                        </Grid>
+                        <Button Margin="5" Content="→">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

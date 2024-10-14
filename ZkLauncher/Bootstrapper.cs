@@ -22,9 +22,6 @@ namespace ZkLauncher
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // オプションの設定などDryIocコンテナ独自の機能を使いたい場合
-            var container = containerRegistry.GetContainer();
-
             // シングルトンクラスとして登録したい時
             containerRegistry.RegisterSingleton<IDisplayEmentsCollection?, DisplayElemetCollection>();
             containerRegistry.RegisterSingleton<IWindowPostionCollection?, WindowPostionCollection>();
@@ -34,6 +31,7 @@ namespace ZkLauncher
             containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
             containerRegistry.RegisterDialog<ucControlPanel, ucControlPanelViewModel>();
             containerRegistry.RegisterDialog<ucSettingLauncher, ucSettingLauncherViewModel>();
+
         }
 
         protected override void ConfigureViewModelLocator()

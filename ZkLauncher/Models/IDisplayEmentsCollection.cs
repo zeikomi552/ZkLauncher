@@ -36,6 +36,9 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+
+        public int WaitSecond { get; set; }
+
         public DisplayElement? First();
         public void SelectFirst();
         public void SelectLast();
@@ -54,5 +57,10 @@ namespace ZkLauncher.Models
 
         public void Add(DisplayElement item);
         public bool AddClipboardElement();
+
+        public void SetupTimer();
+        public void StopTimer();
+        public void StartTimer();
+
     }
 }

@@ -36,7 +36,7 @@ namespace ZkLauncher.ViewModels.UserControl
             else if (parameter?.ToLower() == "false")
                 result = ButtonResult.Cancel;
 
-            RaiseRequestClose(new DialogResult(result));
+            RaiseRequestClose(new Prism.Dialogs.DialogResult(result));
         }
 
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
@@ -123,10 +123,12 @@ namespace ZkLauncher.ViewModels.UserControl
         /// </summary>
         /// <param name="displayElements">表示要素</param>
         /// <param name="windowPosition">ウィンドウ位置</param>
-        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition )
+        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements,
+            IWindowPostionCollection windowPosition, IRegionManager regionManager)
         {
             this.DisplayElements = displayElements;
             this.WindowPosition = windowPosition;
+            //regionManager.RegisterViewWithRegion("ContentRegion", typeof(ucWebView2Container));
         }
         #endregion
 
@@ -146,10 +148,7 @@ namespace ZkLauncher.ViewModels.UserControl
                     try
                     {
                         // タイマーのセット
-                        SetupTimer();
-
-                        // ブラウザの初期化
-                        InitializeAsync(wnd);
+                        this.DisplayElements!.SetupTimer();
                     }
                     catch
                     {
@@ -166,94 +165,7 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region キャッシュの保存先ディレクトリ
-        /// <summary>
-        /// キャッシュの保存先ディレクトリ
-        /// </summary>
-        private string _WebViewDir = "EBWebView";
-        #endregion
 
-        #region 初期化処理(WebView2の配布)
-        /// <summary>
-        /// 初期化処理(WebView2の配布)
-        /// </summary>
-        private async void InitializeAsync(ucViewerPanel wnd)
-        {
-            try
-            {
-                var browserExecutableFolder = Path.Combine(PathManager.GetApplicationFolder(), _WebViewDir);
-
-                // カレントディレクトリの作成
-                PathManager.CreateDirectory(browserExecutableFolder);
-
-                this.DisplayElements!.WebView2Object = wnd.WebView2Ctrl;
-
-
-                // 環境の作成
-                var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
-                await this.DisplayElements!.WebView2Object.EnsureCoreWebView2Async(webView2Environment);
-
-
-                // 最初の要素を選択
-                this.DisplayElements!.SelectFirst();
-
-                // 1つめのURLを表示
-                this.DisplayElements.SelectedItem.Navigate(this.DisplayElements!.WebView2Object);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage.ShowErrorOK(ex.Message, "Error");
-            }
-        }
-        #endregion
-
-        // タイマのインスタンス
-        private DispatcherTimer? _timer;
-
-        // タイマを設定する
-        private void SetupTimer()
-        {
-            // タイマのインスタンスを生成
-            _timer = new DispatcherTimer(); // 優先度はDispatcherPriority.Background
-                                            // インターバルを設定
-            _timer.Interval = new TimeSpan(0, 0, 30);
-            // タイマメソッドを設定
-            _timer.Tick += new EventHandler(LoopExecute!);
-        }
-
-        #region タイマーの停止
-        /// <summary>
-        /// タイマーの停止
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StopTimer(object sender, CancelEventArgs e)
-        {
-            if (_timer != null)
-            {
-                _timer.Stop();
-            }
-        }
-        #endregion
-
-        #region タイマーメソッド
-        /// <summary>
-        /// タイマーメソッド
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LoopExecute(object sender, EventArgs e)
-        {
-            try
-            {
-                this.DisplayElements!.NextNavigate();
-            }
-            catch
-            {
-
-            }
-        }
-        #endregion
 
         #region 次へ画面(URL)遷移
         /// <summary>
@@ -263,7 +175,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.DisplayElements!.NextNavigate();
+                this.DisplayElements?.NextNavigate();
             }
             catch
             {
@@ -280,7 +192,8 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                this.DisplayElements!.PrevNavigate();
+                this.DisplayElements?.PrevNavigate();
+
             }
             catch
             {
@@ -322,11 +235,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                if (_timer != null)
-                {
-                    // タイマを開始
-                    _timer.Start();
-                }
+                this.DisplayElements?.StartTimer();
             }
             catch
             {
@@ -343,11 +252,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                if (_timer != null)
-                {
-                    // タイマを開始
-                    _timer.Stop();
-                }
+                this.DisplayElements?.StopTimer();
             }
             catch
             {
@@ -405,5 +310,6 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
     }
 }
