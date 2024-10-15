@@ -54,25 +54,37 @@ namespace ZkLauncher.Common.Utilities
             // GetPatternでIScrollProviderを取得
             var scrollProvider = peer.GetPattern(PatternInterface.Scroll) as IScrollProvider;
 
-            bool nextf = oldidx < newidx;
-            int loopmax =  Math.Abs(newidx - oldidx) > 2 ? 200 : 100;
+            var count = newitem.Items.Count;
+
+            int loopmax =  50;
+
+            oldidx = oldidx >= 0 ? oldidx : 0;
 
             if (scrollProvider != null)
             {
-                for (int i = 0; i < loopmax; i++)
+                var tmp = scrollProvider.HorizontalScrollPercent;
+                var percent = 100.0 / ((double)count-1);
+                var oldpos = percent * oldidx >= 0 ? oldidx : 0;
+
+                for (int i = 1; i <= loopmax; i++)
                 {
+                    var nextpos = oldpos * percent + percent * ((newidx - oldidx) / (double)loopmax * i);
+
+                    if(nextpos < 0 ) nextpos = 0;
+                    else if(nextpos > 100) nextpos = 100;
+
+
                     // ちょっとスクロール
-                    scrollProvider.Scroll(
-                        // 水平方向にはスクロールしない
-                        nextf ? ScrollAmount.SmallIncrement : ScrollAmount.SmallDecrement,
-                        // 垂直方向にはちょっとだけ下にスクロール
-                        ScrollAmount.NoAmount);
+                    scrollProvider.SetScrollPercent(
+                    // 水平方向にはちょっとだけスクロール
+                    nextpos,
+                    // 垂直方向にはスクロールしない
+                    scrollProvider.VerticalScrollPercent);
                     newitem.UpdateLayout();
                 }
-
             }
 
-            newitem.ScrollIntoView(newitem.Items[newitem.SelectedIndex]); // 選択行にスクロールが移動
+            //newitem.ScrollIntoView(newitem.Items[newitem.SelectedIndex]); // 選択行にスクロールが移動
             newitem.UpdateLayout();
 
         }
