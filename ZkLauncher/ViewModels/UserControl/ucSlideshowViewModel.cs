@@ -78,20 +78,6 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                var wnd = sender as ucViewerPanel;
-                if (wnd != null)
-                {
-                    try
-                    {
-                        // タイマーのセット
-                        this.DisplayElements!.SetupTimer();
-                    }
-                    catch
-                    {
-                        ShowMessage.ShowNoticeOK("WebView2ランタイムがインストールされていないようです。\r\nインストールしてください", "通知");
-                        URLUtility.OpenUrl("https://developer.microsoft.com/en-us/microsoft-edge/webview2/");
-                    }
-                }
 
             }
             catch (Exception ex)
@@ -169,6 +155,8 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
+                // タイマーのセット
+                this.DisplayElements!.SetupTimer();
                 this.DisplayElements?.StartTimer();
             }
             catch
