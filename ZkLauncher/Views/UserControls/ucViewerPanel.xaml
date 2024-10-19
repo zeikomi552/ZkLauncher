@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:behavior="clr-namespace:ZkLauncher.Common.Behavior"
              xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -53,17 +54,39 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid Height="auto">
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button Margin="5" Content="←">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Cursor="">
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Copy textarea prompt">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
                                     <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-left.svg" />
+                            </StackPanel>
                         </Button>
 
-
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Copy textarea prompt">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Reload"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/refresh-cw-svgrepo-com.svg" />
+                            </StackPanel>
+                        </Button>
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Copy textarea prompt">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
+                            </StackPanel>
+                        </Button>
                         <Grid Cursor="">
                             <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">
                                 <b:Interaction.Triggers>
@@ -77,20 +100,7 @@
                             </ToggleButton>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding DisplayElements.WaitSecond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>
                         </Grid>
-                        <Button Margin="5" Content="Reload">
-                            <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="Click">
-                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Reload"/>
-                                </b:EventTrigger>
-                            </b:Interaction.Triggers>
-                        </Button>
-                        <Button Margin="5" Content="→">
-                            <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="Click">
-                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
-                                </b:EventTrigger>
-                            </b:Interaction.Triggers>
-                        </Button>
+
                     </StackPanel>
                 </Grid>
 
