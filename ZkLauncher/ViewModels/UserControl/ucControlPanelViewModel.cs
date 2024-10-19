@@ -89,6 +89,7 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
         #region 表示要素
         /// <summary>
         /// 表示要素
@@ -113,8 +114,6 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
-
-
 
         private IDialogService? _dialogService;
         /// <summary>
@@ -240,7 +239,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
         #region 選択要素の変更
         /// <summary>
         /// 選択要素の変更
@@ -257,5 +255,39 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
+        #region ChangeNameWindow表示画面の呼び出し
+        /// <summary>
+        /// ChangeNameWindow表示画面の呼び出し
+        /// </summary>
+        public void ShowChangeNameWindow()
+        {
+            try
+            {
+                if(this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
+                {
+                    _dialogService.ShowDialog("ucNameChange", new DialogParameters($"CurrentName={this.DisplayElements.SelectedItem.Title}"), r =>
+                    {
+                        if (r.Result == ButtonResult.OK)
+                        {
+                            // 戻り値の取り出し
+                            var result = r.Parameters.GetValue<string>("AfterName");
+
+                            // 結果の設定
+                            this.DisplayElements.SelectedItem.Title = result;
+
+                            // 保存
+                            this.DisplayElements.SaveConfig();
+                        }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
     }
 }

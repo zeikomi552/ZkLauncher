@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ZkLauncher.Views.UserControls.ucNameChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
+             mc:Ignorable="d" 
+             Width="500">
+    <Grid>
+        <StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Margin="5" Text="Before"/>
+                <TextBlock Margin="5" Text=":"/>
+                <TextBlock Margin="5" Width="200" Text="{Binding BeforeName}"/>
+            </StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Margin="5" Text="After"/>
+                <TextBlock Margin="5" Text=":"/>
+                <TextBox Margin="5" Width="200" Text="{Binding AfterName}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100" Content="OK" Command="{Binding OkCommand}"/>
+                <Button Margin="5" Width="100" Content="Cancel" Command="{Binding CancelCommand}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
