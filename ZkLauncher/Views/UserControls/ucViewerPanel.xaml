@@ -56,7 +56,7 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Cursor="">
-                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Copy textarea prompt">
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Previous page">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
                                     <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
@@ -67,7 +67,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Copy textarea prompt">
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Refresh web page">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
                                     <b:CallMethodAction TargetObject="{Binding}" MethodName="Reload"/>
@@ -77,7 +77,7 @@
                                 <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/refresh-cw-svgrepo-com.svg" />
                             </StackPanel>
                         </Button>
-                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Copy textarea prompt">
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Next page">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
                                     <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
@@ -87,6 +87,17 @@
                                 <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
                             </StackPanel>
                         </Button>
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Save page">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="SavePage"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
+                            </StackPanel>
+                        </Button>
+
                         <Grid Cursor="">
                             <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">
                                 <b:Interaction.Triggers>
