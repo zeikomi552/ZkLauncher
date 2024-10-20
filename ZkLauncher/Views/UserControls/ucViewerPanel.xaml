@@ -6,7 +6,8 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:vm="clr-namespace:ZkLauncher.ViewModels.UserControl"
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance Type=vm:ucViewerPanelViewModel}">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="hlp:DragWindowHelper.DragEnable" Value="True"/>

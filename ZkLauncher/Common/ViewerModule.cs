@@ -23,25 +23,14 @@ namespace ZkLauncher.Common
         public void OnInitialized(IContainerProvider containerProvider)
         {           
             var regionManager = containerProvider.Resolve<IRegionManager>();
-
-            //regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
-
-            //regionManager.AddToRegion("ViewerRegion", typeof(ucSlideshow));
-            //regionManager.AddToRegion("ViewerRegion", typeof(ucWhitebord));
             regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
             regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
-
             containerRegistry.RegisterForNavigation<ucSlideshow, ucSlideshowViewModel>();
             containerRegistry.RegisterForNavigation<ucWhitebord, ucWhitebordViewModel>();
-
-            //ViewModelLocationProvider.Register(typeof(ucViewerPanel).ToString(), typeof(ucViewerPanelViewModel));
-            //ViewModelLocationProvider.Register(typeof(ucSlideshow).ToString(), typeof(ucSlideshowViewModel));
-            //ViewModelLocationProvider.Register(typeof(ucWhitebord).ToString(), typeof(ucWhitebordViewModel));
         }
     }
 }

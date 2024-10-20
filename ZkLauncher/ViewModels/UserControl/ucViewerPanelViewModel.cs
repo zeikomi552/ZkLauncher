@@ -126,6 +126,31 @@ namespace ZkLauncher.ViewModels.UserControl
 
         bool _SlideshowF { get; set; } = true;
 
+        #region 画像保存先ファイルパス
+        /// <summary>
+        /// 画像保存先ファイルパス
+        /// </summary>
+        string _FilePath = string.Empty;
+        /// <summary>
+        /// 画像保存先ファイルパス
+        /// </summary>
+        public string FilePath
+        {
+            get
+            {
+                return _FilePath;
+            }
+            set
+            {
+                if (_FilePath == null || !_FilePath.Equals(value))
+                {
+                    _FilePath = value;
+                    RaisePropertyChanged("FilePath");
+                }
+            }
+        }
+        #endregion
+
         #region コンストラクタ
         /// <summary>
         /// コンストラクタ
@@ -153,16 +178,19 @@ namespace ZkLauncher.ViewModels.UserControl
             if (navigatePath != null)
             {
                 if (this._SlideshowF)
-                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord));
+                {
+                    SavePage();
+                    var parameters = new NavigationParameters();
+                    parameters.Add("filepath", this.FilePath);
+                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord), parameters);
+                }
                 else
+                {
                     _regionManager.RequestNavigate("ViewerRegion", nameof(ucSlideshow));
 
+                }
+
                 this._SlideshowF = !this._SlideshowF;
-
-                //var region = _regionManager.Regions["ViewerRegion"];
-
-                //var uc = _container.Resolve<ucWhitebord>();
-                //region.Activate(uc);
             }
         }
         public void Init()
@@ -172,11 +200,86 @@ namespace ZkLauncher.ViewModels.UserControl
             //this._regionManager.RequestNavigate("ViewerRegion", "ucWhitebord");
         }
 
-        public void ChangeWindow()
+        #region 背景の保存先ディレクトリ
+        /// <summary>
+        /// 背景の保存先ディレクトリ
+        /// </summary>
+        private string ImageSaveDirectory
         {
-            //this._regionManager.RequestNavigate("ViewerRegion", "ucWhitebord");
+            get
+            {
+                // アプリケーションフォルダの取得
+                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage", DateTime.Today.ToString("yyyyMM"));
+                PathManager.CreateDirectory(dir);
 
-            //this._regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
+                return dir;
+            }
         }
+        #endregion
+
+        #region ページの保存処理
+        /// <summary>
+        /// ページの保存処理
+        /// </summary>
+        public void SavePage()
+        {
+            try
+            {
+                var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
+                var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
+
+                // キャプチャ領域の生成
+                var targetRect = new Rect(targetPoint.X, targetPoint.Y, ctrl.ActualWidth, ctrl.ActualHeight);
+
+                // ファイルパスの取得
+                string file = GetfileName(ImageSaveDirectory);
+
+                //// スクリーンショット実行
+                ExcuteScreenShot(targetRect, file);
+
+                this.FilePath = file;
+
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
+        #region ファイルパスの作成処理
+        /// <summary>
+        /// ファイルパスの作成処理
+        /// </summary>
+        /// <param name="folderPath">フォルダパス</param>
+        /// <returns>ファイルパス</returns>
+        private string GetfileName(string folderPath)
+        {
+            var dtNow = DateTime.Now;
+            var file = dtNow.ToString("yyyyMMdd_hhmmss") + dtNow.Millisecond.ToString() + ".jpg";
+            return Path.Combine(folderPath, file);
+        }
+        #endregion
+
+        #region スクリーンショットの作成処理
+        /// <summary>
+        /// スクリーンショットの作成処理
+        /// </summary>
+        /// <param name="rect">矩形</param>
+        /// <param name="fileName">ファイル名</param>
+        private void ExcuteScreenShot(Rect rect, string fileName)
+        {
+            // 矩形と同じサイズのBitmapを作成
+            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height))
+            using (var graphics = Graphics.FromImage(bitmap))
+            {
+                // 画面から指定された矩形と同じ条件でコピー
+                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, bitmap.Size);
+
+                // 画像ファイルとして保存
+                bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
+        }
+        #endregion
     }
 }
