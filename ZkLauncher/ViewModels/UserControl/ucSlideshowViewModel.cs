@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
 using ZkLauncher.Views.UserControls;
@@ -56,15 +57,17 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        IRegionManager _regionManager;
         #region コンストラクタ
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="displayElements">表示要素</param>
         /// <param name="windowPosition">ウィンドウ位置</param>
-        public ucSlideshowViewModel(IDisplayEmentsCollection displayElements)
+        public ucSlideshowViewModel(IRegionManager regionManager, IDisplayEmentsCollection displayElements)
         {
             this.DisplayElements = displayElements;
+            _regionManager = regionManager;
         }
         #endregion
 
@@ -296,6 +299,8 @@ namespace ZkLauncher.ViewModels.UserControl
         /// <param name="fileName">ファイル名</param>
         private void ExcuteScreenShot(Rect rect, string fileName)
         {
+            this._regionManager.RequestNavigate("ViewerRegion", "ucWhitebord");
+
             // 矩形と同じサイズのBitmapを作成
             using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height))
             using (var graphics = Graphics.FromImage(bitmap))

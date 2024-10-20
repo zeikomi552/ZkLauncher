@@ -8,8 +8,9 @@
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"             
              xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
-             xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:vm="clr-namespace:ZkLauncher.ViewModels.UserControl"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance Type=vm:ucViewerPanelViewModel}">
     <b:Interaction.Triggers>

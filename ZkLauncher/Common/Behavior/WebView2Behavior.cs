@@ -80,7 +80,7 @@ namespace ZkLauncher.Common.Behavior
         private string _WebViewDir = "EBWebView";
         #endregion
 
-
+        private bool _IsInitialized = false;
         #region 初期化処理(WebView2の配布)
         /// <summary>
         /// 初期化処理(WebView2の配布)
@@ -89,6 +89,10 @@ namespace ZkLauncher.Common.Behavior
         {
             try
             {
+                if (_IsInitialized == true)
+                    return;
+
+
                 var browserExecutableFolder = Path.Combine(PathManager.GetApplicationFolder(), _WebViewDir);
 
                 // カレントディレクトリの作成
@@ -97,6 +101,8 @@ namespace ZkLauncher.Common.Behavior
                 // 環境の作成
                 var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
                 await this.WebView2Ctl.EnsureCoreWebView2Async(webView2Environment);
+
+                _IsInitialized = true;
 
                 if (!string.IsNullOrEmpty(this.URL))
                 {

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Prism.Navigation.Regions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using ZkLauncher.ViewModels.UserControl;
 using ZkLauncher.Views;
@@ -12,43 +14,34 @@ namespace ZkLauncher.Common
 {
     public class ViewerModule : IModule
     {
+        IContainerExtension _Container;
         public ViewerModule(IContainerExtension container, IRegionManager regionManager)
         {
+            _Container = container;
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
-        {
+        {           
             var regionManager = containerProvider.Resolve<IRegionManager>();
 
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(ucSlideshow));
+            //regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
 
-
-            //IRegion region = regionManager.Regions["ContentRegion"];
-
-            //var tabA = containerProvider.Resolve<ucSlideshow>();
-            //SetTitle(tabA, "Tab A");
-            //region.Add(tabA);
-
-            ////var tabB = containerProvider.Resolve<TabView>();
-            ////SetTitle(tabB, "Tab B");
-            ////region.Add(tabB);
-
-            ////var tabC = containerProvider.Resolve<TabView>();
-            ////SetTitle(tabC, "Tab C");
-            ////region.Add(tabC);
+            //regionManager.AddToRegion("ViewerRegion", typeof(ucSlideshow));
+            //regionManager.AddToRegion("ViewerRegion", typeof(ucWhitebord));
+            regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
+            regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
 
-            containerRegistry.RegisterDialogWindow<BaseDialogWindow>("Viewer");
-            containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
-            ViewModelLocationProvider.Register(typeof(ucSlideshow).ToString(), typeof(ucSlideshowViewModel));
-        }
 
-        void SetTitle(ucSlideshow tab, string title)
-        {
-            var tmp = (tab.DataContext as ucSlideshowViewModel);
+            containerRegistry.RegisterForNavigation<ucSlideshow, ucSlideshowViewModel>();
+            containerRegistry.RegisterForNavigation<ucWhitebord, ucWhitebordViewModel>();
+
+            //ViewModelLocationProvider.Register(typeof(ucViewerPanel).ToString(), typeof(ucViewerPanelViewModel));
+            //ViewModelLocationProvider.Register(typeof(ucSlideshow).ToString(), typeof(ucSlideshowViewModel));
+            //ViewModelLocationProvider.Register(typeof(ucWhitebord).ToString(), typeof(ucWhitebordViewModel));
         }
     }
 }

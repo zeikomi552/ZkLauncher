@@ -29,15 +29,17 @@ namespace ZkLauncher
 
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>("ControlPanel");
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>("NameChange");
+            containerRegistry.RegisterDialogWindow<BaseDialogWindow>("Viewer");
+
             containerRegistry.RegisterDialog<ucControlPanel, ucControlPanelViewModel>();
             containerRegistry.RegisterDialog<ucSettingLauncher, ucSettingLauncherViewModel>();
             containerRegistry.RegisterDialog<ucNameChange, ucNameChangeViewModel>();
+            containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
         }
 
         protected override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.Register(typeof(ucViewerPanel).ToString(), typeof(ucViewerPanelViewModel));
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="800">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -18,7 +19,18 @@
             <Setter Property="Height" Value="{Binding WindowPosition.ViewerPosition.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+    <b:Interaction.Triggers>
+        <b:EventTrigger>
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Grid Cursor="">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Button Command="{Binding NavigateCommand}" CommandParameter="ucSlideshow"/>
+
+        <ContentControl Grid.Row="1" x:Name="content_region" prism:RegionManager.RegionName="ViewerRegion"/>
     </Grid>
 </UserControl>
