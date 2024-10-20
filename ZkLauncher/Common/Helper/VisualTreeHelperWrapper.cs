@@ -15,7 +15,7 @@ namespace ZkLauncher.Common.Helper
         /// VisualTreeを親側にたどって、
         /// 指定した型の要素を探す
         /// </summary>
-        public static T FindAncestor<T>(this DependencyObject depObj)
+        public static T? FindAncestor<T>(this DependencyObject depObj)
             where T : DependencyObject
         {
             while (depObj != null)
@@ -35,7 +35,7 @@ namespace ZkLauncher.Common.Helper
         /// </summary>
         /// <param name="sender"></param>
         /// <returns></returns>
-        public static DependencyObject GetWindow<T>(object sender)
+        public static DependencyObject? GetWindow<T>(object sender)
         {
             DependencyObject depobj = (DependencyObject)sender;
 
@@ -66,7 +66,7 @@ namespace ZkLauncher.Common.Helper
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
-        public static DependencyObject GetScrollViewer(DependencyObject o)
+        public static DependencyObject? GetScrollViewer(DependencyObject o)
         {
             if (o is ScrollViewer)
             { return o; }

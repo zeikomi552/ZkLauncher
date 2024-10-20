@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ZkLauncher.Common.Helper;
+using ZkLauncher.Common.Utilities;
 using ZkLauncher.Views.UserControls;
 
 namespace ZkLauncher.ViewModels.UserControl
@@ -142,35 +143,42 @@ namespace ZkLauncher.ViewModels.UserControl
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Save(object sender, RoutedEventArgs e)
+        public void Save(object sender, RoutedEventArgs ex)
         {
-            var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-            if (wnd != null)
+            try
             {
-                Microsoft.Win32.SaveFileDialog dlgSave = new Microsoft.Win32.SaveFileDialog();
+                var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
 
-                dlgSave.Filter = "PNGファイル(*.png)|*.png";
-                dlgSave.AddExtension = true;
-
-                if ((bool)dlgSave.ShowDialog()!)
+                if (wnd != null)
                 {
-                    // レンダリング
-                    var bmp = new RenderTargetBitmap(
-                        (int)wnd.Drawgrid.ActualWidth,
-                        (int)wnd.Drawgrid.ActualHeight,
-                        96, 96, // DPI
-                        PixelFormats.Pbgra32);
-                    bmp.Render(wnd.Drawgrid);
+                    Microsoft.Win32.SaveFileDialog dlgSave = new Microsoft.Win32.SaveFileDialog();
 
-                    // jpegで保存
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(bmp));
-                    using (var fs = File.Open(dlgSave.FileName, FileMode.Create))
+                    dlgSave.Filter = "PNGファイル(*.png)|*.png";
+                    dlgSave.AddExtension = true;
+
+                    if ((bool)dlgSave.ShowDialog()!)
                     {
-                        encoder.Save(fs);
+                        // レンダリング
+                        var bmp = new RenderTargetBitmap(
+                            (int)wnd.Drawgrid.ActualWidth,
+                            (int)wnd.Drawgrid.ActualHeight,
+                            96, 96, // DPI
+                            PixelFormats.Pbgra32);
+                        bmp.Render(wnd.Drawgrid);
+
+                        // jpegで保存
+                        var encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(bmp));
+                        using (var fs = File.Open(dlgSave.FileName, FileMode.Create))
+                        {
+                            encoder.Save(fs);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
             }
         }
         #endregion
