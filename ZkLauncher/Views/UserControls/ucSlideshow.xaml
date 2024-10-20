@@ -79,16 +79,6 @@
                                 <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
                             </StackPanel>
                         </Button>
-                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Save page">
-                            <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="Click">
-                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="SavePage"/>
-                                </b:EventTrigger>
-                            </b:Interaction.Triggers>
-                            <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
-                            </StackPanel>
-                        </Button>
 
                         <Grid Cursor="">
                             <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">

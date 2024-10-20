@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="ZkLauncher.Views.UserControls.ucViewerPanel"
              mc:Ignorable="d" xmlns:prism="http://prismlibrary.com/" xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -27,11 +28,16 @@
     </b:Interaction.Triggers>
     <Grid Cursor="">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Command="{Binding NavigateCommand}" CommandParameter="ucSlideshow"/>
-
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="ucSlideshow" Cursor="Hand">
+                <StackPanel Orientation="Vertical">
+                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
         <ContentControl Grid.Row="1" x:Name="content_region" prism:RegionManager.RegionName="ViewerRegion"/>
     </Grid>
 </UserControl>
