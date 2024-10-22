@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ZkLauncher.Common.Helper;
 using ZkLauncher.Common.Utilities;
+using ZkLauncher.Models;
 using ZkLauncher.Views.UserControls;
 
 namespace ZkLauncher.ViewModels.UserControl
@@ -116,6 +118,11 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        private bool handle = true;
+        //List<StrokePairM> _StrokeUndo = new List<StrokePairM>();
+        //List<StrokePairM> _StrokeRedo = new List<StrokePairM>();
+        InkCanvas _InkCanvas;
+        private string _StorkePath = System.AppDomain.CurrentDomain.BaseDirectory + @"Common\canvas1-stroke";
 
         IRegionManager _regionManager;
         IContainerExtension _container;
@@ -182,5 +189,171 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
+        public void Init(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
+
+                //if (wnd != null)
+                //{
+                //    wnd.theInkCanvas.Strokes.StrokesChanged -= Strokes_StrokesChanged;
+                //    wnd.theInkCanvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
+                //}
+
+                //Clear(sender, e);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        #region クリア処理
+        /// <summary>
+        /// クリア処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Clear(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
+
+                if (wnd != null)
+                {
+                    wnd.theInkCanvas.Strokes.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                ///_logger.Error(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+        }
+        #endregion
+
+
+        //#region Undo処理
+        ///// <summary>
+        ///// Undo処理
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //public void Undo(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
+
+        //        if (wnd != null)
+        //        {
+        //            handle = false;
+
+        //            // 最後の変更を取り出す
+        //            var tmp = this._StrokeUndo.LastOrDefault();
+
+        //            // nullチェック
+        //            if (tmp != null)
+        //            {
+        //                // Redo用に保存する
+        //                _StrokeRedo.Add(new StrokePairM(tmp.AddedStroke, tmp.RemovedStroke));
+
+        //                // 最後に追加された分は取り除く
+        //                wnd.theInkCanvas.Strokes.Remove(tmp.AddedStroke);
+
+        //                // 最後に取り除かれた分は追加する
+        //                wnd.theInkCanvas.Strokes.Add(tmp.RemovedStroke);
+
+        //                // Undoのリストから削除する
+        //                this._StrokeUndo.Remove(tmp);
+        //            }
+
+        //            handle = true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //_logger.Error(ex.Message);
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //}
+        //#endregion
+
+        //#region Redo処理
+        ///// <summary>
+        ///// Redo処理
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //public void Redo(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
+
+        //        if (wnd != null)
+        //        {
+        //            handle = false;
+
+        //            // 最後の変更を取り出す
+        //            var tmp = this._StrokeRedo.LastOrDefault();
+
+        //            if (tmp != null)
+        //            {
+        //                // Undoで消されたストロークを追加
+        //                wnd.theInkCanvas.Strokes.Add(tmp.AddedStroke);
+
+        //                // Undoで戻されたストロークを削除
+        //                wnd.theInkCanvas.Strokes.Remove(tmp.RemovedStroke);
+
+        //                // Undo用のストロークを保存
+        //                this._StrokeUndo.Add(new StrokePairM(tmp.AddedStroke, tmp.RemovedStroke));
+
+        //                // Redo用のストロークを削除
+        //                this._StrokeRedo.Remove(tmp);
+        //            }
+
+        //            handle = true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //_logger.Error(ex.Message);
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //}
+        //#endregion
+        //#region ストロークが変化した場合の処理
+        ///// <summary>
+        ///// ストロークが変化した場合の処理
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (handle)
+        //        {
+        //            this._StrokeUndo.Add(new StrokePairM(e.Added, e.Removed));
+        //            this._StrokeRedo.Clear();
+
+        //            using (System.IO.FileStream fs =
+        //                new System.IO.FileStream(this._StorkePath, System.IO.FileMode.Create))
+        //            {
+        //                this._InkCanvas.Strokes.Save(fs);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //_logger.Error(ex.Message);
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //}
+        //#endregion
     }
 }

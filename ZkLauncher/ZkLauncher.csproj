@@ -18,6 +18,7 @@
     <None Remove="Common\Imanges\icons\arrow-right.svg" />
     <None Remove="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\save-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,7 @@
 
   <ItemGroup>
     <Resource Include="Common\Imanges\app.ico" />
+    <Resource Include="Common\Imanges\icons\save-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>

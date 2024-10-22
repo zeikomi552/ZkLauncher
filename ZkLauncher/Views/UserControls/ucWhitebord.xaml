@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              xmlns:local="clr-namespace:ZkLauncher.Views.UserControls"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
@@ -15,35 +16,212 @@
     <UserControl.Resources>
         <Converters:URLStringToImageSourceConverter x:Key="URLStringToImageSourceConverter"/>
         <Converters:InkCanvasEditingModeToBoolConverter x:Key="InkCanvasEditingModeToBoolConverter"/>
+        <Converters:ColorToBooleanConverter x:Key="ColorToBooleanConverter"/>
+        <Converters:IntToBooleanConverter x:Key="IntToBooleanConverter" Default="5"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Save">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Save"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-        </StackPanel>
-        <Grid Grid.Row="1">
-            <Border>
-                <Grid x:Name="Drawgrid"
-                              MinWidth="{Binding ActualWidth, ElementName=DrawArea, Mode=OneWay}"
-                              MinHeight="{Binding ActualHeight, ElementName=DrawArea, Mode=OneWay}">
-                    <Image  x:Name="DrawArea" Margin="5" Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
-                    <InkCanvas EditingMode="{Binding EditingMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   hlp:InkCanvasSizeHelper.Size="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   hlp:InkCanvasElaseShapeHelper.ElaseShape="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   hlp:InkCanvasColorHelper.Color="{Binding MarkerColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   hlp:InkCanvasHighlighterHelper.Highlighter="{Binding IsChecked, ElementName=toggleButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   Margin="5" Background="{x:Null}"/>
-                </Grid>
-            </Border>
+    <Border BorderBrush="AliceBlue" BorderThickness="5" Cursor="">
+        <Grid Background="Black" Cursor="">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <StackPanel Margin="0,20">
+                    <Button Height="45" Margin="5" Cursor="Hand">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Save"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <Button.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/save-svgrepo-com.svg" Cursor="" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Save"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </Button.Content>
+                    </Button>
+                    
+                    <ToggleButton Background="Black" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5" 
+                                  IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
+                                    ConverterParameter=Black, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </ToggleButton>
+
+                    <ToggleButton Background="Red" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
+                                  IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
+                                    ConverterParameter=Red, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </ToggleButton>
+
+                    <ToggleButton Background="Blue" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
+                                  IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
+                                    ConverterParameter=Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </ToggleButton>
+
+                    <ToggleButton Background="Yellow" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
+                                  IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
+                                    ConverterParameter=Yellow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </ToggleButton>
+
+                </StackPanel>
+                <StackPanel Margin="0,20">
+                    <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                                      Content="大" Height="50" Width="50" Margin="5" IsChecked="{Binding Size, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=20}"/>
+
+
+                    <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                                      Content="中" Height="50" Width="50" Margin="5" IsChecked="{Binding Size, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=10}"/>
+
+                    <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                                      Content="小" Height="50" Width="50" Margin="5" IsChecked="{Binding Size, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=5}"/>
+
+
+                </StackPanel>
+            </StackPanel>
+
+            <Grid Grid.Column="1">
+                <Border Margin="5" BorderBrush="AliceBlue" BorderThickness="1">
+                    <Grid x:Name="Drawgrid"
+              MinWidth="{Binding ActualWidth, ElementName=DrawArea, Mode=OneWay}"
+              MinHeight="{Binding ActualHeight, ElementName=DrawArea, Mode=OneWay}">
+                        <Image x:Name="DrawArea" Margin="5" Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
+                        <InkCanvas x:Name="theInkCanvas" EditingMode="{Binding EditingMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   hlp:InkCanvasSizeHelper.Size="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   hlp:InkCanvasElaseShapeHelper.ElaseShape="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   hlp:InkCanvasColorHelper.Color="{Binding MarkerColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   hlp:InkCanvasHighlighterHelper.Highlighter="{Binding IsChecked, ElementName=toggleButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   Margin="5" Background="{x:Null}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Vertical">
+                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Cursor="Hand">
+                    <ToggleButton x:Name="toggleButton" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"  Margin="5" Cursor="Hand">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="蛍光"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand" 
+                                      IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=Ink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="ペン"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                                      IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=EraseByPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="消しゴム"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                                      IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=EraseByStroke, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="消しゴム"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </ToggleButton.Content>
+
+                    </ToggleButton>
+
+                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                                      IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=Select, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="選択"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </ToggleButton.Content>
+
+                    </ToggleButton>
+
+                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                                      IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=GestureOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="ジェスチャ"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+                    <Button Width="55" Height="55" Style="{StaticResource MaterialDesignToolButton}" Margin="5" Cursor="Hand">
+                        <Button.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="1つ戻る"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </Button.Content>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Undo"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </Button>
+
+                    <Button Width="55" Height="55" Style="{StaticResource MaterialDesignToolButton}" Margin="5" Cursor="Hand">
+                        <Button.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="1つ進む"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </Button.Content>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Redo"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </Button>
+
+                    <Button Width="55" Height="55" Style="{StaticResource MaterialDesignToolButton}" Margin="5" Cursor="Hand">
+                        <Button.Content>
+                            <Viewbox>
+                                <StackPanel>
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="全消し"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </Button.Content>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Clear"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </Button>
+
+                </StackPanel>
+
+            </StackPanel>
+
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>
