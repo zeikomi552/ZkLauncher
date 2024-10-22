@@ -209,7 +209,7 @@ namespace ZkLauncher.ViewModels.UserControl
             get
             {
                 // アプリケーションフォルダの取得
-                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage", DateTime.Today.ToString("yyyyMM"));
+                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage");
                 PathManager.CreateDirectory(dir);
 
                 return dir;
@@ -256,7 +256,7 @@ namespace ZkLauncher.ViewModels.UserControl
         private string GetfileName(string folderPath)
         {
             var dtNow = DateTime.Now;
-            var file = dtNow.ToString("yyyyMMdd_hhmmss") + dtNow.Millisecond.ToString() + ".jpg";
+            var file = "Temporary.jpg";
             return Path.Combine(folderPath, file);
         }
         #endregion

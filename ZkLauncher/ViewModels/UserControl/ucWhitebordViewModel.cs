@@ -141,6 +141,7 @@ namespace ZkLauncher.ViewModels.UserControl
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // このViewが表示されるときに実行される
+            this.FilePath = string.Empty;
             this.FilePath = navigationContext.Parameters["filepath"]?.ToString()!;
         }
 
