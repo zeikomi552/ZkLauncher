@@ -17,6 +17,10 @@
     <None Remove="Common\Imanges\icons\arrow-left.svg" />
     <None Remove="Common\Imanges\icons\arrow-right.svg" />
     <None Remove="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\pencil-black.svg" />
+    <None Remove="Common\Imanges\icons\pencil-blue.svg" />
+    <None Remove="Common\Imanges\icons\pencil-red.svg" />
+    <None Remove="Common\Imanges\icons\pencil-yellow.svg" />
     <None Remove="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\save-svgrepo-com.svg" />
   </ItemGroup>
@@ -29,6 +33,10 @@
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-black.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-blue.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-red.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-yellow.svg" />
     <Resource Include="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
   </ItemGroup>
 

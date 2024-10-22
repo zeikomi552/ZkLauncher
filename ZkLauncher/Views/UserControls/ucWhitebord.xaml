@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Center" Cursor="">
-                <StackPanel Background="AliceBlue" Margin="0,20" Cursor="">
+                <StackPanel Margin="0,20" Cursor="">
                     <Button Height="45" Margin="5" Cursor="Hand">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="Click">
@@ -35,45 +35,75 @@
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                         <Button.Content>
-                            <Viewbox>
-                                <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/save-svgrepo-com.svg" Cursor="" />
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Save"/>
-                                </StackPanel>
-                            </Viewbox>
+                            <StackPanel>
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/save-svgrepo-com.svg" Cursor="" />
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Save"/>
+                            </StackPanel>
                         </Button.Content>
                     </Button>
                     <ToggleButton x:Name="toggleButton" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"  Margin="5" Cursor="Hand">
                         <ToggleButton.Content>
-                            <Viewbox>
-                                <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="蛍光"/>
-                                </StackPanel>
-                            </Viewbox>
+                            <StackPanel>
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="蛍光"/>
+                            </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    
-                    <ToggleButton Background="Black" BorderBrush="Black" BorderThickness="2" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5" 
-                                  IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
-                                    ConverterParameter=Black, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    </ToggleButton>
 
-                    <ToggleButton Background="Red" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
+                    <StackPanel>
+                        <ToggleButton Background="Silver" BorderBrush="White" BorderThickness="2"
+                                  Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5" 
+                                  IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
+                                    ConverterParameter=Black, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="">
+                            <ToggleButton.Content>
+                                <Viewbox>
+                                    <StackPanel>
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-black.svg" />
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Black"/>
+                                    </StackPanel>
+                                </Viewbox>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+
+                        <ToggleButton Background="Red" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
                                   IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
                                     ConverterParameter=Red, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    </ToggleButton>
+                            <ToggleButton.Content>
+                                <Viewbox>
+                                    <StackPanel>
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-red.svg" />
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Red"/>
+                                    </StackPanel>
+                                </Viewbox>
+                            </ToggleButton.Content>
+                        </ToggleButton>
 
-                    <ToggleButton Background="Blue" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
+                        <ToggleButton Background="Blue" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
                                   IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
                                     ConverterParameter=Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    </ToggleButton>
+                            <ToggleButton.Content>
+                                <Viewbox>
+                                    <StackPanel>
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-blue.svg" />
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Blue"/>
+                                    </StackPanel>
+                                </Viewbox>
+                            </ToggleButton.Content>
+                        </ToggleButton>
 
-                    <ToggleButton Background="Yellow" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
+                        <ToggleButton Background="Yellow" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Height="50" Width="50" Margin="5"
                                   IsChecked="{Binding MarkerColor, Converter={StaticResource ColorToBooleanConverter},
                                     ConverterParameter=Yellow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    </ToggleButton>
-
+                            <ToggleButton.Content>
+                                <Viewbox>
+                                    <StackPanel>
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-yellow.svg" />
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Yellow"/>
+                                    </StackPanel>
+                                </Viewbox>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="0,20">
                     <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
