@@ -1,5 +1,4 @@
-﻿using Prism.Navigation.Regions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,16 +16,13 @@ using System.Windows.Shapes;
 namespace ZkLauncher.Views.UserControls
 {
     /// <summary>
-    /// ucViewerPanel.xaml の相互作用ロジック
+    /// ucSlideshow.xaml の相互作用ロジック
     /// </summary>
-    public partial class ucViewerPanel : UserControl
+    public partial class ucSlideshow : UserControl
     {
-        public ucViewerPanel(IRegionManager regionManager)
+        public ucSlideshow()
         {
             InitializeComponent();
-
-            RegionManager.SetRegionManager(this.content_region, regionManager);
-
         }
     }
 }

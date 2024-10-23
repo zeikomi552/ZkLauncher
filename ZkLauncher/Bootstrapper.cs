@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ZkLauncher.Common;
 using ZkLauncher.Models;
 using ZkLauncher.ViewModels.UserControl;
 using ZkLauncher.Views;
@@ -27,13 +28,13 @@ namespace ZkLauncher
             containerRegistry.RegisterSingleton<IWindowPostionCollection?, WindowPostionCollection>();
 
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>("ControlPanel");
-            containerRegistry.RegisterDialogWindow<BaseDialogWindow>("Viewer");
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>("NameChange");
-            containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
+            containerRegistry.RegisterDialogWindow<BaseDialogWindow>("Viewer");
+
             containerRegistry.RegisterDialog<ucControlPanel, ucControlPanelViewModel>();
             containerRegistry.RegisterDialog<ucSettingLauncher, ucSettingLauncherViewModel>();
             containerRegistry.RegisterDialog<ucNameChange, ucNameChangeViewModel>();
-
+            containerRegistry.RegisterDialog<ucViewerPanel, ucViewerPanelViewModel>();
         }
 
         protected override void ConfigureViewModelLocator()
@@ -43,7 +44,7 @@ namespace ZkLauncher
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            base.ConfigureModuleCatalog(moduleCatalog);
+            moduleCatalog.AddModule<ViewerModule>();
         }
     }
 }

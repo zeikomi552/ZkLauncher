@@ -6,8 +6,10 @@
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:ZkLauncher.Views"
         xmlns:hlp="clr-namespace:ZkLauncher.Common.Helper"
+        xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d">
     <Grid>
-        
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ViewerRegion"/>
+
     </Grid>
 </Window>

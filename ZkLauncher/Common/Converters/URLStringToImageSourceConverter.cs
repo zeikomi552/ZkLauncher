@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,12 +32,15 @@ namespace ZkLauncher.Common.Converters
         {
             try
             {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;      // プロセスを占有しないため
-                bitmap.UriSource = new Uri(url, UriKind.Absolute);
-                bitmap.EndInit();
-                return bitmap;
+                string filePath = url;
+                BitmapImage bmpImage = new BitmapImage();
+                FileStream stream = File.OpenRead(filePath);
+                bmpImage.BeginInit();
+                bmpImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmpImage.StreamSource = stream;
+                bmpImage.EndInit();
+                stream.Close();
+                return bmpImage;
             }
             catch { return null; }
         }

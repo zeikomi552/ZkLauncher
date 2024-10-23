@@ -1,10 +1,17 @@
-﻿using System;
+﻿using Prism.Navigation.Regions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Threading;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
@@ -56,16 +63,9 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
-            Message = parameters.GetValue<string>("message");
+            
         }
         #endregion
-
-        private string? _message;
-        public string? Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
 
         #region 表示要素
         /// <summary>
@@ -117,158 +117,99 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        public DelegateCommand<string> NavigateCommand { get; private set; }
+
+
+        IContainerExtension _container;
+
+        public IRegionManager _regionManager { get; set; }
+
+        bool _SlideshowF { get; set; } = true;
+
+        #region 画像保存先ファイルパス
+        /// <summary>
+        /// 画像保存先ファイルパス
+        /// </summary>
+        string _FilePath = string.Empty;
+        /// <summary>
+        /// 画像保存先ファイルパス
+        /// </summary>
+        public string FilePath
+        {
+            get
+            {
+                return _FilePath;
+            }
+            set
+            {
+                if (_FilePath == null || !_FilePath.Equals(value))
+                {
+                    _FilePath = value;
+                    RaisePropertyChanged("FilePath");
+                }
+            }
+        }
+        #endregion
+
         #region コンストラクタ
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="displayElements">表示要素</param>
         /// <param name="windowPosition">ウィンドウ位置</param>
-        public ucViewerPanelViewModel(IDisplayEmentsCollection displayElements,
-            IWindowPostionCollection windowPosition, IRegionManager regionManager)
+        public ucViewerPanelViewModel(IRegionManager regionManager,
+            IContainerExtension container,
+            IDisplayEmentsCollection displayElements,
+            IWindowPostionCollection windowPosition)
         {
+            _container = container;
+            this._regionManager = regionManager;
+            //_regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucViewerPanel));
             this.DisplayElements = displayElements;
             this.WindowPosition = windowPosition;
-            //regionManager.RegisterViewWithRegion("ContentRegion", typeof(ucWebView2Container));
+
+
+            NavigateCommand = new DelegateCommand<string>(Navigate);
+
         }
         #endregion
-
-        #region 初期化処理
-        /// <summary>
-        /// 初期化処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Init(object sender, EventArgs e)
+        private void Navigate(string navigatePath)
         {
-            try
+            if (navigatePath != null)
             {
-                var wnd = sender as ucViewerPanel;
-                if (wnd != null)
+                if (this._SlideshowF)
                 {
-                    try
-                    {
-                        // タイマーのセット
-                        this.DisplayElements!.SetupTimer();
-                    }
-                    catch
-                    {
-                        ShowMessage.ShowNoticeOK("WebView2ランタイムがインストールされていないようです。\r\nインストールしてください", "通知");
-                        URLUtility.OpenUrl("https://developer.microsoft.com/en-us/microsoft-edge/webview2/");
-                    }
+                    SavePage();
+                    var parameters = new NavigationParameters();
+                    parameters.Add("filepath", this.FilePath);
+                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord), parameters);
+                }
+                else
+                {
+                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucSlideshow));
+
                 }
 
-            }
-            catch (Exception ex)
-            {
-                ShowMessage.ShowErrorOK(ex.Message, "Error");
+                this._SlideshowF = !this._SlideshowF;
             }
         }
-        #endregion
-
-        #region 次へ画面(URL)遷移
-        /// <summary>
-        /// 次へ画面(URL)遷移
-        /// </summary>
-        public void Next()
+        public void Init()
         {
-            try
-            {
-                this.DisplayElements?.NextNavigate();
-            }
-            catch
-            {
-                
-            }
+            //this._regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
+            //this._regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
+            //this._regionManager.RequestNavigate("ViewerRegion", "ucWhitebord");
         }
-        #endregion
-
-        #region 直前へ画面(URL)遷移
-        /// <summary>
-        /// 直前へ画面(URL)遷移
-        /// </summary>
-        public void Prev()
-        {
-            try
-            {
-                this.DisplayElements?.PrevNavigate();
-
-            }
-            catch
-            {
-
-            }
-        }
-        #endregion
-
-        #region ループフラグ
-        /// <summary>
-        /// ループフラグ
-        /// </summary>
-        bool _LoopF = false;
-        /// <summary>
-        /// ループフラグ
-        /// </summary>
-        public bool LoopF
-        {
-            get
-            {
-                return _LoopF;
-            }
-            set
-            {
-                if (!_LoopF.Equals(value))
-                {
-                    _LoopF = value;
-                    RaisePropertyChanged("LoopF");
-                }
-            }
-        }
-        #endregion
-
-        #region ループ処理の開始
-        /// <summary>
-        /// ループ処理の開始
-        /// </summary>
-        public void Loop()
-        {
-            try
-            {
-                this.DisplayElements?.StartTimer();
-            }
-            catch
-            {
-
-            }
-        }
-        #endregion
-
-        #region ループの一時停止
-        /// <summary>
-        /// ループの一時停止
-        /// </summary>
-        public void Pose()
-        {
-            try
-            {
-                this.DisplayElements?.StopTimer();
-            }
-            catch
-            {
-
-            }
-        }
-        #endregion
 
         #region 背景の保存先ディレクトリ
         /// <summary>
         /// 背景の保存先ディレクトリ
         /// </summary>
-        private string BackgroundDirectory
+        private string ImageSaveDirectory
         {
             get
             {
                 // アプリケーションフォルダの取得
-                var dir = Path.Combine(PathManager.GetApplicationFolder(), "Config", "Background");
+                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage");
                 PathManager.CreateDirectory(dir);
 
                 return dir;
@@ -276,31 +217,28 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region 背景の登録
+        #region ページの保存処理
         /// <summary>
-        /// 背景の登録
+        /// ページの保存処理
         /// </summary>
-        public void RegistBackground()
+        public void SavePage()
         {
             try
             {
-                // ダイアログのインスタンスを生成
-                var dialog = new Microsoft.Win32.OpenFileDialog();
+                var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
+                var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
-                // ファイルの種類を設定
-                dialog.Filter = "メディアファイル (*.mp4;*.wav;*.jpg;*.png)|*.mp4;*.wav;*.jpg;*.png|全てのファイル (*.*)|*.*";
+                // キャプチャ領域の生成
+                var targetRect = new Rect(targetPoint.X, targetPoint.Y, ctrl.ActualWidth, ctrl.ActualHeight);
 
-                // ダイアログを表示する
-                if (dialog.ShowDialog() == true)
-                {
-                    var path = Path.Combine(BackgroundDirectory, "Viewer" + Path.GetExtension(dialog.FileName));
+                // ファイルパスの取得
+                string file = GetfileName(ImageSaveDirectory);
 
-                    // ファイルの移動（同じ名前のファイルがある場合は上書き）
-                    File.Copy(dialog.FileName, path, true);
-                    this.DisplayElements!.ViewerBackgroundMediaPath = path;
-                    this.DisplayElements.SaveConfig();
-                    this.DisplayElements.LoadConfig();
-                }
+                //// スクリーンショット実行
+                ExcuteScreenShot(targetRect, file);
+
+                this.FilePath = file;
+
             }
             catch (Exception e)
             {
@@ -309,16 +247,39 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        public void Reload()
+        #region ファイルパスの作成処理
+        /// <summary>
+        /// ファイルパスの作成処理
+        /// </summary>
+        /// <param name="folderPath">フォルダパス</param>
+        /// <returns>ファイルパス</returns>
+        private string GetfileName(string folderPath)
         {
-            try
+            var dtNow = DateTime.Now;
+            var file = "Temporary.jpg";
+            return Path.Combine(folderPath, file);
+        }
+        #endregion
+
+        #region スクリーンショットの作成処理
+        /// <summary>
+        /// スクリーンショットの作成処理
+        /// </summary>
+        /// <param name="rect">矩形</param>
+        /// <param name="fileName">ファイル名</param>
+        private void ExcuteScreenShot(Rect rect, string fileName)
+        {
+            // 矩形と同じサイズのBitmapを作成
+            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height))
+            using (var graphics = Graphics.FromImage(bitmap))
             {
-                this.DisplayElements?.ReloadURL();
-            }
-            catch (Exception e)
-            {
-                ShowMessage.ShowErrorOK(e.Message, "Error");
+                // 画面から指定された矩形と同じ条件でコピー
+                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, bitmap.Size);
+
+                // 画像ファイルとして保存
+                bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
         }
+        #endregion
     }
 }

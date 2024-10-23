@@ -492,12 +492,15 @@ namespace ZkLauncher.Models
         // タイマを設定する
         public void SetupTimer()
         {
-            // タイマのインスタンスを生成
-            _timer = new DispatcherTimer(); // 優先度はDispatcherPriority.Background
-                                            // インターバルを設定
-            _timer.Interval = new TimeSpan(0, 0, 1);
-            // タイマメソッドを設定
-            _timer.Tick += new EventHandler(LoopExecute!);
+            if (_timer == null)
+            {
+                // タイマのインスタンスを生成
+                _timer = new DispatcherTimer(); // 優先度はDispatcherPriority.Background
+                                                // インターバルを設定
+                _timer.Interval = new TimeSpan(0, 0, 1);
+                // タイマメソッドを設定
+                _timer.Tick += new EventHandler(LoopExecute!);
+            }
         }
 
         #region タイマーの開始処理

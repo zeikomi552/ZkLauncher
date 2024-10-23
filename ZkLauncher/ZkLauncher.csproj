@@ -9,14 +9,24 @@
     <Authors>Zeikomi552</Authors>
     <Company>Zeikomi</Company>
     <ApplicationIcon>Common\Imanges\app.ico</ApplicationIcon>
-    <Version>0.9.2</Version>
+    <Version>0.9.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Common\Imanges\app.ico" />
     <None Remove="Common\Imanges\icons\arrow-left.svg" />
     <None Remove="Common\Imanges\icons\arrow-right.svg" />
+    <None Remove="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\erase-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\gesture-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\pencil-black.svg" />
+    <None Remove="Common\Imanges\icons\pencil-blue.svg" />
+    <None Remove="Common\Imanges\icons\pencil-red.svg" />
+    <None Remove="Common\Imanges\icons\pencil-yellow.svg" />
     <None Remove="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\save-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\select-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +36,13 @@
     <Resource Include="Common\Imanges\icons\arrow-right.svg">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\erase-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\gesture-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-black.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-blue.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-red.svg" />
+    <Resource Include="Common\Imanges\icons\pencil-yellow.svg" />
     <Resource Include="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
   </ItemGroup>
 
@@ -35,12 +52,17 @@
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="3.1.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2739.15" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="Prism.Core" Version="9.0.537" />
     <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
     <PackageReference Include="SharpVectors.Reloaded" Version="1.8.4.2" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Common\Imanges\app.ico" />
+    <Resource Include="Common\Imanges\icons\save-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\select-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
