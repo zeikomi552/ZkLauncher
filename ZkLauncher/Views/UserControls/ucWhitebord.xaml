@@ -106,26 +106,24 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="0,20">
-                    <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                    <ToggleButton Background="Silver" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
                                       Content="大" Height="50" Width="50" Margin="5" IsChecked="{Binding Size, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=20}"/>
 
 
-                    <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                    <ToggleButton Background="Silver" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
                                       Content="中" Height="50" Width="50" Margin="5" IsChecked="{Binding Size, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=10}"/>
 
-                    <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                    <ToggleButton Background="Silver" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
                                       Content="小" Height="50" Width="50" Margin="5" IsChecked="{Binding Size, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=5}"/>
 
 
                 </StackPanel>
-                <Button Width="55" Height="55" Style="{StaticResource MaterialDesignToolButton}" Margin="5" Cursor="Hand">
+                <Button Background="Silver" Width="55" Height="55" Style="{StaticResource MaterialDesignToolButton}" Margin="5" Cursor="Hand">
                     <Button.Content>
-                        <Viewbox>
-                            <StackPanel>
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="全消し"/>
-                            </StackPanel>
-                        </Viewbox>
+                        <StackPanel>
+                            <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/trush-square-svgrepo-com.svg" />
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="全消し"/>
+                        </StackPanel>
                     </Button.Content>
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
@@ -156,24 +154,24 @@
                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Cursor="Hand">
 
 
-                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand" 
+                    <ToggleButton Background="Silver" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand" 
                                       IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=Ink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-black.svg" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="ペン"/>
                                 </StackPanel>
                             </Viewbox>
                         </ToggleButton.Content>
                     </ToggleButton>
 
-                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                    <ToggleButton Background="Silver" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
                                       IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=EraseByStroke, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" Cursor="" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/erase-svgrepo-com.svg" Cursor="" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="消しゴム"/>
                                 </StackPanel>
                             </Viewbox>
@@ -181,12 +179,12 @@
 
                     </ToggleButton>
 
-                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                    <ToggleButton Background="Silver" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
                                       IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=Select, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/select-svgrepo-com.svg" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="選択"/>
                                 </StackPanel>
                             </Viewbox>
@@ -194,12 +192,12 @@
 
                     </ToggleButton>
 
-                    <ToggleButton Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
+                    <ToggleButton Background="Silver" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Cursor="Hand"
                                       IsChecked="{Binding EditingMode, Converter={StaticResource InkCanvasEditingModeToBoolConverter}, ConverterParameter=GestureOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/gesture-svgrepo-com.svg" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="ジェスチャ"/>
                                 </StackPanel>
                             </Viewbox>

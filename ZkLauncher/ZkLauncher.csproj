@@ -17,12 +17,16 @@
     <None Remove="Common\Imanges\icons\arrow-left.svg" />
     <None Remove="Common\Imanges\icons\arrow-right.svg" />
     <None Remove="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\erase-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\gesture-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\pencil-black.svg" />
     <None Remove="Common\Imanges\icons\pencil-blue.svg" />
     <None Remove="Common\Imanges\icons\pencil-red.svg" />
     <None Remove="Common\Imanges\icons\pencil-yellow.svg" />
     <None Remove="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\save-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\select-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +37,8 @@
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\erase-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\gesture-svgrepo-com.svg" />
     <Resource Include="Common\Imanges\icons\pencil-black.svg" />
     <Resource Include="Common\Imanges\icons\pencil-blue.svg" />
     <Resource Include="Common\Imanges\icons\pencil-red.svg" />
@@ -55,6 +61,8 @@
   <ItemGroup>
     <Resource Include="Common\Imanges\app.ico" />
     <Resource Include="Common\Imanges\icons\save-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\select-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
