@@ -62,5 +62,9 @@ namespace ZkLauncher.Models
 
         public void ReloadURL();
 
+        public void MoveUP();
+        public void MoveDown();
+        public void SelectedItemDelete();
+
     }
 }
