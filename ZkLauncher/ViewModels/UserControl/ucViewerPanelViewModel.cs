@@ -229,7 +229,10 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
+                // オブジェクトの取得
                 var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
+
+                // 座標の取得
                 var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
                 // ファイルパスの取得
