@@ -19,6 +19,11 @@
         <Converters:ColorToBooleanConverter x:Key="ColorToBooleanConverter"/>
         <Converters:IntToBooleanConverter x:Key="IntToBooleanConverter" Default="5"/>
     </UserControl.Resources>
+    <b:Interaction.Triggers>
+        <b:EventTrigger>
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
     <Border BorderBrush="AliceBlue" BorderThickness="5" Cursor="">
         <Grid Background="Black" Cursor="">
             <Grid.ColumnDefinitions>
@@ -32,6 +37,7 @@
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="Click">
                                 <b:CallMethodAction TargetObject="{Binding}" MethodName="Save"/>
+                                <b:CallMethodAction TargetObject="{Binding}" MethodName="Clear"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                         <Button.Content>
@@ -136,16 +142,17 @@
 
             <Grid Grid.Column="1">
                 <Border Margin="5" BorderBrush="AliceBlue" BorderThickness="1">
-                    <Grid Width="1407" Height="960" x:Name="Drawgrid"
+                    <Grid Margin="1">
+                        <Grid x:Name="Drawgrid"
                         MinWidth="{Binding ActualWidth, ElementName=DrawArea, Mode=OneWay}"
                         MinHeight="{Binding ActualHeight, ElementName=DrawArea, Mode=OneWay}">
-                        <Image Width="auto" Height="auto" x:Name="DrawArea" Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
-                        <InkCanvas x:Name="theInkCanvas" EditingMode="{Binding EditingMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <Image Width="auto" Height="auto" x:Name="DrawArea" Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
+                            <InkCanvas x:Name="theInkCanvas" EditingMode="{Binding EditingMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            hlp:InkCanvasSizeHelper.Size="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            hlp:InkCanvasElaseShapeHelper.ElaseShape="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            hlp:InkCanvasColorHelper.Color="{Binding MarkerColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                           hlp:InkCanvasHighlighterHelper.Highlighter="{Binding IsChecked, ElementName=toggleButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                           Margin="5" Background="{x:Null}"/>
+                           hlp:InkCanvasHighlighterHelper.Highlighter="{Binding IsChecked, ElementName=toggleButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}"/>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>

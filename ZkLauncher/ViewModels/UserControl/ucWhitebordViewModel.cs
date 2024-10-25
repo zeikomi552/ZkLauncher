@@ -162,8 +162,10 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            _SaveF = false;
             // このViewが表示されるときに実行される
             this.FilePath = GetfileName(DirectoryPathDictionary.ImageSaveDirectory);
+            RaisePropertyChanged("FilePath");
         }
 
         #region ファイルパスの作成処理
@@ -206,7 +208,7 @@ namespace ZkLauncher.ViewModels.UserControl
                 }
 
                 PathManager.CreateDirectory(dir);
-                return Path.Combine(dir, "Picture-" + DateTime.Today.ToString("yyyyMMdd-HHmmss") + ".png");
+                return Path.Combine(dir, "Picture-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png");
             }
             // 保存されている場合
             else
@@ -257,6 +259,8 @@ namespace ZkLauncher.ViewModels.UserControl
 
                     this.FilePath = filepath;
                     RaisePropertyChanged("FilePath");
+
+                    this._SaveF = true;
                 }
             }
             catch (Exception e)
@@ -270,15 +274,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                //var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-                //if (wnd != null)
-                //{
-                //    wnd.theInkCanvas.Strokes.StrokesChanged -= Strokes_StrokesChanged;
-                //    wnd.theInkCanvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
-                //}
-
-                //Clear(sender, e);
+                Clear(sender, e);
             }
             catch(Exception ex)
             {
