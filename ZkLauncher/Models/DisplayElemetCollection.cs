@@ -95,6 +95,82 @@ namespace ZkLauncher.Models
 
         public DisplayElement? SelectedItemBk { get; set; } = null;
 
+        #region 1つ上の要素と入れ替える
+        /// <summary>
+        /// 1つ上の要素と入れ替える
+        /// </summary>
+        public void MoveUP()
+        {
+            if (this.SelectedItem != null)
+            {
+                int index = this.Elements.IndexOf(this.SelectedItem);
+
+                if (index > 0)
+                {
+                    // 指定した位置の要素を取り出す
+                    var elem = this.Elements.ElementAt(index);
+                    // 指定した位置の要素を削除する
+                    this.Elements.RemoveAt(index);
+                    // 一つ上の要素に挿入する
+                    this.Elements.Insert(index - 1, elem);
+                    // 選択要素をセット
+                    this.SelectedItem = elem;
+                }
+            }
+        }
+        #endregion
+
+        #region 一つ下の要素と入れ替える
+        /// <summary>
+        /// 一つ下の要素と入れ替える
+        /// </summary>
+        public void MoveDown()
+        {
+            if (this.SelectedItem != null)
+            {
+                int index = this.Elements.IndexOf(this.SelectedItem);
+
+                if (index < this.Elements.Count - 1)
+                {
+                    // 指定した位置の要素を取り出す
+                    var elem = this.Elements.ElementAt(index);
+                    // 指定した位置の要素を削除する
+                    this.Elements.RemoveAt(index);
+                    // 一つ上の要素に挿入する
+                    this.Elements.Insert(index + 1, elem);
+                    // 選択要素をセット
+                    this.SelectedItem = elem;
+                }
+            }
+        }
+        #endregion
+
+        #region 選択行を削除する処理
+        /// <summary>
+        /// 選択行を削除する処理
+        /// </summary>
+        public void SelectedItemDelete()
+        {
+            try
+            {
+                // 選択行を削除
+                if (this.SelectedItem != null)
+                {
+                    var tmp = (from x in this.Elements
+                               where x.Equals(this.SelectedItem)
+                               select x).First();
+
+                    Remove(tmp);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+        }
+        #endregion
+
         #region 選択要素
         /// <summary>
         /// 選択要素

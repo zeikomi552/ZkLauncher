@@ -118,10 +118,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        private bool handle = true;
-        //List<StrokePairM> _StrokeUndo = new List<StrokePairM>();
-        //List<StrokePairM> _StrokeRedo = new List<StrokePairM>();
-        InkCanvas _InkCanvas;
         private string _StorkePath = System.AppDomain.CurrentDomain.BaseDirectory + @"Common\canvas1-stroke";
 
         IRegionManager _regionManager;
