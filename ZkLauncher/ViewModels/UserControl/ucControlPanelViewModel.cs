@@ -188,6 +188,30 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        #region 登録処理
+        /// <summary>
+        /// 登録処理
+        /// </summary>
+        public void ContextMenu_AutoSetTumbnail()
+        {
+            try
+            {
+                // サムネイルの作成処理
+                this.DisplayElements!.AutoSetThumbnail();
+
+                // Configへの保存
+                this.DisplayElements.SaveConfig();
+
+                // コンフィグのロード
+                this.DisplayElements.LoadConfig();
+            }
+            catch
+            {
+
+            }
+        }
+        #endregion
+
         #region 背景の保存先ディレクトリ
         /// <summary>
         /// 背景の保存先ディレクトリ

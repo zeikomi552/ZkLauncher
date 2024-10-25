@@ -288,7 +288,6 @@ namespace ZkLauncher.ViewModels.UserControl
         /// <returns>ファイルパス</returns>
         private string GetfileName(string folderPath)
         {
-            var dtNow = DateTime.Now;
             var file = "Temporary.jpg";
             return Path.Combine(folderPath, file);
         }
