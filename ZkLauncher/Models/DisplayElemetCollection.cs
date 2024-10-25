@@ -481,7 +481,10 @@ namespace ZkLauncher.Models
 
                 if (text.Contains("http://") || text.Contains("https://"))
                 {
-                    this.Add(new DisplayElement() { Title = "リンク", URI = text });
+                    var tmp = text.Replace("http://", "").Replace("https://", "").Split('/');
+                    var title = tmp.ElementAt(0);
+
+                    this.Add(new DisplayElement() { Title = title, URI = text });
                     regist = true;
                 }
                 else

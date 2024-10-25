@@ -193,12 +193,16 @@ namespace ZkLauncher.ViewModels.UserControl
                 this._SlideshowF = !this._SlideshowF;
             }
         }
+
+        #region 初期化処理
+        /// <summary>
+        /// 初期化処理
+        /// </summary>
         public void Init()
         {
-            //this._regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
-            //this._regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
-            //this._regionManager.RequestNavigate("ViewerRegion", "ucWhitebord");
+
         }
+        #endregion
 
         #region 背景の保存先ディレクトリ
         /// <summary>
@@ -228,14 +232,11 @@ namespace ZkLauncher.ViewModels.UserControl
                 var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
                 var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
-                // キャプチャ領域の生成
-                var targetRect = new Rect(targetPoint.X, targetPoint.Y, ctrl.ActualWidth, ctrl.ActualHeight);
-
                 // ファイルパスの取得
                 string file = GetfileName(ImageSaveDirectory);
 
-                //// スクリーンショット実行
-                ExcuteScreenShot(targetRect, file);
+                // スクリーンショットの作成
+                ScreenShotM.ExecuteScreenShot(ctrl, file);
 
                 this.FilePath = file;
 
@@ -261,25 +262,5 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region スクリーンショットの作成処理
-        /// <summary>
-        /// スクリーンショットの作成処理
-        /// </summary>
-        /// <param name="rect">矩形</param>
-        /// <param name="fileName">ファイル名</param>
-        private void ExcuteScreenShot(Rect rect, string fileName)
-        {
-            // 矩形と同じサイズのBitmapを作成
-            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height))
-            using (var graphics = Graphics.FromImage(bitmap))
-            {
-                // 画面から指定された矩形と同じ条件でコピー
-                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, bitmap.Size);
-
-                // 画像ファイルとして保存
-                bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-            }
-        }
-        #endregion
     }
 }
