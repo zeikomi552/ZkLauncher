@@ -20,6 +20,9 @@ using ZkLauncher.Views.UserControls;
 
 namespace ZkLauncher.ViewModels.UserControl
 {
+    /// <summary>
+    /// Viewerパネル用ビューモデル
+    /// </summary>
     public class ucViewerPanelViewModel : BindableBase, IDialogAware
     {
         #region IDialogAware overwrite
