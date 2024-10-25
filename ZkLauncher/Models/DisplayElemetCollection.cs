@@ -492,7 +492,9 @@ namespace ZkLauncher.Models
                     text = text.Replace("\"", "");
                     if (File.Exists(text) && System.IO.Path.GetExtension(text).ToLower().Equals(".pdf"))
                     {
-                        this.Add(new DisplayElement() { Title = "ファイル", URI = text });
+                        var filename = Path.GetFileNameWithoutExtension(text);
+
+                        this.Add(new DisplayElement() { Title = filename, URI = text });
                         regist = true;
                     }
                 }
