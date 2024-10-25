@@ -66,5 +66,7 @@ namespace ZkLauncher.Models
         public void MoveDown();
         public void SelectedItemDelete();
 
+        public void AutoSetThumbnail();
+
     }
 }

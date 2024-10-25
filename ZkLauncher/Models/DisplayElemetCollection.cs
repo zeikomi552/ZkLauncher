@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -64,6 +65,22 @@ namespace ZkLauncher.Models
                     _ViewerBackgroundMediaPath = value;
                     RaisePropertyChanged("ViewerBackgroundMediaPath");
                 }
+            }
+        }
+        #endregion
+
+        #region サムネイルの一時保存先ディレクトリ
+        /// <summary>
+        /// 背景の保存先ディレクトリ
+        /// </summary>
+        private string ThumbnailFilePath
+        {
+            get
+            {
+                // アプリケーションフォルダの取得
+                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage");
+                PathManager.CreateDirectory(dir);
+                return Path.Combine(dir, "TemporaryTumnail.jpg");
             }
         }
         #endregion
@@ -466,6 +483,54 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region サムネイルの自動セット処理
+        /// <summary>
+        /// サムネイルの自動セット処理
+        /// </summary>
+        public void AutoSetThumbnail()
+        {
+            try
+            {
+                var ctrl = this.SelectedItem.WebView2Object;
+
+
+                if (ctrl != null)
+                {
+                    var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
+
+                    // キャプチャ領域の生成
+                    var targetRect = ctrl.ActualWidth < ctrl.ActualHeight ?
+                        new Rect(targetPoint.X, targetPoint.Y, ctrl.ActualWidth, (ctrl.ActualWidth / 4) * 3)
+                        : new Rect(targetPoint.X, targetPoint.Y, ctrl.ActualWidth, ctrl.ActualHeight);
+
+                    using (var bitmap = ScreenShotM.ExecuteScreenShotToBitmap(targetRect))
+                    {
+                        // 圧縮後のサイズ
+                        int width = 400; int height = 300;
+                        // 新しいBitmapオブジェクトを作成
+                        using (Bitmap resizedImage = new Bitmap(width, height))
+                        {
+                            // Graphicsオブジェクトを作成
+                            using (Graphics g = Graphics.FromImage(resizedImage))
+                            {
+                                // DrawImageメソッドを使用して画像を縮小
+                                g.DrawImage(bitmap, 0, 0, width, height);
+                            }
+
+                            PathManager.CreateCurrentDirectory(this.SelectedItem.ImagePath);
+                            //bitmap.Save(this.SelectedItem.ImagePath, System.Drawing.Imaging.ImageFormat.Png);
+                            // 縮小後の画像を保存
+                            resizedImage.Save(this.SelectedItem.ImagePath, System.Drawing.Imaging.ImageFormat.Png);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
 
         #region クリップボード上の要素の追加
         /// <summary>
@@ -481,7 +546,15 @@ namespace ZkLauncher.Models
 
                 if (text.Contains("http://") || text.Contains("https://"))
                 {
-                    this.Add(new DisplayElement() { Title = "リンク", URI = text });
+                    var tmp = text.Replace("http://", "").Replace("https://", "").Split('/');
+                    var title = tmp.ElementAt(0);
+
+                    // 要素を追加
+                    this.Add(new DisplayElement() { Title = title, URI = text });
+
+                    // 最後の要素を選択
+                    this.SelectLast();
+
                     regist = true;
                 }
                 else
@@ -489,12 +562,18 @@ namespace ZkLauncher.Models
                     text = text.Replace("\"", "");
                     if (File.Exists(text) && System.IO.Path.GetExtension(text).ToLower().Equals(".pdf"))
                     {
-                        this.Add(new DisplayElement() { Title = "ファイル", URI = text });
+                        var filename = Path.GetFileNameWithoutExtension(text);
+
+                        this.Add(new DisplayElement() { Title = filename, URI = text });
+
+                        // 最後の要素を選択
+                        this.SelectLast();
+
                         regist = true;
                     }
                 }
             }
-            //クリップボードにBitmapデータがあるか調べる（調べなくても良い）
+            //クリップボードにBitmapデータがあるか調べる
             else if (System.Windows.Clipboard.ContainsImage())
             {
 
@@ -565,6 +644,7 @@ namespace ZkLauncher.Models
         // タイマのインスタンス
         private DispatcherTimer? _timer;
 
+        #region タイマを設定する
         // タイマを設定する
         public void SetupTimer()
         {
@@ -578,6 +658,7 @@ namespace ZkLauncher.Models
                 _timer.Tick += new EventHandler(LoopExecute!);
             }
         }
+        #endregion
 
         #region タイマーの開始処理
         /// <summary>
@@ -627,7 +708,6 @@ namespace ZkLauncher.Models
             }
         }
         #endregion
-
 
         #region 待ち時間の初期化
         /// <summary>
