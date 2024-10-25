@@ -117,14 +117,33 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        #region ナビゲートコマンド
+        /// <summary>
+        /// ナビゲートコマンド
+        /// </summary>
         public DelegateCommand<string> NavigateCommand { get; private set; }
+        #endregion
 
-
+        #region コンテナマネージャー
+        /// <summary>
+        /// コンテナマネージャー
+        /// </summary>
         IContainerExtension _container;
+        #endregion
 
+        #region 領域マネージャー
+        /// <summary>
+        /// 領域マネージャー
+        /// </summary>
         public IRegionManager _regionManager { get; set; }
+        #endregion
 
+        #region スライドショー画面モード
+        /// <summary>
+        /// スライドショー画面モード
+        /// </summary>
         bool _SlideshowF { get; set; } = true;
+        #endregion
 
         #region 画像保存先ファイルパス
         /// <summary>
