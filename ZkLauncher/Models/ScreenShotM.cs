@@ -9,9 +9,18 @@ using System.Windows.Controls;
 
 namespace ZkLauncher.Models
 {
+    /// <summary>
+    /// スクリーンショット作成クラス
+    /// </summary>
     public class ScreenShotM : BindableBase
     {
-        public static void ExecuteScreenShot(FrameworkElement ctrl, string filename)
+        #region スクリーンショットの実行処理
+        /// <summary>
+        /// スクリーンショットの実行処理
+        /// </summary>
+        /// <param name="ctrl">コントロール</param>
+        /// <param name="filepath">ファイルパス</param>
+        public static void ExecuteScreenShot(FrameworkElement ctrl, string filepath)
         {
             var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
@@ -19,8 +28,9 @@ namespace ZkLauncher.Models
             var targetRect = new Rect(targetPoint.X, targetPoint.Y, ctrl.ActualWidth, ctrl.ActualHeight);
 
             //// スクリーンショット実行
-            ScreenShotM.ExecuteScreenShot(targetRect, filename);
+            ScreenShotM.ExecuteScreenShot(targetRect, filepath);
         }
+        #endregion
 
 
         #region スクリーンショットの作成処理
