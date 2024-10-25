@@ -136,17 +136,16 @@
 
             <Grid Grid.Column="1">
                 <Border Margin="5" BorderBrush="AliceBlue" BorderThickness="1">
-                    <Grid x:Name="Drawgrid"
-              MinWidth="{Binding ActualWidth, ElementName=DrawArea, Mode=OneWay}"
-              MinHeight="{Binding ActualHeight, ElementName=DrawArea, Mode=OneWay}">
-                        <Image x:Name="DrawArea" Margin="5"
-                               Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
+                    <Grid Width="1407" Height="960" x:Name="Drawgrid"
+                        MinWidth="{Binding ActualWidth, ElementName=DrawArea, Mode=OneWay}"
+                        MinHeight="{Binding ActualHeight, ElementName=DrawArea, Mode=OneWay}">
+                        <Image Width="auto" Height="auto" x:Name="DrawArea" Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
                         <InkCanvas x:Name="theInkCanvas" EditingMode="{Binding EditingMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   hlp:InkCanvasSizeHelper.Size="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   hlp:InkCanvasElaseShapeHelper.ElaseShape="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   hlp:InkCanvasColorHelper.Color="{Binding MarkerColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   hlp:InkCanvasHighlighterHelper.Highlighter="{Binding IsChecked, ElementName=toggleButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   Margin="5" Background="{x:Null}"/>
+                           hlp:InkCanvasSizeHelper.Size="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           hlp:InkCanvasElaseShapeHelper.ElaseShape="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           hlp:InkCanvasColorHelper.Color="{Binding MarkerColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           hlp:InkCanvasHighlighterHelper.Highlighter="{Binding IsChecked, ElementName=toggleButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Margin="5" Background="{x:Null}"/>
                     </Grid>
                 </Border>
             </Grid>

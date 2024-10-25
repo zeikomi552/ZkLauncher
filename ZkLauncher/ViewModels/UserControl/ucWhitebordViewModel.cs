@@ -118,14 +118,40 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        private string _StorkePath = System.AppDomain.CurrentDomain.BaseDirectory + @"Common\canvas1-stroke";
+
+        #region 表示要素
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        IDisplayEmentsCollection? _DisplayElements;
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        public IDisplayEmentsCollection? DisplayElements
+        {
+            get
+            {
+                return _DisplayElements;
+            }
+            set
+            {
+                if (_DisplayElements == null || !_DisplayElements.Equals(value))
+                {
+                    _DisplayElements = value;
+                    RaisePropertyChanged("DisplayElements");
+                }
+            }
+        }
+        #endregion
+
 
         IRegionManager _regionManager;
         IContainerExtension _container;
-        public ucWhitebordViewModel(IContainerExtension container, IRegionManager regionManager)
+        public ucWhitebordViewModel(IContainerExtension container, IRegionManager regionManager, IDisplayEmentsCollection displayElements)
         {
             _regionManager = regionManager;
             _container = container;
+            this.DisplayElements = displayElements;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -137,9 +163,58 @@ namespace ZkLauncher.ViewModels.UserControl
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // このViewが表示されるときに実行される
-            this.FilePath = string.Empty;
-            this.FilePath = navigationContext.Parameters["filepath"]?.ToString()!;
+            this.FilePath = GetfileName(DirectoryPathDictionary.ImageSaveDirectory);
         }
+
+        #region ファイルパスの作成処理
+        /// <summary>
+        /// ファイルパスの作成処理
+        /// </summary>
+        /// <param name="folderPath">フォルダパス</param>
+        /// <returns>ファイルパス</returns>
+        private string GetfileName(string folderPath)
+        {
+            var file = "Temporary.jpg";
+            return Path.Combine(folderPath, file);
+        }
+        #endregion
+
+        private bool _SaveF = false;
+
+        #region ファイルパスの取得処理
+        /// <summary>
+        /// ファイルパスの取得処理
+        /// </summary>
+        /// <returns>ファイルパス</returns>
+        private string GetFilepath()
+        {
+            // まだ保存していない場合
+            if (!_SaveF)
+            {
+                string dir = string.Empty;
+                if (this.DisplayElements == null ||
+                    string.IsNullOrEmpty(this.DisplayElements.DrawPictureSaveDirectoryPath))
+                {
+                    // アプリケーションフォルダの取得
+                    dir = DirectoryPathDictionary.ImageSaveDirectoryDefault;
+                }
+                else
+                {
+                    // アプリケーションフォルダの取得
+                    dir = Path.Combine(this.DisplayElements.DrawPictureSaveDirectoryPath);
+
+                }
+
+                PathManager.CreateDirectory(dir);
+                return Path.Combine(dir, "Picture-" + DateTime.Today.ToString("yyyyMMdd-HHmmss") + ".png");
+            }
+            // 保存されている場合
+            else
+            {
+                return this.FilePath;
+            }
+        }
+        #endregion
 
         #region 保存ボタン処理(.png)
         /// <summary>
@@ -153,31 +228,35 @@ namespace ZkLauncher.ViewModels.UserControl
             {
                 var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
 
+                PresentationSource source = PresentationSource.FromVisual(wnd);
+
                 if (wnd != null)
                 {
-                    Microsoft.Win32.SaveFileDialog dlgSave = new Microsoft.Win32.SaveFileDialog();
+                    // ↓画像がにじむ問題に対応
+                    var size = new Size((int)(wnd.Drawgrid.ActualWidth), (int)(wnd.Drawgrid.ActualHeight));
+                    wnd.Drawgrid.Measure(size);
+                    wnd.Drawgrid.Arrange(new Rect(size));
+                    // ↑画像がにじむ問題に対応
 
-                    dlgSave.Filter = "PNGファイル(*.png)|*.png";
-                    dlgSave.AddExtension = true;
+                    // レンダリング
+                    var bmp = new RenderTargetBitmap(
+                        (int)(wnd.Drawgrid.ActualWidth),
+                        (int)(wnd.Drawgrid.ActualHeight),
+                        96, 96, // DPI
+                        PixelFormats.Pbgra32);
+                    bmp.Render(wnd.Drawgrid);
 
-                    if ((bool)dlgSave.ShowDialog()!)
+                    string filepath = GetFilepath();
+                    // jpegで保存
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(bmp));
+                    using (var fs = File.Open(filepath, FileMode.Create))
                     {
-                        // レンダリング
-                        var bmp = new RenderTargetBitmap(
-                            (int)wnd.Drawgrid.ActualWidth,
-                            (int)wnd.Drawgrid.ActualHeight,
-                            96, 96, // DPI
-                            PixelFormats.Pbgra32);
-                        bmp.Render(wnd.Drawgrid);
-
-                        // jpegで保存
-                        var encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(bmp));
-                        using (var fs = File.Open(dlgSave.FileName, FileMode.Create))
-                        {
-                            encoder.Save(fs);
-                        }
+                        encoder.Save(fs);
                     }
+
+                    this.FilePath = filepath;
+                    RaisePropertyChanged("FilePath");
                 }
             }
             catch (Exception e)
@@ -232,125 +311,5 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
-        //#region Undo処理
-        ///// <summary>
-        ///// Undo処理
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //public void Undo(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-        //        if (wnd != null)
-        //        {
-        //            handle = false;
-
-        //            // 最後の変更を取り出す
-        //            var tmp = this._StrokeUndo.LastOrDefault();
-
-        //            // nullチェック
-        //            if (tmp != null)
-        //            {
-        //                // Redo用に保存する
-        //                _StrokeRedo.Add(new StrokePairM(tmp.AddedStroke, tmp.RemovedStroke));
-
-        //                // 最後に追加された分は取り除く
-        //                wnd.theInkCanvas.Strokes.Remove(tmp.AddedStroke);
-
-        //                // 最後に取り除かれた分は追加する
-        //                wnd.theInkCanvas.Strokes.Add(tmp.RemovedStroke);
-
-        //                // Undoのリストから削除する
-        //                this._StrokeUndo.Remove(tmp);
-        //            }
-
-        //            handle = true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.Error(ex.Message);
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-        //#endregion
-
-        //#region Redo処理
-        ///// <summary>
-        ///// Redo処理
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //public void Redo(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-        //        if (wnd != null)
-        //        {
-        //            handle = false;
-
-        //            // 最後の変更を取り出す
-        //            var tmp = this._StrokeRedo.LastOrDefault();
-
-        //            if (tmp != null)
-        //            {
-        //                // Undoで消されたストロークを追加
-        //                wnd.theInkCanvas.Strokes.Add(tmp.AddedStroke);
-
-        //                // Undoで戻されたストロークを削除
-        //                wnd.theInkCanvas.Strokes.Remove(tmp.RemovedStroke);
-
-        //                // Undo用のストロークを保存
-        //                this._StrokeUndo.Add(new StrokePairM(tmp.AddedStroke, tmp.RemovedStroke));
-
-        //                // Redo用のストロークを削除
-        //                this._StrokeRedo.Remove(tmp);
-        //            }
-
-        //            handle = true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.Error(ex.Message);
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-        //#endregion
-        //#region ストロークが変化した場合の処理
-        ///// <summary>
-        ///// ストロークが変化した場合の処理
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (handle)
-        //        {
-        //            this._StrokeUndo.Add(new StrokePairM(e.Added, e.Removed));
-        //            this._StrokeRedo.Clear();
-
-        //            using (System.IO.FileStream fs =
-        //                new System.IO.FileStream(this._StorkePath, System.IO.FileMode.Create))
-        //            {
-        //                this._InkCanvas.Strokes.Save(fs);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.Error(ex.Message);
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-        //#endregion
     }
 }

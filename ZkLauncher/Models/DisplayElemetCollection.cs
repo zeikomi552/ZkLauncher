@@ -297,6 +297,7 @@ namespace ZkLauncher.Models
             }
             this.ControlBackgroundMediaPath = item.ControlBackgroundMediaPath;
             this.ViewerBackgroundMediaPath = item.ViewerBackgroundMediaPath;
+            this.DrawPictureSaveDirectoryPath = item.DrawPictureSaveDirectoryPath;
         }
         #endregion
 

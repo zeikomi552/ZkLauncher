@@ -208,14 +208,11 @@ namespace ZkLauncher.ViewModels.UserControl
                 if (this._SlideshowF)
                 {
                     SavePage();
-                    var parameters = new NavigationParameters();
-                    parameters.Add("filepath", this.FilePath);
-                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord), parameters);
+                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord));
                 }
                 else
                 {
                     _regionManager.RequestNavigate("ViewerRegion", nameof(ucSlideshow));
-
                 }
 
                 this._SlideshowF = !this._SlideshowF;
@@ -233,23 +230,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region 背景の保存先ディレクトリ
-        /// <summary>
-        /// 背景の保存先ディレクトリ
-        /// </summary>
-        private string ImageSaveDirectory
-        {
-            get
-            {
-                // アプリケーションフォルダの取得
-                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage");
-                PathManager.CreateDirectory(dir);
-
-                return dir;
-            }
-        }
-        #endregion
-
         #region ページの保存処理
         /// <summary>
         /// ページの保存処理
@@ -264,8 +244,9 @@ namespace ZkLauncher.ViewModels.UserControl
                 // 座標の取得
                 var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
+                var dirctorypath = DirectoryPathDictionary.ImageSaveDirectory;
                 // ファイルパスの取得
-                string file = GetfileName(ImageSaveDirectory);
+                string file = GetfileName(dirctorypath);
 
                 // スクリーンショットの作成
                 ScreenShotM.ExecuteScreenShot(ctrl, file);
