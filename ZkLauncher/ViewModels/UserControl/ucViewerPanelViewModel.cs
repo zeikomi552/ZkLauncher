@@ -173,6 +173,12 @@ namespace ZkLauncher.ViewModels.UserControl
 
         }
         #endregion
+
+        #region URLへのナビゲート処理
+        /// <summary>
+        /// URLへのナビゲート処理
+        /// </summary>
+        /// <param name="navigatePath">ナビゲートパス（URL or ファイルパス(.pdfのみ)）</param>
         private void Navigate(string navigatePath)
         {
             if (navigatePath != null)
@@ -193,6 +199,7 @@ namespace ZkLauncher.ViewModels.UserControl
                 this._SlideshowF = !this._SlideshowF;
             }
         }
+        #endregion
 
         #region 初期化処理
         /// <summary>
