@@ -209,10 +209,12 @@ namespace ZkLauncher.ViewModels.UserControl
                 {
                     SavePage();
                     _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord));
+                    _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForWhiteboard));
                 }
                 else
                 {
                     _regionManager.RequestNavigate("ViewerRegion", nameof(ucSlideshow));
+                    _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForSlideshow));
                 }
 
                 this._SlideshowF = !this._SlideshowF;
