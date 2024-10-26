@@ -118,9 +118,8 @@ namespace ZkLauncher.ViewModels.UserControl
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="dialogService"></param>
         /// <param name="displayElements"></param>
-        public ucControlPanelViewModel(IDialogService dialogService, IWindowPostionCollection windowPosition)
+        public ucControlPanelViewModel(IWindowPostionCollection windowPosition)
         {
             try
             {
