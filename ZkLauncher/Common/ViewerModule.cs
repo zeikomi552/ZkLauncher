@@ -25,12 +25,15 @@ namespace ZkLauncher.Common
             var regionManager = containerProvider.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucSlideshow));
             regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
+
+            regionManager.RegisterViewWithRegion("CotrolPanelRegion", typeof(ucControlPanelForSlideshow));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<ucSlideshow, ucSlideshowViewModel>();
             containerRegistry.RegisterForNavigation<ucWhitebord, ucWhitebordViewModel>();
+            containerRegistry.RegisterForNavigation<ucControlPanelForSlideshow, ucControlPanelForSlideshowViewModel>();
         }
     }
 }

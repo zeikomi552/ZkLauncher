@@ -1,95 +1,16 @@
-﻿using Prism.Dialogs;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Media.Imaging;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
-using Clipboard = System.Windows.Clipboard;
-using DialogResult = Prism.Dialogs.DialogResult;
 
 namespace ZkLauncher.ViewModels.UserControl
 {
-    public class ucControlPanelViewModel : BindableBase, IDialogAware
+    public class ucControlPanelForSlideshowViewModel : BindableBase
     {
-        #region IDialogAware Overwrite
-
-        public string Title
-        {
-            get { return "Control Panel"; }
-        }
-
-
-        private DelegateCommand<string>? _closeDialogCommand;
-        public DelegateCommand<string> CloseDialogCommand =>
-            _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
-        public DialogCloseListener RequestClose { get; }
-
-        protected virtual void CloseDialog(string parameter)
-        {
-            ButtonResult result = ButtonResult.None;
-
-            if (parameter?.ToLower() == "true")
-            {
-                result = ButtonResult.OK;
-            }
-            else if (parameter?.ToLower() == "false")
-                result = ButtonResult.Cancel;
-
-            RaiseRequestClose(new DialogResult(result));
-        }
-
-        public virtual void RaiseRequestClose(IDialogResult dialogResult)
-        {
-            RequestClose.Invoke(dialogResult);
-        }
-
-        public virtual bool CanCloseDialog()
-        {
-            return true;
-        }
-
-        public virtual void OnDialogClosed()
-        {
-
-        }
-        public virtual void OnDialogOpened(IDialogParameters parameters)
-        {
-
-        }
-        #endregion
-
-        #region ウィンドウ位置
-        /// <summary>
-        /// ウィンドウ位置
-        /// </summary>
-        IWindowPostionCollection? _WindowPosition;
-        /// <summary>
-        /// ウィンドウ位置
-        /// </summary>
-        public IWindowPostionCollection? WindowPosition
-        {
-            get
-            {
-                return _WindowPosition;
-            }
-            set
-            {
-                if (_WindowPosition == null || !_WindowPosition.Equals(value))
-                {
-                    _WindowPosition = value;
-                    RaisePropertyChanged("WindowPosition");
-                }
-            }
-        }
-        #endregion
-
         #region 表示要素
         /// <summary>
         /// 表示要素
@@ -121,26 +42,18 @@ namespace ZkLauncher.ViewModels.UserControl
         /// </summary>
         /// <param name="dialogService"></param>
         /// <param name="displayElements"></param>
-        public ucControlPanelViewModel(IDialogService dialogService, IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition)
+        public ucControlPanelForSlideshowViewModel(IDialogService dialogService, IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition)
         {
             try
             {
                 _dialogService = dialogService;
                 this.DisplayElements = displayElements;
                 this.DisplayElements.LoadConfig();
-
-                this.WindowPosition = windowPosition;
-                this.WindowPosition.LoadConfig();
             }
             catch
             {
 
             }
-        }
-
-        public void Init()
-        {
-
         }
 
         #region 登録処理
@@ -261,7 +174,7 @@ namespace ZkLauncher.ViewModels.UserControl
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ShowMessage.ShowErrorOK(e.Message, "Error");
             }
@@ -293,7 +206,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                if(this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
+                if (this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
                 {
                     _dialogService.ShowDialog("ucNameChange", new DialogParameters($"CurrentName={this.DisplayElements.SelectedItem.Title}"), r =>
                     {
@@ -317,6 +230,5 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
-
     }
 }
