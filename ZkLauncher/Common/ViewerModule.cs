@@ -27,6 +27,7 @@ namespace ZkLauncher.Common
             regionManager.RegisterViewWithRegion("ViewerRegion", typeof(ucWhitebord));
 
             regionManager.RegisterViewWithRegion("CotrolPanelRegion", typeof(ucControlPanelForSlideshow));
+            regionManager.RegisterViewWithRegion("CotrolPanelRegion", typeof(ucControlPanelForWhiteboard));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -34,6 +35,7 @@ namespace ZkLauncher.Common
             containerRegistry.RegisterForNavigation<ucSlideshow, ucSlideshowViewModel>();
             containerRegistry.RegisterForNavigation<ucWhitebord, ucWhitebordViewModel>();
             containerRegistry.RegisterForNavigation<ucControlPanelForSlideshow, ucControlPanelForSlideshowViewModel>();
+            containerRegistry.RegisterForNavigation<ucControlPanelForWhiteboard, ucControlPanelForWhiteboardViewModel>();
         }
     }
 }
