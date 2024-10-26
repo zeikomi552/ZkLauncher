@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -236,6 +237,32 @@ namespace ZkLauncher.ViewModels.UserControl
             catch (Exception ex)
             {
                 ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+        }
+        #endregion
+
+        #region ファイルを選択した状態でエクスプローラーを開く
+        /// <summary>
+        /// ファイルを選択した状態でエクスプローラーを開く
+        /// </summary>
+        public void RevealInFileExplore()
+        {
+            try
+            {
+                if (this.FileCollection != null && this.FileCollection.SelectedItem != null &&
+                    !string.IsNullOrEmpty(this.FileCollection.SelectedItem.Filepath))
+                {
+                    var filepath = this.FileCollection.SelectedItem.Filepath;
+                    // ファイルパスのnullチェック
+                    if (!string.IsNullOrEmpty(filepath))
+                    {
+                        Process.Start("explorer.exe", string.Format(@"/select,""{0}", filepath));  // 指定したフォルダを選択した状態でエクスプローラを開く
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.GetType());
             }
         }
         #endregion
