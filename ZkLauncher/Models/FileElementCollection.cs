@@ -123,14 +123,37 @@ namespace ZkLauncher.Models
         {
             try
             {
+                
                 // 選択行を削除
                 if (this.SelectedItem != null)
                 {
+                    int index = this.Elements.IndexOf(this.SelectedItem);
+
                     var tmp = (from x in this.Elements
                                where x.Equals(this.SelectedItem)
                                select x).First();
 
                     Remove(tmp);
+
+                    // 選択されており要素が削除後1個以上存在する場合のみ選択アイテムをセットする
+                    if (index >= 0 && this.Elements.Count > 0)
+                    {
+                        // 最初の要素を選択していた場合
+                        if (index == 0)
+                        {
+                            this.SelectFirst();
+                        }
+                        // 最後の要素を選択していた場合
+                        else if (this.Elements.Count  >= index)
+                        {
+                            this.SelectedItem = this.Elements.ElementAt(index - 1);
+                        }
+                        // 上記以外の要素を選択していた場合
+                        else
+                        {
+                            this.SelectedItem = this.Elements.ElementAt(index);
+                        }
+                    }
                 }
 
             }
@@ -216,6 +239,14 @@ namespace ZkLauncher.Models
         /// </summary>
         public void Remove(FileElement delete_item)
         {
+            if (File.Exists(delete_item.Filepath))
+            {
+                if (ShowMessage.ShowQuestionYesNo("ファイルを削除してもよろしいですか？", "確認") == MessageBoxResult.Yes)
+                {
+                    File.Delete(delete_item.Filepath);
+                }
+            }
+
             this.Elements.Remove(delete_item);
         }
         #endregion

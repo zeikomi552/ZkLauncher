@@ -243,21 +243,23 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                // オブジェクトの取得
-                var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
+                if (this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
+                {
+                    // オブジェクトの取得
+                    var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
 
-                // 座標の取得
-                var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
+                    // 座標の取得
+                    var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
-                var dirctorypath = DirectoryPathDictionary.ImageSaveDirectory;
-                // ファイルパスの取得
-                string file = GetfileName(dirctorypath);
+                    var dirctorypath = DirectoryPathDictionary.ImageSaveDirectory;
+                    // ファイルパスの取得
+                    string file = GetfileName(dirctorypath);
 
-                // スクリーンショットの作成
-                ScreenShotM.ExecuteScreenShot(ctrl, file);
+                    // スクリーンショットの作成
+                    ScreenShotM.ExecuteScreenShot(ctrl, file);
 
-                this.FilePath = file;
-
+                    this.FilePath = file;
+                }
             }
             catch (Exception e)
             {

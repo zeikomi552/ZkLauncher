@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -72,5 +73,20 @@ namespace ZkLauncher.ViewModels.UserControl
 
         }
 
+
+        public void ContextMenu_Delete()
+        {
+            try
+            {
+                if (this.FileCollection != null)
+                {
+                    this.FileCollection.SelectedItemDelete();
+                }
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
