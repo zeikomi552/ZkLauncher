@@ -8,6 +8,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Threading;
 using ZkLauncher.Common.Utilities;
 
@@ -60,6 +61,46 @@ namespace ZkLauncher.Models
                 {
                     _Elements = value;
                     RaisePropertyChanged("Elements");
+                }
+            }
+        }
+        #endregion
+
+        #region ファイルパスの取得処理
+        /// <summary>
+        /// ファイルパスの取得処理
+        /// </summary>
+        /// <returns>ファイルパス</returns>
+        public string GetFilepath()
+        {
+            // まだ一時ファイルの場合
+            if (GetTemporaryFilepath().Equals(this.SelectedItem.Filepath))
+            {
+                string dir;
+                if (string.IsNullOrEmpty(this.SaveDirectoryPath))
+                {
+                    // アプリケーションフォルダの取得
+                    dir = DirectoryPathDictionary.ImageSaveDirectoryDefault;
+                }
+                else
+                {
+                    // アプリケーションフォルダの取得
+                    dir = Path.Combine(this.SaveDirectoryPath, DateTime.Today.ToString("yyyyMMdd"));
+                }
+
+                PathManager.CreateDirectory(dir);
+                return Path.Combine(dir, "Picture-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png");
+            }
+            // 正規フォルダに保存している場合
+            else
+            {
+                if (this.SelectedItem == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return this.SelectedItem.Filepath;
                 }
             }
         }
@@ -383,7 +424,7 @@ namespace ZkLauncher.Models
 
                     list.Insert(0, new FileElement()
                     {
-                        Filepath = GetFilePath(DirectoryPathDictionary.ImageSaveDirectory),
+                        Filepath = GetTemporaryFilepath(),
                         EditingF = true
                     });
 
@@ -419,19 +460,18 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-
-        #region ファイルパスの作成処理
+        #region 一時ファイルパスの作成処理
         /// <summary>
-        /// ファイルパスの作成処理
+        /// 一時ファイルパスの作成処理
         /// </summary>
-        /// <param name="folderPath">フォルダパス</param>
-        /// <returns>ファイルパス</returns>
-        private string GetFilePath(string folderPath)
+        /// <returns>一時ファイルパス</returns>
+        private string GetTemporaryFilepath()
         {
             var file = "Temporary.jpg";
-            return Path.Combine(folderPath, file);
+            return Path.Combine(DirectoryPathDictionary.ImageSaveDirectory, file);
         }
         #endregion
+
         #region ディレクトリを開く処理
         /// <summary>
         /// ディレクトリを開く処理

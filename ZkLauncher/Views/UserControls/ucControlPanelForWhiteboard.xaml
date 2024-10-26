@@ -62,7 +62,7 @@
                         <DataTemplate>
                             <Grid Margin="5">
                                 <Image Margin="2" Width="250" Height="180"
-                                   Source="{Binding Filepath, Converter={StaticResource URLStringToImageSourceConverter}}">
+                                   Source="{Binding Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}">
                                 </Image>
                                 <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#99FFFFFF">
                                     <TextBlock Margin="5" Foreground="Black" Text="{Binding Filename}" FontSize="20"/>

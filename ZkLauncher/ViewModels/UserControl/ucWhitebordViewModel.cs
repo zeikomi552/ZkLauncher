@@ -162,52 +162,14 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _SaveF = false;
+            if (this.FileCollection != null && navigationContext != null && navigationContext.Parameters["SaveDirectory"] != null)
+            {
+                this.FileCollection.SaveDirectoryPath = navigationContext.Parameters["SaveDirectory"]!.ToString()!;
+            }
+            //_SaveF = false;
         }
 
-        private bool _SaveF = false;
 
-        #region ファイルパスの取得処理
-        /// <summary>
-        /// ファイルパスの取得処理
-        /// </summary>
-        /// <returns>ファイルパス</returns>
-        private string GetFilepath()
-        {
-            // まだ保存していない場合
-            if (!_SaveF)
-            {
-                string dir = string.Empty;
-                if (this.DisplayElements == null ||
-                    string.IsNullOrEmpty(this.DisplayElements.DrawPictureSaveDirectoryPath))
-                {
-                    // アプリケーションフォルダの取得
-                    dir = DirectoryPathDictionary.ImageSaveDirectoryDefault;
-                }
-                else
-                {
-                    // アプリケーションフォルダの取得
-                    dir = Path.Combine(this.DisplayElements.DrawPictureSaveDirectoryPath);
-
-                }
-
-                PathManager.CreateDirectory(dir);
-                return Path.Combine(dir, "Picture-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png");
-            }
-            // 保存されている場合
-            else
-            {
-                if (this.FileCollection!.SelectedItem == null)
-                {
-                    return string.Empty;
-                }
-                else
-                {
-                    return this.FileCollection!.SelectedItem.Filename;
-                }
-            }
-        }
-        #endregion
 
         #region 保存ボタン処理(.png)
         /// <summary>
@@ -239,7 +201,7 @@ namespace ZkLauncher.ViewModels.UserControl
                         PixelFormats.Pbgra32);
                     bmp.Render(wnd.Drawgrid);
 
-                    string filepath = GetFilepath();
+                    string filepath = this.FileCollection!.GetFilepath();
                     // jpegで保存
                     var encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create(bmp));
@@ -249,9 +211,6 @@ namespace ZkLauncher.ViewModels.UserControl
                     }
 
                     this.FileCollection!.SelectedItem.Filepath = filepath;
-                    RaisePropertyChanged("FilePath");
-
-                    this._SaveF = true;
                 }
             }
             catch (Exception e)

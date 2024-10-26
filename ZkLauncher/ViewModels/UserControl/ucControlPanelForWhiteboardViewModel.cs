@@ -29,6 +29,9 @@ namespace ZkLauncher.ViewModels.UserControl
 
             if (!string.IsNullOrEmpty(dir) && Directory.Exists(dir))
             {
+                // アプリケーションフォルダの取得
+                dir = Path.Combine(dir, DateTime.Today.ToString("yyyyMMdd"));
+                PathManager.CreateDirectory(dir);
                 this.FileCollection!.ReadDirectory(dir);
 
             }
@@ -38,10 +41,36 @@ namespace ZkLauncher.ViewModels.UserControl
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ucControlPanelForWhiteboardViewModel(IFileElementCollection filecollection)
+        public ucControlPanelForWhiteboardViewModel(IFileElementCollection filecollection, IDisplayEmentsCollection? displayElement)
         {
             this.FileCollection = filecollection;
+            this.DisplayElements = displayElement;
         }
+
+        #region 表示要素
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        IDisplayEmentsCollection? _DisplayElements;
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        public IDisplayEmentsCollection? DisplayElements
+        {
+            get
+            {
+                return _DisplayElements;
+            }
+            set
+            {
+                if (_DisplayElements == null || !_DisplayElements.Equals(value))
+                {
+                    _DisplayElements = value;
+                    RaisePropertyChanged("DisplayElements");
+                }
+            }
+        }
+        #endregion
 
         #region ファイルデータリスト
         /// <summary>

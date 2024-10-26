@@ -30,5 +30,7 @@ namespace ZkLauncher.Models
         public bool ExecuteReadDirF { get; set; }
         public void ReadDirectory();
         public void ReadDirectory(string dir);
+
+        public string GetFilepath();
     }
 }
