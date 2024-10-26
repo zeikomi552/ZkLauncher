@@ -69,22 +69,6 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-        #region サムネイルの一時保存先ディレクトリ
-        /// <summary>
-        /// 背景の保存先ディレクトリ
-        /// </summary>
-        private string ThumbnailFilePath
-        {
-            get
-            {
-                // アプリケーションフォルダの取得
-                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage");
-                PathManager.CreateDirectory(dir);
-                return Path.Combine(dir, "TemporaryTumnail.jpg");
-            }
-        }
-        #endregion
-
         #region お絵描き後の絵を保存するディレクトリ
         /// <summary>
         /// お絵描き後の絵を保存するディレクトリ

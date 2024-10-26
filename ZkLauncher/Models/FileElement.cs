@@ -24,12 +24,9 @@ namespace ZkLauncher.Models
             }
             set
             {
-                if (_Filepath == null || !_Filepath.Equals(value))
-                {
-                    _Filepath = value;
-                    RaisePropertyChanged("Filepath");
-                    RaisePropertyChanged("Filename");
-                }
+                _Filepath = value;
+                RaisePropertyChanged("Filepath");
+                RaisePropertyChanged("Filename");
             }
         }
         #endregion

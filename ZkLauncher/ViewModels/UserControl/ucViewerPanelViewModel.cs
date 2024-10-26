@@ -208,10 +208,10 @@ namespace ZkLauncher.ViewModels.UserControl
                 if (this._SlideshowF)
                 {
                     SavePage();
-                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord));
-
                     var parameters = new NavigationParameters();
+
                     parameters.Add("SaveDirectory", this.DisplayElements!.DrawPictureSaveDirectoryPath);
+                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord), parameters);
                     _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForWhiteboard), parameters);
                 }
                 else
