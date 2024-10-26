@@ -85,6 +85,31 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region お絵描き後の絵を保存するディレクトリ
+        /// <summary>
+        /// お絵描き後の絵を保存するディレクトリ
+        /// </summary>
+        string _DrawPictureSaveDirectoryPath = string.Empty;
+        /// <summary>
+        /// お絵描き後の絵を保存するディレクトリ
+        /// </summary>
+        public string DrawPictureSaveDirectoryPath
+        {
+            get
+            {
+                return _DrawPictureSaveDirectoryPath;
+            }
+            set
+            {
+                if (_DrawPictureSaveDirectoryPath == null || !_DrawPictureSaveDirectoryPath.Equals(value))
+                {
+                    _DrawPictureSaveDirectoryPath = value;
+                    RaisePropertyChanged("DrawPictureSaveDirectoryPath");
+                }
+            }
+        }
+        #endregion
+
         #region 表示要素
         /// <summary>
         /// 表示要素
@@ -147,7 +172,7 @@ namespace ZkLauncher.Models
             {
                 int index = this.Elements.IndexOf(this.SelectedItem);
 
-                if (index < this.Elements.Count - 1)
+                if (index >= 0 && index < this.Elements.Count - 1)
                 {
                     // 指定した位置の要素を取り出す
                     var elem = this.Elements.ElementAt(index);
@@ -272,6 +297,7 @@ namespace ZkLauncher.Models
             }
             this.ControlBackgroundMediaPath = item.ControlBackgroundMediaPath;
             this.ViewerBackgroundMediaPath = item.ViewerBackgroundMediaPath;
+            this.DrawPictureSaveDirectoryPath = item.DrawPictureSaveDirectoryPath;
         }
         #endregion
 

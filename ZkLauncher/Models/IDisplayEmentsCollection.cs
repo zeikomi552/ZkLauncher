@@ -34,7 +34,7 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-
+        public string DrawPictureSaveDirectoryPath { get; set; }
         public int WaitSecond { get; set; }
 
         public DisplayElement? First();

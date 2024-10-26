@@ -18,31 +18,6 @@ namespace ZkLauncher.ViewModels.UserControl
 {
     public class ucWhitebordViewModel : BindableBase, INavigationAware
     {
-        #region 画像保存先ファイルパス
-        /// <summary>
-        /// 画像保存先ファイルパス
-        /// </summary>
-        string _FilePath = string.Empty;
-        /// <summary>
-        /// 画像保存先ファイルパス
-        /// </summary>
-        public string FilePath
-        {
-            get
-            {
-                return _FilePath;
-            }
-            set
-            {
-                if (_FilePath == null || !_FilePath.Equals(value))
-                {
-                    _FilePath = value;
-                    RaisePropertyChanged("FilePath");
-                }
-            }
-        }
-        #endregion
-
         #region 書き込みモード[EditingMode]プロパティ
         /// <summary>
         /// 書き込みモード[EditingMode]プロパティ用変数
@@ -118,14 +93,65 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        private string _StorkePath = System.AppDomain.CurrentDomain.BaseDirectory + @"Common\canvas1-stroke";
+        #region 表示要素
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        IDisplayEmentsCollection? _DisplayElements;
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        public IDisplayEmentsCollection? DisplayElements
+        {
+            get
+            {
+                return _DisplayElements;
+            }
+            set
+            {
+                if (_DisplayElements == null || !_DisplayElements.Equals(value))
+                {
+                    _DisplayElements = value;
+                    RaisePropertyChanged("DisplayElements");
+                }
+            }
+        }
+        #endregion
+
+        #region ファイルデータリスト
+        /// <summary>
+        /// ファイルデータリスト
+        /// </summary>
+        IFileElementCollection? _FileCollection;
+        /// <summary>
+        /// ファイルデータリスト
+        /// </summary>
+        public IFileElementCollection? FileCollection
+        {
+            get
+            {
+                return _FileCollection;
+            }
+            set
+            {
+                if (_FileCollection == null || !_FileCollection.Equals(value))
+                {
+                    _FileCollection = value;
+                    RaisePropertyChanged("FileCollection");
+                }
+            }
+        }
+        #endregion
 
         IRegionManager _regionManager;
         IContainerExtension _container;
-        public ucWhitebordViewModel(IContainerExtension container, IRegionManager regionManager)
+        public ucWhitebordViewModel(IContainerExtension container, 
+            IRegionManager regionManager, IDisplayEmentsCollection displayElements, IFileElementCollection filecollection)
         {
             _regionManager = regionManager;
             _container = container;
+            this.DisplayElements = displayElements;
+            this.FileCollection = filecollection;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -136,10 +162,52 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            // このViewが表示されるときに実行される
-            this.FilePath = string.Empty;
-            this.FilePath = navigationContext.Parameters["filepath"]?.ToString()!;
+            _SaveF = false;
         }
+
+        private bool _SaveF = false;
+
+        #region ファイルパスの取得処理
+        /// <summary>
+        /// ファイルパスの取得処理
+        /// </summary>
+        /// <returns>ファイルパス</returns>
+        private string GetFilepath()
+        {
+            // まだ保存していない場合
+            if (!_SaveF)
+            {
+                string dir = string.Empty;
+                if (this.DisplayElements == null ||
+                    string.IsNullOrEmpty(this.DisplayElements.DrawPictureSaveDirectoryPath))
+                {
+                    // アプリケーションフォルダの取得
+                    dir = DirectoryPathDictionary.ImageSaveDirectoryDefault;
+                }
+                else
+                {
+                    // アプリケーションフォルダの取得
+                    dir = Path.Combine(this.DisplayElements.DrawPictureSaveDirectoryPath);
+
+                }
+
+                PathManager.CreateDirectory(dir);
+                return Path.Combine(dir, "Picture-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png");
+            }
+            // 保存されている場合
+            else
+            {
+                if (this.FileCollection!.SelectedItem == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return this.FileCollection!.SelectedItem.Filename;
+                }
+            }
+        }
+        #endregion
 
         #region 保存ボタン処理(.png)
         /// <summary>
@@ -153,31 +221,37 @@ namespace ZkLauncher.ViewModels.UserControl
             {
                 var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
 
+                PresentationSource source = PresentationSource.FromVisual(wnd);
+
                 if (wnd != null)
                 {
-                    Microsoft.Win32.SaveFileDialog dlgSave = new Microsoft.Win32.SaveFileDialog();
+                    // ↓画像がにじむ問題に対応
+                    var size = new Size((int)(wnd.Drawgrid.ActualWidth), (int)(wnd.Drawgrid.ActualHeight));
+                    wnd.Drawgrid.Measure(size);
+                    wnd.Drawgrid.Arrange(new Rect(size));
+                    // ↑画像がにじむ問題に対応
 
-                    dlgSave.Filter = "PNGファイル(*.png)|*.png";
-                    dlgSave.AddExtension = true;
+                    // レンダリング
+                    var bmp = new RenderTargetBitmap(
+                        (int)(wnd.Drawgrid.ActualWidth),
+                        (int)(wnd.Drawgrid.ActualHeight),
+                        96, 96, // DPI
+                        PixelFormats.Pbgra32);
+                    bmp.Render(wnd.Drawgrid);
 
-                    if ((bool)dlgSave.ShowDialog()!)
+                    string filepath = GetFilepath();
+                    // jpegで保存
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(bmp));
+                    using (var fs = File.Open(filepath, FileMode.Create))
                     {
-                        // レンダリング
-                        var bmp = new RenderTargetBitmap(
-                            (int)wnd.Drawgrid.ActualWidth,
-                            (int)wnd.Drawgrid.ActualHeight,
-                            96, 96, // DPI
-                            PixelFormats.Pbgra32);
-                        bmp.Render(wnd.Drawgrid);
-
-                        // jpegで保存
-                        var encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(bmp));
-                        using (var fs = File.Open(dlgSave.FileName, FileMode.Create))
-                        {
-                            encoder.Save(fs);
-                        }
+                        encoder.Save(fs);
                     }
+
+                    this.FileCollection!.SelectedItem.Filepath = filepath;
+                    RaisePropertyChanged("FilePath");
+
+                    this._SaveF = true;
                 }
             }
             catch (Exception e)
@@ -191,15 +265,7 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                //var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-                //if (wnd != null)
-                //{
-                //    wnd.theInkCanvas.Strokes.StrokesChanged -= Strokes_StrokesChanged;
-                //    wnd.theInkCanvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
-                //}
-
-                //Clear(sender, e);
+                Clear(sender, e);
             }
             catch(Exception ex)
             {
@@ -232,125 +298,5 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
-        //#region Undo処理
-        ///// <summary>
-        ///// Undo処理
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //public void Undo(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-        //        if (wnd != null)
-        //        {
-        //            handle = false;
-
-        //            // 最後の変更を取り出す
-        //            var tmp = this._StrokeUndo.LastOrDefault();
-
-        //            // nullチェック
-        //            if (tmp != null)
-        //            {
-        //                // Redo用に保存する
-        //                _StrokeRedo.Add(new StrokePairM(tmp.AddedStroke, tmp.RemovedStroke));
-
-        //                // 最後に追加された分は取り除く
-        //                wnd.theInkCanvas.Strokes.Remove(tmp.AddedStroke);
-
-        //                // 最後に取り除かれた分は追加する
-        //                wnd.theInkCanvas.Strokes.Add(tmp.RemovedStroke);
-
-        //                // Undoのリストから削除する
-        //                this._StrokeUndo.Remove(tmp);
-        //            }
-
-        //            handle = true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.Error(ex.Message);
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-        //#endregion
-
-        //#region Redo処理
-        ///// <summary>
-        ///// Redo処理
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //public void Redo(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var wnd = VisualTreeHelperWrapper.GetWindow<ucWhitebord>(sender) as ucWhitebord;
-
-        //        if (wnd != null)
-        //        {
-        //            handle = false;
-
-        //            // 最後の変更を取り出す
-        //            var tmp = this._StrokeRedo.LastOrDefault();
-
-        //            if (tmp != null)
-        //            {
-        //                // Undoで消されたストロークを追加
-        //                wnd.theInkCanvas.Strokes.Add(tmp.AddedStroke);
-
-        //                // Undoで戻されたストロークを削除
-        //                wnd.theInkCanvas.Strokes.Remove(tmp.RemovedStroke);
-
-        //                // Undo用のストロークを保存
-        //                this._StrokeUndo.Add(new StrokePairM(tmp.AddedStroke, tmp.RemovedStroke));
-
-        //                // Redo用のストロークを削除
-        //                this._StrokeRedo.Remove(tmp);
-        //            }
-
-        //            handle = true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.Error(ex.Message);
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-        //#endregion
-        //#region ストロークが変化した場合の処理
-        ///// <summary>
-        ///// ストロークが変化した場合の処理
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (handle)
-        //        {
-        //            this._StrokeUndo.Add(new StrokePairM(e.Added, e.Removed));
-        //            this._StrokeRedo.Clear();
-
-        //            using (System.IO.FileStream fs =
-        //                new System.IO.FileStream(this._StorkePath, System.IO.FileMode.Create))
-        //            {
-        //                this._InkCanvas.Strokes.Save(fs);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.Error(ex.Message);
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
-        //#endregion
     }
 }

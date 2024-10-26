@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using ZkLauncher.Common.Helper;
 using ZkLauncher.Common.Utilities;
 using ZkLauncher.Models;
+using ZkLauncher.Views.UserControls;
 
 namespace ZkLauncher.ViewModels.UserControl
 {
@@ -100,5 +104,34 @@ namespace ZkLauncher.ViewModels.UserControl
             }
         }
         #endregion
+
+
+
+        public void SelectedDirectory(object sender, EventArgs e)
+        {
+            try
+            {
+                var wnd = VisualTreeHelperWrapper.GetWindow<Window>(sender) as Window;
+
+                using (var cofd = new CommonOpenFileDialog()
+                {
+                    Title = "フォルダを選択してください",
+                    //InitialDirectory = @"D:\Users\threeshark",
+                    // フォルダ選択モードにする
+                    IsFolderPicker = true,
+                })
+                {
+                    if (cofd.ShowDialog(wnd) == CommonFileDialogResult.Ok)
+                    {
+                        this.Config.Item!.DrawPictureSaveDirectoryPath = cofd.FileName;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+        }
     }
 }

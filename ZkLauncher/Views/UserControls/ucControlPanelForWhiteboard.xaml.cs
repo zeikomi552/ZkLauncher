@@ -1,5 +1,4 @@
-﻿using Prism.Navigation.Regions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace ZkLauncher.Views.UserControls
 {
     /// <summary>
-    /// ucControlPanel.xaml の相互作用ロジック
+    /// ucControlPanelForWhiteboard.xaml の相互作用ロジック
     /// </summary>
-    public partial class ucControlPanel : UserControl
+    public partial class ucControlPanelForWhiteboard : UserControl
     {
-        public ucControlPanel(IRegionManager regionManager)
+        public ucControlPanelForWhiteboard()
         {
             InitializeComponent();
-
-            RegionManager.SetRegionManager(this.content_region, regionManager);
         }
     }
 }

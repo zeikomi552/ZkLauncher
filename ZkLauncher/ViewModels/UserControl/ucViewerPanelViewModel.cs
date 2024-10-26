@@ -208,14 +208,16 @@ namespace ZkLauncher.ViewModels.UserControl
                 if (this._SlideshowF)
                 {
                     SavePage();
+                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord));
+
                     var parameters = new NavigationParameters();
-                    parameters.Add("filepath", this.FilePath);
-                    _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord), parameters);
+                    parameters.Add("SaveDirectory", this.DisplayElements!.DrawPictureSaveDirectoryPath);
+                    _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForWhiteboard), parameters);
                 }
                 else
                 {
                     _regionManager.RequestNavigate("ViewerRegion", nameof(ucSlideshow));
-
+                    _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForSlideshow));
                 }
 
                 this._SlideshowF = !this._SlideshowF;
@@ -233,23 +235,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region 背景の保存先ディレクトリ
-        /// <summary>
-        /// 背景の保存先ディレクトリ
-        /// </summary>
-        private string ImageSaveDirectory
-        {
-            get
-            {
-                // アプリケーションフォルダの取得
-                var dir = Path.Combine(PathManager.GetApplicationFolder(), "SaveImage");
-                PathManager.CreateDirectory(dir);
-
-                return dir;
-            }
-        }
-        #endregion
-
         #region ページの保存処理
         /// <summary>
         /// ページの保存処理
@@ -258,20 +243,23 @@ namespace ZkLauncher.ViewModels.UserControl
         {
             try
             {
-                // オブジェクトの取得
-                var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
+                if (this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
+                {
+                    // オブジェクトの取得
+                    var ctrl = this.DisplayElements!.SelectedItem.WebView2Object!;
 
-                // 座標の取得
-                var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
+                    // 座標の取得
+                    var targetPoint = ctrl.PointToScreen(new System.Windows.Point(0.0d, 0.0d));
 
-                // ファイルパスの取得
-                string file = GetfileName(ImageSaveDirectory);
+                    var dirctorypath = DirectoryPathDictionary.ImageSaveDirectory;
+                    // ファイルパスの取得
+                    string file = GetfileName(dirctorypath);
 
-                // スクリーンショットの作成
-                ScreenShotM.ExecuteScreenShot(ctrl, file);
+                    // スクリーンショットの作成
+                    ScreenShotM.ExecuteScreenShot(ctrl, file);
 
-                this.FilePath = file;
-
+                    this.FilePath = file;
+                }
             }
             catch (Exception e)
             {
