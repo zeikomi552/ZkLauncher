@@ -149,6 +149,10 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        #region コンボボックスの選択が変更された
+        /// <summary>
+        /// コンボボックスの選択が変更された
+        /// </summary>
         public void ComboboxSelectionChanged()
         {
             try
@@ -165,8 +169,12 @@ namespace ZkLauncher.ViewModels.UserControl
                 ShowMessage.ShowErrorOK(ex.Message, "Error");
             }
         }
+        #endregion
 
-
+        #region リストボックスの選択が変更された
+        /// <summary>
+        /// リストボックスの選択が変更された
+        /// </summary>
         public void ListboxSelectionChanged()
         {
             try
@@ -178,7 +186,14 @@ namespace ZkLauncher.ViewModels.UserControl
                 ShowMessage.ShowErrorOK(ex.Message, "Error");
             }
         }
-        public void SetFileList(string dir)
+        #endregion
+
+        #region ファイル一覧のセット処理
+        /// <summary>
+        /// ファイル一覧のセット処理
+        /// </summary>
+        /// <param name="dir">対象ディレクトリ</param>
+        private void SetFileList(string dir)
         {
             try
             {
@@ -203,8 +218,12 @@ namespace ZkLauncher.ViewModels.UserControl
                 ShowMessage.ShowErrorOK(ex.Message, "Error");
             }
         }
+        #endregion
 
-
+        #region 選択要素の削除処理
+        /// <summary>
+        /// 選択要素の削除処理
+        /// </summary>
         public void ContextMenu_Delete()
         {
             try
@@ -219,5 +238,6 @@ namespace ZkLauncher.ViewModels.UserControl
                 ShowMessage.ShowErrorOK(ex.Message, "Error");
             }
         }
+        #endregion
     }
 }
