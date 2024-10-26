@@ -146,7 +146,7 @@
                         <Grid x:Name="Drawgrid"
                         MinWidth="{Binding ActualWidth, ElementName=DrawArea, Mode=OneWay}"
                         MinHeight="{Binding ActualHeight, ElementName=DrawArea, Mode=OneWay}">
-                            <Image Width="auto" Height="auto" x:Name="DrawArea" Source="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
+                            <Image Width="auto" Height="auto" x:Name="DrawArea" Source="{Binding FileCollection.SelectedItem.Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource URLStringToImageSourceConverter}}"/>
                             <InkCanvas x:Name="theInkCanvas" EditingMode="{Binding EditingMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            hlp:InkCanvasSizeHelper.Size="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            hlp:InkCanvasElaseShapeHelper.ElaseShape="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

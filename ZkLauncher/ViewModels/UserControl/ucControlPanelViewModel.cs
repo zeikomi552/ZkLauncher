@@ -61,7 +61,7 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
-
+            var tmp = parameters.GetValue<string>("SaveDirectory");
         }
         #endregion
 

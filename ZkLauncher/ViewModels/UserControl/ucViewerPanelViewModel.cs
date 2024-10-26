@@ -209,7 +209,10 @@ namespace ZkLauncher.ViewModels.UserControl
                 {
                     SavePage();
                     _regionManager.RequestNavigate("ViewerRegion", nameof(ucWhitebord));
-                    _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForWhiteboard));
+
+                    var parameters = new NavigationParameters();
+                    parameters.Add("SaveDirectory", this.DisplayElements!.DrawPictureSaveDirectoryPath);
+                    _regionManager.RequestNavigate("CotrolPanelRegion", nameof(ucControlPanelForWhiteboard), parameters);
                 }
                 else
                 {

@@ -18,31 +18,6 @@ namespace ZkLauncher.ViewModels.UserControl
 {
     public class ucWhitebordViewModel : BindableBase, INavigationAware
     {
-        #region 画像保存先ファイルパス
-        /// <summary>
-        /// 画像保存先ファイルパス
-        /// </summary>
-        string _FilePath = string.Empty;
-        /// <summary>
-        /// 画像保存先ファイルパス
-        /// </summary>
-        public string FilePath
-        {
-            get
-            {
-                return _FilePath;
-            }
-            set
-            {
-                if (_FilePath == null || !_FilePath.Equals(value))
-                {
-                    _FilePath = value;
-                    RaisePropertyChanged("FilePath");
-                }
-            }
-        }
-        #endregion
-
         #region 書き込みモード[EditingMode]プロパティ
         /// <summary>
         /// 書き込みモード[EditingMode]プロパティ用変数
@@ -118,7 +93,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
         #region 表示要素
         /// <summary>
         /// 表示要素
@@ -144,14 +118,40 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        #region ファイルデータリスト
+        /// <summary>
+        /// ファイルデータリスト
+        /// </summary>
+        IFileElementCollection? _FileCollection;
+        /// <summary>
+        /// ファイルデータリスト
+        /// </summary>
+        public IFileElementCollection? FileCollection
+        {
+            get
+            {
+                return _FileCollection;
+            }
+            set
+            {
+                if (_FileCollection == null || !_FileCollection.Equals(value))
+                {
+                    _FileCollection = value;
+                    RaisePropertyChanged("FileCollection");
+                }
+            }
+        }
+        #endregion
 
         IRegionManager _regionManager;
         IContainerExtension _container;
-        public ucWhitebordViewModel(IContainerExtension container, IRegionManager regionManager, IDisplayEmentsCollection displayElements)
+        public ucWhitebordViewModel(IContainerExtension container, 
+            IRegionManager regionManager, IDisplayEmentsCollection displayElements, IFileElementCollection filecollection)
         {
             _regionManager = regionManager;
             _container = container;
             this.DisplayElements = displayElements;
+            this.FileCollection = filecollection;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -163,23 +163,7 @@ namespace ZkLauncher.ViewModels.UserControl
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _SaveF = false;
-            // このViewが表示されるときに実行される
-            this.FilePath = GetfileName(DirectoryPathDictionary.ImageSaveDirectory);
-            RaisePropertyChanged("FilePath");
         }
-
-        #region ファイルパスの作成処理
-        /// <summary>
-        /// ファイルパスの作成処理
-        /// </summary>
-        /// <param name="folderPath">フォルダパス</param>
-        /// <returns>ファイルパス</returns>
-        private string GetfileName(string folderPath)
-        {
-            var file = "Temporary.jpg";
-            return Path.Combine(folderPath, file);
-        }
-        #endregion
 
         private bool _SaveF = false;
 
@@ -213,7 +197,14 @@ namespace ZkLauncher.ViewModels.UserControl
             // 保存されている場合
             else
             {
-                return this.FilePath;
+                if (this.FileCollection!.SelectedItem == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return this.FileCollection!.SelectedItem.Filename;
+                }
             }
         }
         #endregion
@@ -257,7 +248,7 @@ namespace ZkLauncher.ViewModels.UserControl
                         encoder.Save(fs);
                     }
 
-                    this.FilePath = filepath;
+                    this.FileCollection!.SelectedItem.Filepath = filepath;
                     RaisePropertyChanged("FilePath");
 
                     this._SaveF = true;
