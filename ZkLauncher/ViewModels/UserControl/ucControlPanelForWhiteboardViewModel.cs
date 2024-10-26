@@ -1,6 +1,7 @@
 ﻿using Prism.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,21 +23,72 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            // このViewが表示されるときに実行される
-
-            var parameters = navigationContext.Parameters;
-            var dir = parameters["SaveDirectory"]!.ToString();
-
-            if (!string.IsNullOrEmpty(dir) && Directory.Exists(dir))
+            try
             {
-                // アプリケーションフォルダの取得
-                dir = Path.Combine(dir, DateTime.Today.ToString("yyyyMMdd"));
-                PathManager.CreateDirectory(dir);
-                this.FileCollection!.ReadDirectory(dir);
+                // このViewが表示されるときに実行される
 
+                var parameters = navigationContext.Parameters;
+                var dir = parameters["SaveDirectory"]!.ToString();
+
+
+                var list = new List<DirectoryElement>();
+
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    // 画像保存先の作成
+                    var save_dir = Path.Combine(dir, DateTime.Today.ToString("yyyyMMdd"));
+                    PathManager.CreateDirectory(save_dir);           // ディレクトリの作成
+
+                    // 読み込んだディレクトリ一覧を登録
+                    var directories = Directory.GetDirectories(dir);
+                    foreach (var diritem in directories)
+                    {
+                        list.Add(new DirectoryElement() { DirectoryPath = diritem });
+                    }
+                    this.DirectoryCollection.Elements = new ObservableCollection<DirectoryElement>(list);
+
+
+                    // 今日の日付のディレクトリを選択
+                    this.DirectoryCollection.SelectedItem = (from x in this.DirectoryCollection.Elements
+                                                             where x.DirectoryPath.Equals(save_dir)
+                                                             select x).First();
+
+                    ComboboxSelectionChanged();
+                }
+            }
+            catch(Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+
+        }
+        #endregion
+
+        #region ディレクトリ一覧
+        /// <summary>
+        /// ディレクトリ一覧
+        /// </summary>
+        DirectoryElementCollection _DirectoryCollection = new DirectoryElementCollection();
+        /// <summary>
+        /// ディレクトリ一覧
+        /// </summary>
+        public DirectoryElementCollection DirectoryCollection
+        {
+            get
+            {
+                return _DirectoryCollection;
+            }
+            set
+            {
+                if (_DirectoryCollection == null || !_DirectoryCollection.Equals(value))
+                {
+                    _DirectoryCollection = value;
+                    RaisePropertyChanged("DirectoryCollection");
+                }
             }
         }
         #endregion
+
 
         /// <summary>
         /// コンストラクタ
@@ -97,9 +149,59 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        public void SelectionChanged()
+        public void ComboboxSelectionChanged()
         {
+            try
+            {
+                if (this.DirectoryCollection.SelectedItem != null)
+                {
+                    var list = new List<DirectoryElement>();
+                    string dir = this.DirectoryCollection.SelectedItem.DirectoryPath;
+                    SetFileList(dir);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+        }
 
+
+        public void ListboxSelectionChanged()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+        }
+        public void SetFileList(string dir)
+        {
+            try
+            {
+                var list = new List<DirectoryElement>();
+
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    PathManager.CreateDirectory(dir);           // ディレクトリの作成
+
+                    if (System.IO.Path.GetFileName(dir).Equals(DateTime.Today.ToString("yyyyMMdd")))
+                    {
+                        this.FileCollection!.ReadDirectory(dir, true);    // 指定フォルダ配下のファイルを読み込み
+                    }
+                    else
+                    {
+                        this.FileCollection!.ReadDirectory(dir, false);    // 指定フォルダ配下のファイルを読み込み
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
         }
 
 
@@ -112,9 +214,9 @@ namespace ZkLauncher.ViewModels.UserControl
                     this.FileCollection.SelectedItemDelete();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
             }
         }
     }

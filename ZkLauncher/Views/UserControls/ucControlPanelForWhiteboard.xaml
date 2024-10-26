@@ -23,14 +23,24 @@
         <Grid>
             <Grid Margin="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ListBox Margin="5" ItemsSource="{Binding FileCollection.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <ComboBox ItemsSource="{Binding DirectoryCollection.Elements}" 
+                          SelectedItem="{Binding DirectoryCollection.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="DirectoryName">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="ComboboxSelectionChanged"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ComboBox>
+
+
+                <ListBox Grid.Row="1" Margin="5" ItemsSource="{Binding FileCollection.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      SelectedItem="{Binding FileCollection.SelectedItem}">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="SelectionChanged">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="ListboxSelectionChanged"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                     <ListBox.ContextMenu>

@@ -383,7 +383,8 @@ namespace ZkLauncher.Models
         /// ディレクトリのファイル全て読み込み
         /// </summary>
         /// <param name="dir">ディレクトリパス</param>
-        public void ReadDirectory(string dir)
+        /// <param name="tempf">一時ファイルをリスト上に追加するかどうか</param>
+        public void ReadDirectory(string dir, bool tempf = true)
         {
             try
             {
@@ -422,12 +423,14 @@ namespace ZkLauncher.Models
                         });
                     }
 
-                    list.Insert(0, new FileElement()
+                    if (tempf)
                     {
-                        Filepath = GetTemporaryFilepath(),
-                        EditingF = true
-                    });
-
+                        list.Insert(0, new FileElement()
+                        {
+                            Filepath = GetTemporaryFilepath(),
+                            EditingF = true
+                        });
+                    }
 
                     // スレッドセーフの呼び出し
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
