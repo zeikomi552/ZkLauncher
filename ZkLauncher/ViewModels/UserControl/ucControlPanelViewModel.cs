@@ -52,7 +52,7 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public virtual bool CanCloseDialog()
         {
-            return true;
+            return false;
         }
 
         public virtual void OnDialogClosed()

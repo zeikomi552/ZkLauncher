@@ -18,8 +18,8 @@
         <tb:TaskbarIcon IconSource="/Common/imanges/app.ico">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="OpenViewer" Header="Viewer" Command="{Binding ShowViewerCommand}"/>
-                    <MenuItem Name="OpenControlPanel" Header="Control Panel" Command="{Binding ShowControlPanelCommand}"/>
+                    <!--<MenuItem Name="OpenViewer" Header="Viewer" Command="{Binding ShowViewerCommand}"/>
+                    <MenuItem Name="OpenControlPanel" Header="Control Panel" Command="{Binding ShowControlPanelCommand}"/>-->
                     <MenuItem Name="OpenSetting" Header="Setting" Command="{Binding ShowSettingLauncherCommand}"/>
                     <MenuItem Name="AjustPosition" Header="Ajust Position" Command="{Binding AjustPositionCommand}"/>
                     <MenuItem Name="Exit" Header="Exit" Command="{Binding AppShutdownCommand}"/>
