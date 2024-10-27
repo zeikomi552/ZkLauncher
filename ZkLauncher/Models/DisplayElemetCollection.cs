@@ -570,7 +570,10 @@ namespace ZkLauncher.Models
                 else
                 {
                     text = text.Replace("\"", "");
-                    if (File.Exists(text) && System.IO.Path.GetExtension(text).ToLower().Equals(".pdf"))
+                    if (File.Exists(text) 
+                        && (System.IO.Path.GetExtension(text).ToLower().Equals(".pdf")
+                        || System.IO.Path.GetExtension(text).ToLower().Equals(".html"))
+                        )
                     {
                         var filename = Path.GetFileNameWithoutExtension(text);
 
