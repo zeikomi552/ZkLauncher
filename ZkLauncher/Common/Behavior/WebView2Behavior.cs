@@ -108,6 +108,8 @@ namespace ZkLauncher.Common.Behavior
                 var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, browserExecutableFolder);
                 await this.WebView2Ctl.EnsureCoreWebView2Async(webView2Environment);
 
+                // パスワード保存機能を有効化
+                this.WebView2Ctl.CoreWebView2.Settings.IsPasswordAutosaveEnabled = true;
                 _IsInitialized = true;  // 初期化済みに変更
 
                 if (!string.IsNullOrEmpty(this.URL))
