@@ -56,7 +56,7 @@ namespace ZkLauncher.Common.Utilities
 
             var count = newitem.Items.Count;
 
-            int loopmax =  50;
+            int loopmax =  20;
 
             oldidx = oldidx >= 0 ? oldidx : 0;
 
