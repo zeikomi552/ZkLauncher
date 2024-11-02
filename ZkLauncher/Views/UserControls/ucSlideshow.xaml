@@ -98,7 +98,8 @@
                 </Grid>
 
                 <ListBox Grid.Row="1" Margin="5" ItemsSource="{Binding DisplayElements.Elements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding DisplayElements.SelectedItem}" hlp:ItemsControlTopRowHelper.SelectedItem="{Binding DisplayElements.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                     SelectedItem="{Binding DisplayElements.SelectedItem}" 
+                     hlp:ItemsControlSilideshowHelper.SelectedItem="{Binding DisplayElements.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ListBox.Template>
                         <ControlTemplate TargetType="{x:Type ListBox}">
                             <Border BorderThickness="1" BorderBrush="AliceBlue">

@@ -1,65 +1,59 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows;
-using ZkLauncher.Common.Helper;
+using System.Windows.Controls;
 using ZkLauncher.Common.Utilities;
 
 namespace ZkLauncher.Common.Helper
 {
-    #region 説明
-    /// <summary>
-    /// ItemsControl(ListBox, ListView, DataGrid)の選択時にスクロールを合わせる添付プロパティ
-    /// </summary>
     public class ItemsControlTopRowHelper
     {
-        public static readonly DependencyProperty SelectedItemProperty
-            = DependencyProperty.RegisterAttached("SelectedItem", typeof(object), typeof(ItemsControlTopRowHelper), new PropertyMetadata(null, SelectedItemChanged));
+        public static readonly DependencyProperty AutoScrollToSelectedItemProperty =
+                DependencyProperty.RegisterAttached(
+                    "AutoScrollToSelectedItem",
+                    typeof(bool),
+                    typeof(ItemsControlTopRowHelper),
+                    new PropertyMetadata(false, OnAutoScrollToSelectedItemChanged));
 
-        public static object GetSelectedItem(DependencyObject obj)
+        public static bool GetAutoScrollToSelectedItem(DependencyObject obj)
         {
-            return (object)obj.GetValue(SelectedItemProperty);
+            return (bool)obj.GetValue(AutoScrollToSelectedItemProperty);
         }
 
-        public static void SetSelectedItem(DependencyObject obj, object value)
+        public static void SetAutoScrollToSelectedItem(DependencyObject obj, bool value)
         {
-            obj.SetValue(SelectedItemProperty, value);
+            obj.SetValue(AutoScrollToSelectedItemProperty, value);
         }
 
-        private static void SelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnAutoScrollToSelectedItemChanged(
+            DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            switch (d)
+            if (d is ListBox listBox && e.NewValue is bool isEnabled)
             {
-                case ListBox lb:
-                    {
-                        if (lb.SelectedIndex >= 0)
-                        {
-                            var oldidx = lb.Items.IndexOf(e.OldValue);
-                            var newidx = lb.Items.IndexOf(e.NewValue);
-                            ScrollbarUtility.TopRow(oldidx, newidx, lb);
-                        }
-                        break;
-                    }
-                case DataGrid dg:
-                    {
-                        if (dg.SelectedIndex >= 0)
-                            ScrollbarUtility.TopRow(dg);
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
+                if (isEnabled)
+                {
+                    listBox.SelectionChanged += ListBox_SelectionChanged;
+                }
+                else
+                {
+                    listBox.SelectionChanged -= ListBox_SelectionChanged;
+                }
             }
+        }
 
-
-
+        private static void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listBox && listBox.SelectedItem != null)
+            {
+                listBox.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    listBox.UpdateLayout();
+                    listBox.ScrollIntoView(listBox.SelectedItem);
+                }), System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
     }
-    #endregion
-
 }
