@@ -133,7 +133,7 @@
                             <!-- 追加したStykle その3 -->
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="WhiteSmoke" />
+                                    <Setter Property="Background" Value="#99FFC107" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
