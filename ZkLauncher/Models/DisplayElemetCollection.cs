@@ -447,6 +447,55 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region 次のURLを表示
+        /// <summary>
+        /// 次のURLを表示
+        /// </summary>
+        public void NextNavigatePage()
+        {
+            try
+            {
+                if (this.Elements == null || this.Elements.Count <= 0)
+                    return;
+
+                if (this.SelectedItem != null && this.SelectedItem.WebView2Object != null)
+                {
+                    this.SelectedItem.WebView2Object.GoForward();
+                }
+                   
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+        #endregion
+
+        #region 前のURLを表示
+        /// <summary>
+        /// 前のURLを表示
+        /// </summary>
+        public void PrevNavigatePage()
+        {
+            try
+            {
+                if (this.Elements == null || this.Elements.Count <= 0)
+                    return;
+
+                if (this.SelectedItem != null && this.SelectedItem.WebView2Object != null)
+                {
+                    this.SelectedItem.WebView2Object.GoBack();
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
+
         #region URLのリロード処理
         /// <summary>
         /// URLのリロード処理

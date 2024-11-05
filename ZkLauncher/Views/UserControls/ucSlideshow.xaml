@@ -47,11 +47,28 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid>
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Cursor="">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel HorizontalAlignment="Left">
                         <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Previous page">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
                                     <b:CallMethodAction TargetObject="{Binding}" MethodName="Prev"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-left.svg" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Cursor="" Grid.Column="1">
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Previous page">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="PrevPage"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
@@ -72,13 +89,14 @@
                         <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Next page">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
-                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="NextPage"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" Cursor="" />
                             </StackPanel>
                         </Button>
+
 
                         <Grid Cursor="">
                             <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">
@@ -94,6 +112,19 @@
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding DisplayElements.WaitSecond, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>
                         </Grid>
 
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Next page">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Next"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </Grid>
 
