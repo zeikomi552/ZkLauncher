@@ -72,6 +72,19 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="WebView2">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="5" Content="パスワード削除" Cursor="Hand">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="ClearAutofillData"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
             <Grid VerticalAlignment="Center" Grid.Column="1">
                 <StackPanel>
