@@ -72,7 +72,7 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-left.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/right-previous-navigation-svgrepo-com.svg" />
                             </StackPanel>
                         </Button>
 
@@ -93,13 +93,13 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" Cursor="" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/right-next-navigation-svgrepo-com.svg" Cursor="" />
                             </StackPanel>
                         </Button>
 
 
                         <Grid Cursor="">
-                            <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop">
+                            <ToggleButton Margin="5" x:Name="loopbtn" Content="Loop" Cursor="Hand">
                                 <b:Interaction.Triggers>
                                     <b:EventTrigger EventName="Checked">
                                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Loop"/>

@@ -24,6 +24,8 @@
     <None Remove="Common\Imanges\icons\pencil-red.svg" />
     <None Remove="Common\Imanges\icons\pencil-yellow.svg" />
     <None Remove="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\right-next-navigation-svgrepo-com.svg" />
+    <None Remove="Common\Imanges\icons\right-previous-navigation-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\save-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\select-svgrepo-com.svg" />
     <None Remove="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
@@ -61,6 +63,8 @@
 
   <ItemGroup>
     <Resource Include="Common\Imanges\app.ico" />
+    <Resource Include="Common\Imanges\icons\right-next-navigation-svgrepo-com.svg" />
+    <Resource Include="Common\Imanges\icons\right-previous-navigation-svgrepo-com.svg" />
     <Resource Include="Common\Imanges\icons\save-svgrepo-com.svg" />
     <Resource Include="Common\Imanges\icons\select-svgrepo-com.svg" />
     <Resource Include="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
