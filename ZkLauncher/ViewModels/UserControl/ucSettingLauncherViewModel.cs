@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Microsoft.Web.WebView2.Core;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,13 +87,40 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        #region 表示要素
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        IDisplayEmentsCollection? _DisplayElements;
+        /// <summary>
+        /// 表示要素
+        /// </summary>
+        public IDisplayEmentsCollection? DisplayElements
+        {
+            get
+            {
+                return _DisplayElements;
+            }
+            set
+            {
+                if (_DisplayElements == null || !_DisplayElements.Equals(value))
+                {
+                    _DisplayElements = value;
+                    RaisePropertyChanged("DisplayElements");
+                }
+            }
+        }
+        #endregion
+
         #region コンストラクタ
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="displayElements">表示要素</param>
-        public ucSettingLauncherViewModel()
+        public ucSettingLauncherViewModel(IDisplayEmentsCollection displayElements)
         {
+            this.DisplayElements = displayElements;
+
             // ファイルの存在確認
             if (!File.Exists(this.Config.ConfigFile))
             {
@@ -106,7 +134,12 @@ namespace ZkLauncher.ViewModels.UserControl
         #endregion
 
 
-
+        #region フォルダの選択処理
+        /// <summary>
+        /// フォルダの選択処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void SelectedDirectory(object sender, EventArgs e)
         {
             try
@@ -133,5 +166,53 @@ namespace ZkLauncher.ViewModels.UserControl
                 ShowMessage.ShowErrorOK(ex.Message, "Error");
             }
         }
+        #endregion
+
+        #region パスワードデータの削除処理
+        /// <summary>
+        /// パスワードデータの削除処理
+        /// </summary>
+        public void ClearAutofillData()
+        {
+            try
+            {
+                ClearAutofillDataSub();
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowErrorOK(ex.Message, "Error");
+            }
+        }
+
+
+        /// <summary>
+        /// パスワードデータの削除処理
+        /// </summary>
+        private async void ClearAutofillDataSub()
+        {
+            CoreWebView2Profile profile;
+
+            if (this.DisplayElements != null)
+            {
+                var webobj = this.DisplayElements.Elements.Count > 0 ? this.DisplayElements.Elements.ElementAt(0).WebView2Object : null;
+
+                if (webobj != null)
+                {
+                    profile = webobj.CoreWebView2.Profile;
+                    // Get the current time, the time in which the browsing data will be cleared
+                    // until.
+                    System.DateTime endTime = DateTime.Now;
+                    System.DateTime startTime = new DateTime(2000, 1, 1);
+                    // Offset the current time by one hour to clear the browsing data from the
+                    // last hour.
+                    CoreWebView2BrowsingDataKinds dataKinds = (CoreWebView2BrowsingDataKinds)
+                                             (CoreWebView2BrowsingDataKinds.GeneralAutofill |
+                                              CoreWebView2BrowsingDataKinds.PasswordAutosave);
+                    await profile.ClearBrowsingDataAsync(dataKinds, startTime, endTime);
+                }
+            }
+
+        }
+        #endregion
     }
 }
