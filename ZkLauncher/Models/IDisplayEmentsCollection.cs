@@ -67,6 +67,7 @@ namespace ZkLauncher.Models
         public void SelectedItemDelete();
 
         public void AutoSetThumbnail();
-
+        public void NextNavigatePage();
+        public void PrevNavigatePage();
     }
 }

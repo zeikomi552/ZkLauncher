@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using ZkLauncher.Common.Utilities;
@@ -185,11 +186,16 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                if (this.WindowPosition != null)
-                {
-                    this.WindowPosition.SaveConfig();
-                }
-                Environment.Exit(0); // 正常終了
+                // スレッドセーフの呼び出し
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                    new Action(() =>
+                    {
+                        if (this.WindowPosition != null)
+                        {
+                            this.WindowPosition.SaveConfig();
+                        }
+                        Environment.Exit(0); // 正常終了
+                    }));
             }
             catch(Exception e)
             {

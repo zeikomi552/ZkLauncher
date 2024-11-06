@@ -90,15 +90,50 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-        #region 直前へ画面(URL)遷移
+        #region 直前へ画面遷移
         /// <summary>
-        /// 直前へ画面(URL)遷移
+        /// 直前へ画面遷移
         /// </summary>
         public void Prev()
         {
             try
             {
                 this.DisplayElements?.PrevNavigate();
+
+            }
+            catch
+            {
+
+            }
+        }
+        #endregion
+
+        #region 次のページへ遷移
+        /// <summary>
+        /// 次のページへ遷移
+        /// </summary>
+        public void NextPage()
+        {
+            try
+            {
+                this.DisplayElements?.NextNavigatePage();
+            }
+            catch
+            {
+
+            }
+        }
+        #endregion
+
+        #region 直前へページ遷移
+        /// <summary>
+        /// 直前へページ遷移
+        /// </summary>
+        public void PrevPage()
+        {
+            try
+            {
+                this.DisplayElements?.PrevNavigatePage();
 
             }
             catch
