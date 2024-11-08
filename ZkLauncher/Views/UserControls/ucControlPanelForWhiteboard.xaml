@@ -64,7 +64,7 @@
                     <ListBox.Template>
                         <ControlTemplate TargetType="{x:Type ListBox}">
                             <Border BorderThickness="5">
-                                <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <ScrollViewer  VerticalScrollBarVisibility="auto" HorizontalScrollBarVisibility="Disabled">
                                     <ItemsPresenter Margin="5" />
                                 </ScrollViewer>
                             </Border>
