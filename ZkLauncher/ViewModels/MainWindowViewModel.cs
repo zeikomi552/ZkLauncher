@@ -76,12 +76,46 @@ namespace ZkLauncher.ViewModels
         public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager,
             IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition)
         {
-            _dialogService = dialogService;
-            this.DisplayElements = displayElements;
-            this.DisplayElements.LoadConfig();
+            try
+            {
+                _dialogService = dialogService;
 
-            this.WindowPosition = windowPosition;
-            this.WindowPosition.LoadConfig();
+
+                this.DisplayElements = displayElements;
+
+                if (!this.DisplayElements.FileExists)
+                {
+                    this.DisplayElements.Add("https://www.yahoo.co.jp/");
+                    this.DisplayElements.Add("https://www.google.co.jp/");
+                    this.DisplayElements.SaveConfig();
+                }
+                else
+                {
+                    this.DisplayElements.LoadConfig();
+                }
+
+                // ウィンドウ位置情報の復帰
+                this.WindowPosition = windowPosition;
+
+                // ファイルの存在確認
+                if (!this.WindowPosition.FileExists)
+                {
+                    // 画面サイズの調整
+                    AjustPositionRight();
+
+                    // 位置情報を保存
+                    this.WindowPosition.SaveConfig();
+                }
+                else
+                {
+                    // ウィンドウ情報のロード
+                    this.WindowPosition.LoadConfig();
+                }
+            }
+            catch(Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
         }
 
         /// <summary>
@@ -190,10 +224,6 @@ namespace ZkLauncher.ViewModels
                 System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                     new Action(() =>
                     {
-                        if (this.WindowPosition != null)
-                        {
-                            this.WindowPosition.SaveConfig();
-                        }
                         Environment.Exit(0); // 正常終了
                     }));
             }
@@ -205,15 +235,38 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
-        #region 位置調整コマンド
-        private DelegateCommand? _AjustPositionCommand;
-        public DelegateCommand? AjustPositionCommand =>
-            _AjustPositionCommand ?? (_AjustPositionCommand = new DelegateCommand(AjustPosition));
+        #region 位置保存
+        private DelegateCommand? _SavePositionCommand;
+        public DelegateCommand? SavePositionCommand =>
+            _SavePositionCommand ?? (_SavePositionCommand = new DelegateCommand(SavePosition));
 
         /// <summary>
         /// 位置調整
         /// </summary>
-        private void AjustPosition()
+        private void SavePosition()
+        {
+            try
+            {
+                // 位置情報の再読み込み
+                WindowPosition!.SaveConfig();
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+
+        }
+        #endregion
+
+        #region 位置読み込み
+        private DelegateCommand? _LoadPositionCommand;
+        public DelegateCommand? LoadPositionCommand =>
+            _LoadPositionCommand ?? (_LoadPositionCommand = new DelegateCommand(LoadPosition));
+
+        /// <summary>
+        /// 位置調整
+        /// </summary>
+        private void LoadPosition()
         {
             try
             {
@@ -225,6 +278,181 @@ namespace ZkLauncher.ViewModels
                 ShowMessage.ShowErrorOK(e.Message, "Error");
             }
 
+        }
+        #endregion
+
+
+        #region 位置調整(右)コマンド
+        private DelegateCommand? _AjustPositionRightCommand;
+        public DelegateCommand? AjustPositionRightCommand =>
+            _AjustPositionRightCommand ?? (_AjustPositionRightCommand = new DelegateCommand(AjustPositionRight));
+
+        /// <summary>
+        /// 位置調整(右)
+        /// </summary>
+        private void AjustPositionRight()
+        {
+            try
+            {
+                if (System.Windows.Forms.Screen.PrimaryScreen != null)
+                {
+                    //ディスプレイの高さ
+                    int h = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+                    //ディスプレイの幅
+                    int w = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+
+                    if(this.WindowPosition != null)
+                    {
+                        double controlpanel_w = 360;
+                        double diff = 15;
+
+
+                        this.WindowPosition.ViewerPosition.Left = 0;
+                        this.WindowPosition.ViewerPosition.Top = 0;
+                        this.WindowPosition.ViewerPosition.Width = w - (controlpanel_w - diff);
+                        this.WindowPosition.ViewerPosition.Height = h;
+
+                        this.WindowPosition.ControlPanelPosition.Left = w - controlpanel_w;
+                        this.WindowPosition.ControlPanelPosition.Top = 0;
+                        this.WindowPosition.ControlPanelPosition.Width = controlpanel_w;
+                        this.WindowPosition.ControlPanelPosition.Height = h;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
+        #region 位置調整(左)コマンド
+        private DelegateCommand? _AjustPositionLeftCommand;
+        public DelegateCommand? AjustPositionLeftCommand =>
+            _AjustPositionLeftCommand ?? (_AjustPositionLeftCommand = new DelegateCommand(AjustPositionLeft));
+
+        /// <summary>
+        /// 位置調整(左)
+        /// </summary>
+        private void AjustPositionLeft()
+        {
+            try
+            {
+                if (System.Windows.Forms.Screen.PrimaryScreen != null)
+                {
+                    //ディスプレイの高さ
+                    int h = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+                    //ディスプレイの幅
+                    int w = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+
+                    if (this.WindowPosition != null)
+                    {
+                        double controlpanel_w = 360;
+                        double diff = 15;
+
+
+                        this.WindowPosition.ViewerPosition.Left = controlpanel_w - diff;
+                        this.WindowPosition.ViewerPosition.Top = 0;
+                        this.WindowPosition.ViewerPosition.Width = w - controlpanel_w + diff;
+                        this.WindowPosition.ViewerPosition.Height = h;
+
+                        this.WindowPosition.ControlPanelPosition.Left = 0;
+                        this.WindowPosition.ControlPanelPosition.Top = 0;
+                        this.WindowPosition.ControlPanelPosition.Width = controlpanel_w;
+                        this.WindowPosition.ControlPanelPosition.Height = h;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
+        #region 位置調整（下）コマンド
+        private DelegateCommand? _AjustPositionBottomCommand;
+        public DelegateCommand? AjustPositionBottomCommand =>
+            _AjustPositionBottomCommand ?? (_AjustPositionBottomCommand = new DelegateCommand(AjustPositionBottom));
+
+        /// <summary>
+        /// 位置調整（下）
+        /// </summary>
+        private void AjustPositionBottom()
+        {
+            try
+            {
+                if (System.Windows.Forms.Screen.PrimaryScreen != null)
+                {
+                    //ディスプレイの高さ
+                    int h = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+                    //ディスプレイの幅
+                    int w = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+
+                    if (this.WindowPosition != null)
+                    {
+                        double controlpanel_h = 300;
+                        double diff = 15;
+
+                        this.WindowPosition.ViewerPosition.Left = 0;
+                        this.WindowPosition.ViewerPosition.Top = 0;
+                        this.WindowPosition.ViewerPosition.Width = w;
+                        this.WindowPosition.ViewerPosition.Height = h - (controlpanel_h - diff);
+
+                        this.WindowPosition.ControlPanelPosition.Left = 0;
+                        this.WindowPosition.ControlPanelPosition.Top = h - controlpanel_h;
+                        this.WindowPosition.ControlPanelPosition.Width = w;
+                        this.WindowPosition.ControlPanelPosition.Height = controlpanel_h;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
+        #region 位置調整（下）コマンド
+        private DelegateCommand? _AjustPositionTopCommand;
+        public DelegateCommand? AjustPositionTopCommand =>
+            _AjustPositionTopCommand ?? (_AjustPositionTopCommand = new DelegateCommand(AjustPositionTop));
+
+        /// <summary>
+        /// 位置調整（下）
+        /// </summary>
+        private void AjustPositionTop()
+        {
+            try
+            {
+                if (System.Windows.Forms.Screen.PrimaryScreen != null)
+                {
+                    //ディスプレイの高さ
+                    int h = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+                    //ディスプレイの幅
+                    int w = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+
+                    if (this.WindowPosition != null)
+                    {
+                        double controlpanel_h = 300;
+                        double diff = 15;
+
+                        this.WindowPosition.ViewerPosition.Left = 0;
+                        this.WindowPosition.ViewerPosition.Top = controlpanel_h - diff/2;
+                        this.WindowPosition.ViewerPosition.Width = w;
+                        this.WindowPosition.ViewerPosition.Height = h - controlpanel_h;
+
+                        this.WindowPosition.ControlPanelPosition.Left = 0;
+                        this.WindowPosition.ControlPanelPosition.Top = 0;
+                        this.WindowPosition.ControlPanelPosition.Width = w;
+                        this.WindowPosition.ControlPanelPosition.Height = controlpanel_h;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
         }
         #endregion
     }

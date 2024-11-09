@@ -14,5 +14,7 @@ namespace ZkLauncher.Models
 
         public void LoadConfig();
         public void SaveConfig();
+
+        public bool FileExists { get; }
     }
 }

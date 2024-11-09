@@ -54,6 +54,8 @@ namespace ZkLauncher.Models
         public void Remove(DisplayElement delete_item);
 
         public void Add(DisplayElement item);
+
+        public void Add(string url);
         public bool AddClipboardElement();
 
         public void SetupTimer();
@@ -65,6 +67,8 @@ namespace ZkLauncher.Models
         public void MoveUP();
         public void MoveDown();
         public void SelectedItemDelete();
+
+        public bool FileExists { get; }
 
         public void AutoSetThumbnail();
         public void NextNavigatePage();

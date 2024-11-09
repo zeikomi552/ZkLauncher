@@ -21,7 +21,18 @@
                     <!--<MenuItem Name="OpenViewer" Header="Viewer" Command="{Binding ShowViewerCommand}"/>
                     <MenuItem Name="OpenControlPanel" Header="Control Panel" Command="{Binding ShowControlPanelCommand}"/>-->
                     <MenuItem Name="OpenSetting" Header="Setting" Command="{Binding ShowSettingLauncherCommand}"/>
-                    <MenuItem Name="AjustPosition" Header="Ajust Position" Command="{Binding AjustPositionCommand}"/>
+                    <MenuItem Header="Position Setting">
+                        <MenuItem Header="Save Position" Command="{Binding SavePositionCommand}"/>
+                        <MenuItem Header="Load Position" Command="{Binding LoadPositionCommand}"/>
+                        <MenuItem Header="Ajust Position">
+                            <MenuItem Header="Top" Command="{Binding AjustPositionTopCommand}"/>
+                            <MenuItem Header="Left" Command="{Binding AjustPositionLeftCommand}"/>
+                            <MenuItem Header="Bottom" Command="{Binding AjustPositionBottomCommand}"/>
+                            <MenuItem Header="Right" Command="{Binding AjustPositionRightCommand}"/>
+                        </MenuItem>
+                    </MenuItem>
+
+
                     <MenuItem Name="Exit" Header="Exit" Command="{Binding AppShutdownCommand}"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>

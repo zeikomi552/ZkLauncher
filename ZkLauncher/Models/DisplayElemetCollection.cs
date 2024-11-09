@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -542,6 +543,24 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region URLの追加処理
+        /// <summary>
+        /// URLの追加処理
+        /// </summary>
+        /// <param name="url">URL</param>
+        public void Add(string url)
+        {
+            var tmp = url.Replace("http://", "").Replace("https://", "").Split('/');
+            var title = tmp.ElementAt(0);
+
+            // 要素を追加
+            this.Add(new DisplayElement() { Title = title, URI = url });
+
+            // 最後の要素を選択
+            this.SelectLast();
+        }
+        #endregion
+
         #region サムネイルの自動セット処理
         /// <summary>
         /// サムネイルの自動セット処理
@@ -605,15 +624,7 @@ namespace ZkLauncher.Models
 
                 if (text.Contains("http://") || text.Contains("https://"))
                 {
-                    var tmp = text.Replace("http://", "").Replace("https://", "").Split('/');
-                    var title = tmp.ElementAt(0);
-
-                    // 要素を追加
-                    this.Add(new DisplayElement() { Title = title, URI = text });
-
-                    // 最後の要素を選択
-                    this.SelectLast();
-
+                    Add(text);
                     regist = true;
                 }
                 else
@@ -778,6 +789,28 @@ namespace ZkLauncher.Models
         private void InitWaitTime()
         {
             this.WaitSecond = 30;
+        }
+        #endregion
+
+        #region ファイルの存在確認
+        /// <summary>
+        /// ファイルの存在確認
+        /// </summary>
+        public bool FileExists
+        {
+            get
+            {
+                try
+                {
+                    ConfigManager<DisplayElemetCollection> conf = new ConfigManager<DisplayElemetCollection>(ConfigDir, ConfigFile, new DisplayElemetCollection());
+
+                    return conf.FileExist;
+                }
+                catch
+                {
+                    throw;
+                }
+            }
         }
         #endregion
     }

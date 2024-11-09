@@ -75,6 +75,28 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region ファイルの存在確認
+        /// <summary>
+        /// ファイルの存在確認
+        /// </summary>
+        public bool FileExists
+        {
+            get
+            {
+                try
+                {
+                    ConfigManager<WindowPostionCollection> conf = new ConfigManager<WindowPostionCollection>(ConfigDir, ConfigFile, new WindowPostionCollection());
+
+                    return conf.FileExist;
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
+        #endregion
+
         #region Configファイルの保存処理
         /// <summary>
         /// Configファイルの保存処理
