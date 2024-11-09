@@ -67,6 +67,19 @@ namespace ZkLauncher.Common.Utilities
         }
         #endregion
 
+        #region ファイルが存在するかどうかの確認
+        /// <summary>
+        /// ファイルが存在するかどうかの確認
+        /// </summary>
+        public bool FileExist
+        {
+            get
+            {
+                return File.Exists(this.ConfigFile);
+            }
+        }
+        #endregion
+
         #region 要素[Item]プロパティ
         /// <summary>
         /// 要素[Item]プロパティ用変数

@@ -76,12 +76,46 @@ namespace ZkLauncher.ViewModels
         public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager,
             IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition)
         {
-            _dialogService = dialogService;
-            this.DisplayElements = displayElements;
-            this.DisplayElements.LoadConfig();
+            try
+            {
+                _dialogService = dialogService;
 
-            this.WindowPosition = windowPosition;
-            this.WindowPosition.LoadConfig();
+
+                this.DisplayElements = displayElements;
+
+                if (!this.DisplayElements.FileExists)
+                {
+                    this.DisplayElements.Add("https://www.yahoo.co.jp/");
+                    this.DisplayElements.Add("https://www.google.co.jp/");
+                    this.DisplayElements.SaveConfig();
+                }
+                else
+                {
+                    this.DisplayElements.LoadConfig();
+                }
+
+                // ウィンドウ位置情報の復帰
+                this.WindowPosition = windowPosition;
+
+                // ファイルの存在確認
+                if (!this.WindowPosition.FileExists)
+                {
+                    // 画面サイズの調整
+                    AjustPositionRight();
+
+                    // 位置情報を保存
+                    this.WindowPosition.SaveConfig();
+                }
+                else
+                {
+                    // ウィンドウ情報のロード
+                    this.WindowPosition.LoadConfig();
+                }
+            }
+            catch(Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
         }
 
         /// <summary>
@@ -378,7 +412,6 @@ namespace ZkLauncher.ViewModels
             }
         }
         #endregion
-
 
         #region 位置調整（下）コマンド
         private DelegateCommand? _AjustPositionTopCommand;

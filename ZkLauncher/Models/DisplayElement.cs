@@ -111,6 +111,11 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        public void RefreshImagePath()
+        {
+            RaisePropertyChanged("ImagePath");
+        }
+
         #region ファイル名
         /// <summary>
         /// ファイル名
