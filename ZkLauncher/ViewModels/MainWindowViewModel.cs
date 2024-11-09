@@ -190,10 +190,6 @@ namespace ZkLauncher.ViewModels
                 System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                     new Action(() =>
                     {
-                        if (this.WindowPosition != null)
-                        {
-                            this.WindowPosition.SaveConfig();
-                        }
                         Environment.Exit(0); // 正常終了
                     }));
             }
@@ -205,7 +201,30 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
-        #region 位置調整コマンド
+        #region 位置保存
+        private DelegateCommand? _SavePositionCommand;
+        public DelegateCommand? SavePositionCommand =>
+            _SavePositionCommand ?? (_SavePositionCommand = new DelegateCommand(SavePosition));
+
+        /// <summary>
+        /// 位置調整
+        /// </summary>
+        private void SavePosition()
+        {
+            try
+            {
+                // 位置情報の再読み込み
+                WindowPosition!.SaveConfig();
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+
+        }
+        #endregion
+
+        #region 位置読み込み
         private DelegateCommand? _LoadPositionCommand;
         public DelegateCommand? LoadPositionCommand =>
             _LoadPositionCommand ?? (_LoadPositionCommand = new DelegateCommand(LoadPosition));
@@ -273,13 +292,13 @@ namespace ZkLauncher.ViewModels
         }
         #endregion
 
-        #region 位置調整(右)コマンド
+        #region 位置調整(左)コマンド
         private DelegateCommand? _AjustPositionLeftCommand;
         public DelegateCommand? AjustPositionLeftCommand =>
             _AjustPositionLeftCommand ?? (_AjustPositionLeftCommand = new DelegateCommand(AjustPositionLeft));
 
         /// <summary>
-        /// 位置調整(右)
+        /// 位置調整(左)
         /// </summary>
         private void AjustPositionLeft()
         {
@@ -300,7 +319,7 @@ namespace ZkLauncher.ViewModels
 
                         this.WindowPosition.ViewerPosition.Left = controlpanel_w - diff;
                         this.WindowPosition.ViewerPosition.Top = 0;
-                        this.WindowPosition.ViewerPosition.Width = w - (controlpanel_w + diff);
+                        this.WindowPosition.ViewerPosition.Width = w - controlpanel_w + diff;
                         this.WindowPosition.ViewerPosition.Height = h;
 
                         this.WindowPosition.ControlPanelPosition.Left = 0;
@@ -386,9 +405,9 @@ namespace ZkLauncher.ViewModels
                         double diff = 15;
 
                         this.WindowPosition.ViewerPosition.Left = 0;
-                        this.WindowPosition.ViewerPosition.Top = controlpanel_h;
+                        this.WindowPosition.ViewerPosition.Top = controlpanel_h - diff/2;
                         this.WindowPosition.ViewerPosition.Width = w;
-                        this.WindowPosition.ViewerPosition.Height = h - (controlpanel_h);
+                        this.WindowPosition.ViewerPosition.Height = h - controlpanel_h;
 
                         this.WindowPosition.ControlPanelPosition.Left = 0;
                         this.WindowPosition.ControlPanelPosition.Top = 0;
