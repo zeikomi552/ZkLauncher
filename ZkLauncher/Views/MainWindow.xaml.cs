@@ -22,10 +22,5 @@ namespace ZkLauncher.Views
         {
             InitializeComponent();
         }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-        }
     }
 }
