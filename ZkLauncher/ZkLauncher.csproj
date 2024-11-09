@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+    <Page Remove="Properties\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Common\Imanges\app.ico" />
     <None Remove="Common\Imanges\icons\arrow-left.svg" />
     <None Remove="Common\Imanges\icons\arrow-right.svg" />
@@ -68,10 +75,6 @@
     <Resource Include="Common\Imanges\icons\save-svgrepo-com.svg" />
     <Resource Include="Common\Imanges\icons\select-svgrepo-com.svg" />
     <Resource Include="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
