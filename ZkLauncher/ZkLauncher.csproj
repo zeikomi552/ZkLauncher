@@ -8,7 +8,7 @@
     <UseWPF>true</UseWPF>
     <Authors>Zeikomi552</Authors>
     <Company>Zeikomi</Company>
-    <ApplicationIcon>Common\Imanges\app.ico</ApplicationIcon>
+    <ApplicationIcon>Common\Images\app.ico</ApplicationIcon>
     <Version>0.9.10</Version>
   </PropertyGroup>
 
@@ -20,39 +20,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Common\Imanges\app.ico" />
-    <None Remove="Common\Imanges\icons\arrow-left.svg" />
-    <None Remove="Common\Imanges\icons\arrow-right.svg" />
-    <None Remove="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\erase-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\gesture-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\pencil-black.svg" />
-    <None Remove="Common\Imanges\icons\pencil-blue.svg" />
-    <None Remove="Common\Imanges\icons\pencil-red.svg" />
-    <None Remove="Common\Imanges\icons\pencil-yellow.svg" />
-    <None Remove="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\right-next-navigation-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\right-previous-navigation-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\save-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\select-svgrepo-com.svg" />
-    <None Remove="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
+    <None Remove="Common\Images\app.ico" />
+    <None Remove="Common\Images\icons\arrow-left.svg" />
+    <None Remove="Common\Images\icons\arrow-right.svg" />
+    <None Remove="Common\Images\icons\drawing-tablet-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\erase-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\gesture-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\pencil-black.svg" />
+    <None Remove="Common\Images\icons\pencil-blue.svg" />
+    <None Remove="Common\Images\icons\pencil-red.svg" />
+    <None Remove="Common\Images\icons\pencil-yellow.svg" />
+    <None Remove="Common\Images\icons\refresh-cw-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\right-next-navigation-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\right-previous-navigation-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\save-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\select-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\star-svgrepo-com.svg" />
+    <None Remove="Common\Images\icons\trush-square-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Common\Imanges\icons\arrow-left.svg">
+    <Resource Include="Common\Images\icons\arrow-left.svg">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Common\Imanges\icons\arrow-right.svg">
+    <Resource Include="Common\Images\icons\arrow-right.svg">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Common\Imanges\icons\drawing-tablet-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\erase-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\gesture-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\pencil-black.svg" />
-    <Resource Include="Common\Imanges\icons\pencil-blue.svg" />
-    <Resource Include="Common\Imanges\icons\pencil-red.svg" />
-    <Resource Include="Common\Imanges\icons\pencil-yellow.svg" />
-    <Resource Include="Common\Imanges\icons\refresh-cw-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\drawing-tablet-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\erase-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\gesture-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\pencil-black.svg" />
+    <Resource Include="Common\Images\icons\pencil-blue.svg" />
+    <Resource Include="Common\Images\icons\pencil-red.svg" />
+    <Resource Include="Common\Images\icons\pencil-yellow.svg" />
+    <Resource Include="Common\Images\icons\refresh-cw-svgrepo-com.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,12 +70,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Common\Imanges\app.ico" />
-    <Resource Include="Common\Imanges\icons\right-next-navigation-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\right-previous-navigation-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\save-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\select-svgrepo-com.svg" />
-    <Resource Include="Common\Imanges\icons\trush-square-svgrepo-com.svg" />
+    <Resource Include="Common\Images\app.ico" />
+    <Resource Include="Common\Images\icons\right-next-navigation-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\right-previous-navigation-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\save-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\select-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\star-svgrepo-com.svg" />
+    <Resource Include="Common\Images\icons\trush-square-svgrepo-com.svg" />
   </ItemGroup>
 
 </Project>

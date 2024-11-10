@@ -15,7 +15,7 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
-        <tb:TaskbarIcon IconSource="/Common/imanges/app.ico">
+        <tb:TaskbarIcon IconSource="/Common/Images/app.ico">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <!--<MenuItem Name="OpenViewer" Header="Viewer" Command="{Binding ShowViewerCommand}"/>

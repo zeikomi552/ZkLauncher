@@ -34,7 +34,7 @@
         <StackPanel Margin="5" Orientation="Horizontal">
             <Button Command="{Binding NavigateCommand}" CommandParameter="ucSlideshow" Cursor="Hand">
                 <StackPanel Orientation="Vertical">
-                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/drawing-tablet-svgrepo-com.svg" />
                 </StackPanel>
             </Button>
         </StackPanel>

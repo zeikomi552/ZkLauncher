@@ -271,5 +271,22 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
+        public void Bookmark()
+        {
+            try
+            {
+
+                if (this.DisplayElements != null && this.DisplayElements?.SelectedItem != null
+                    && this.DisplayElements?.SelectedItem.WebView2Object != null && this.DisplayElements?.SelectedItem.WebView2Object.Source != null)
+                {
+                    var url = this.DisplayElements.SelectedItem.WebView2Object.Source.ToString();
+                    this.DisplayElements.Add(url);
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
     }
 }

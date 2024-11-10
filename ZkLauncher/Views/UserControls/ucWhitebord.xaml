@@ -42,7 +42,7 @@
                         </b:Interaction.Triggers>
                         <Button.Content>
                             <StackPanel>
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/save-svgrepo-com.svg" Cursor="" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/save-svgrepo-com.svg" Cursor="" />
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Save"/>
                             </StackPanel>
                         </Button.Content>
@@ -50,7 +50,7 @@
                     <ToggleButton x:Name="toggleButton" Width="50" Height="50" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"  Margin="5" Cursor="Hand">
                         <ToggleButton.Content>
                             <StackPanel>
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/drawing-tablet-svgrepo-com.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/drawing-tablet-svgrepo-com.svg" />
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="蛍光"/>
                             </StackPanel>
                         </ToggleButton.Content>
@@ -64,7 +64,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <StackPanel>
-                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-black.svg" />
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/pencil-black.svg" />
                                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Black"/>
                                     </StackPanel>
                                 </Viewbox>
@@ -77,7 +77,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <StackPanel>
-                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-red.svg" />
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/pencil-red.svg" />
                                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Red"/>
                                     </StackPanel>
                                 </Viewbox>
@@ -90,7 +90,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <StackPanel>
-                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-blue.svg" />
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/pencil-blue.svg" />
                                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Blue"/>
                                     </StackPanel>
                                 </Viewbox>
@@ -103,7 +103,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <StackPanel>
-                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-yellow.svg" />
+                                        <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/pencil-yellow.svg" />
                                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Yellow"/>
                                     </StackPanel>
                                 </Viewbox>
@@ -127,7 +127,7 @@
                 <Button Background="Silver" Width="55" Height="55" Style="{StaticResource MaterialDesignToolButton}" Margin="5" Cursor="Hand">
                     <Button.Content>
                         <StackPanel>
-                            <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/trush-square-svgrepo-com.svg" />
+                            <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/trush-square-svgrepo-com.svg" />
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="全消し"/>
                         </StackPanel>
                     </Button.Content>
@@ -165,7 +165,7 @@
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/pencil-black.svg" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/pencil-black.svg" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="ペン"/>
                                 </StackPanel>
                             </Viewbox>
@@ -177,7 +177,7 @@
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/erase-svgrepo-com.svg" Cursor="" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/erase-svgrepo-com.svg" Cursor="" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="消しゴム"/>
                                 </StackPanel>
                             </Viewbox>
@@ -190,7 +190,7 @@
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/select-svgrepo-com.svg" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/select-svgrepo-com.svg" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="選択"/>
                                 </StackPanel>
                             </Viewbox>
@@ -203,7 +203,7 @@
                         <ToggleButton.Content>
                             <Viewbox>
                                 <StackPanel>
-                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/gesture-svgrepo-com.svg" />
+                                    <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/gesture-svgrepo-com.svg" />
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="ジェスチャ"/>
                                 </StackPanel>
                             </Viewbox>
