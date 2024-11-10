@@ -74,7 +74,7 @@ namespace ZkLauncher.Models
         /// <summary>
         /// お絵描き後の絵を保存するディレクトリ
         /// </summary>
-        string _DrawPictureSaveDirectoryPath = string.Empty;
+        string _DrawPictureSaveDirectoryPath = DirectoryPathDictionary.ImageSaveDirectoryDefault;
         /// <summary>
         /// お絵描き後の絵を保存するディレクトリ
         /// </summary>
