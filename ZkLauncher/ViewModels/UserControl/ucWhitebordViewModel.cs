@@ -211,6 +211,7 @@ namespace ZkLauncher.ViewModels.UserControl
                     }
 
                     this.FileCollection!.SelectedItem.Filepath = filepath;
+                    this.FileCollection!.SelectedItem.TemporaryF = false;
                 }
             }
             catch (Exception e)
