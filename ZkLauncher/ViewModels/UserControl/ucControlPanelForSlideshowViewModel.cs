@@ -77,7 +77,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
         #region リンクの削除処理
         /// <summary>
         /// リンクの削除処理

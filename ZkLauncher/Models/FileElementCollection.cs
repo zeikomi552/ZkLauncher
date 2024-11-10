@@ -420,6 +420,7 @@ namespace ZkLauncher.Models
                         { 
                             EditingF = false,
                             Filepath = file,
+                            TemporaryF = false
                         });
                     }
 
@@ -428,7 +429,8 @@ namespace ZkLauncher.Models
                         list.Insert(0, new FileElement()
                         {
                             Filepath = GetTemporaryFilepath(),
-                            EditingF = true
+                            EditingF = true,
+                            TemporaryF = true
                         });
                     }
 

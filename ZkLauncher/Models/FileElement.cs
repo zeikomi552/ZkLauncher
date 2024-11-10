@@ -73,6 +73,31 @@ namespace ZkLauncher.Models
         }
         #endregion
 
+        #region 一時保存フラグ
+        /// <summary>
+        /// 一時保存フラグ
+        /// </summary>
+        bool _TemporaryF = false;
+        /// <summary>
+        /// 一時保存フラグ
+        /// </summary>
+        public bool TemporaryF
+        {
+            get
+            {
+                return _TemporaryF;
+            }
+            set
+            {
+                if (!_TemporaryF.Equals(value))
+                {
+                    _TemporaryF = value;
+                    RaisePropertyChanged("TemporaryF");
+                }
+            }
+        }
+        #endregion
+
 
     }
 }

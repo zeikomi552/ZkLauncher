@@ -90,14 +90,15 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
+        private IDialogService? _dialogService;
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ucControlPanelForWhiteboardViewModel(IFileElementCollection filecollection, IDisplayEmentsCollection? displayElement)
+        public ucControlPanelForWhiteboardViewModel(IDialogService dialogService, IFileElementCollection filecollection, IDisplayEmentsCollection? displayElement)
         {
             this.FileCollection = filecollection;
             this.DisplayElements = displayElement;
+            this._dialogService = dialogService;
         }
 
         #region 表示要素
@@ -263,6 +264,56 @@ namespace ZkLauncher.ViewModels.UserControl
             catch (Exception ex)
             {
                 Console.WriteLine(ex.GetType());
+            }
+        }
+        #endregion
+
+
+        #region ChangeNameWindow表示画面の呼び出し
+        /// <summary>
+        /// ChangeNameWindow表示画面の呼び出し
+        /// </summary>
+        public void ChangeFileName()
+        {
+            try
+            {
+                if (this.FileCollection != null && this.FileCollection.SelectedItem != null)
+                {
+                    _dialogService.ShowDialog("ucNameChange", new DialogParameters($"CurrentName={this.FileCollection.SelectedItem.Filename}"), r =>
+                    {
+                        if (r.Result == ButtonResult.OK)
+                        {
+                            // 戻り値の取り出し
+                            var result = r.Parameters.GetValue<string>("AfterName");
+
+
+                            var dir = System.IO.Path.GetDirectoryName(this.FileCollection.SelectedItem.Filepath);
+                            var ext = System.IO.Path.GetExtension(this.FileCollection.SelectedItem.Filepath);
+
+                            if (!string.IsNullOrEmpty(dir) && !string.IsNullOrEmpty(ext))
+                            {
+                                string filepath = Path.Combine(dir, result) + ext;
+
+                                // ファイル名に変更がない場合はそのまま抜ける
+                                if (this.FileCollection.SelectedItem.Filepath.Equals(filepath))
+                                    return;
+
+                                int count = 1;
+                                while (File.Exists(filepath))
+                                {
+                                    filepath = Path.Combine(dir, result) + $"({count++})" + ext;
+                                }
+                                // ファイル名の変更
+                                File.Move(this.FileCollection.SelectedItem.Filepath, filepath);
+                                this.FileCollection.SelectedItem.Filepath = filepath;
+                            }
+                        }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
             }
         }
         #endregion
