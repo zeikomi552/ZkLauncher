@@ -60,7 +60,7 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-left.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/arrow-left.svg" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -72,7 +72,7 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/right-previous-navigation-svgrepo-com.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/right-previous-navigation-svgrepo-com.svg" />
                             </StackPanel>
                         </Button>
 
@@ -83,9 +83,21 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/refresh-cw-svgrepo-com.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/refresh-cw-svgrepo-com.svg" />
                             </StackPanel>
                         </Button>
+                        <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Bookmark">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Click">
+                                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Bookmark"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <StackPanel Orientation="Vertical">
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/star-svgrepo-com.svg" Cursor="" />
+                            </StackPanel>
+                        </Button>
+
+
                         <Button Height="45" Grid.Column="1" Margin="5" Cursor="Hand" ToolTip="Next page">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="Click">
@@ -93,7 +105,7 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/right-next-navigation-svgrepo-com.svg" Cursor="" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/right-next-navigation-svgrepo-com.svg" Cursor="" />
                             </StackPanel>
                         </Button>
 
@@ -122,7 +134,7 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <StackPanel Orientation="Vertical">
-                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Imanges/icons/arrow-right.svg" />
+                                <svgc:SvgViewbox Width="20" Height="20" Source="/Common/Images/icons/arrow-right.svg" />
                             </StackPanel>
                         </Button>
                     </StackPanel>

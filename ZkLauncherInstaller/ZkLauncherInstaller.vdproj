@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9D19EAE51E1E40F4B3093FB141A06924"
+        "MsmKey" = "8:_D450ADB823264BB5804E824BBD814975"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -122,9 +122,9 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9D19EAE51E1E40F4B3093FB141A06924"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D450ADB823264BB5804E824BBD814975"
             {
-            "SourcePath" = "8:..\\ZkLauncher\\Common\\Imanges\\app.ico"
+            "SourcePath" = "8:..\\ZkLauncher\\Common\\Images\\app.ico"
             "TargetName" = "8:app.ico"
             "Tag" = "8:"
             "Folder" = "8:_FACAF4771F974161BA2A46F63F24037E"
@@ -216,7 +216,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_9D19EAE51E1E40F4B3093FB141A06924"
+        "ARPPRODUCTICON" = "8:_D450ADB823264BB5804E824BBD814975"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -330,7 +330,7 @@
             "Target" = "8:_49FF3454FC19461C82DF12172B135DC7"
             "Folder" = "8:_7C299F81074B4FE1AB9E6AEFB4EB4D06"
             "WorkingFolder" = "8:_FACAF4771F974161BA2A46F63F24037E"
-            "Icon" = "8:_9D19EAE51E1E40F4B3093FB141A06924"
+            "Icon" = "8:_D450ADB823264BB5804E824BBD814975"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BE00481124E8482BB548EAFB5A58D61B"
@@ -344,7 +344,7 @@
             "Target" = "8:_49FF3454FC19461C82DF12172B135DC7"
             "Folder" = "8:_EEDC76EFFB4A49F09495F73BD052BD81"
             "WorkingFolder" = "8:_FACAF4771F974161BA2A46F63F24037E"
-            "Icon" = "8:_9D19EAE51E1E40F4B3093FB141A06924"
+            "Icon" = "8:_D450ADB823264BB5804E824BBD814975"
             "Feature" = "8:"
             }
         }
@@ -748,7 +748,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_49FF3454FC19461C82DF12172B135DC7"
             {
-            "SourcePath" = "8:..\\ZkLauncher\\obj\\Debug\\net8.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\ZkLauncher\\obj\\Release\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FACAF4771F974161BA2A46F63F24037E"
