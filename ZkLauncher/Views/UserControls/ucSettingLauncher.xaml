@@ -19,42 +19,69 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
             <TabControl>
                 <TabItem Header="URLリスト">
-                    <DataGrid Margin="5" AutoGenerateColumns="False"
+                    <Grid Cursor="">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Margin="5" AutoGenerateColumns="False"
                       ItemsSource="{Binding Config.Item.Elements}"
                       SelectedItem="{Binding Config.Item.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Title" Binding="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="URI" Width="400" Binding="{Binding URI, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTemplateColumn Header="FileName">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <TextBlock Text="{Binding FileName}"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Button Content="File" Width="100">
-                                                <b:Interaction.Triggers>
-                                                    <b:EventTrigger EventName="Click">
-                                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectedFile"/>
-                                                    </b:EventTrigger>
-                                                </b:Interaction.Triggers>
-                                            </Button>
-                                        </Grid>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="URI" Width="400" Binding="{Binding URI, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTemplateColumn Header="FileName">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <TextBlock Text="{Binding FileName}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Button Content="File" Width="100">
+                                                    <b:Interaction.Triggers>
+                                                        <b:EventTrigger EventName="Click">
+                                                            <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectedFile"/>
+                                                        </b:EventTrigger>
+                                                    </b:Interaction.Triggers>
+                                                </Button>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid VerticalAlignment="Center" Grid.Column="1">
+                            <StackPanel>
+                                <Button Margin="5" Content="↑">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding Config.Item}" MethodName="MoveUP"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+                                <Button Margin="5" Content="-">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding Config.Item}" MethodName="SelectedItemDelete"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+                                <Button Margin="5" Content="↓">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding Config.Item}" MethodName="MoveDown"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="画像保存先">
                     <StackPanel>
@@ -86,31 +113,7 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>
-            <Grid VerticalAlignment="Center" Grid.Column="1">
-                <StackPanel>
-                    <Button Margin="5" Content="↑">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Click">
-                                <b:CallMethodAction TargetObject="{Binding Config.Item}" MethodName="MoveUP"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </Button>
-                    <Button Margin="5" Content="-">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Click">
-                                <b:CallMethodAction TargetObject="{Binding Config.Item}" MethodName="SelectedItemDelete"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </Button>
-                    <Button Margin="5" Content="↓">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Click">
-                                <b:CallMethodAction TargetObject="{Binding Config.Item}" MethodName="MoveDown"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </Button>
-                </StackPanel>
-            </Grid>
+
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="1" >
             <Button Command="{Binding CloseDialogCommand}" CommandParameter="true" Content="OK" Width="75" Height="25" IsDefault="True" />
