@@ -191,14 +191,14 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                _dialogService.ShowDialog("ucSettingLauncher", new DialogParameters(/*$"message={message}"*/), r =>
+                _dialogService.Show("ucSettingLauncher", new DialogParameters(/*$"message={message}"*/), r =>
                 {
                     string test = string.Empty;
                     if (r.Result == ButtonResult.OK)
                     {
                         this.DisplayElements!.LoadConfig();
                     }
-                });
+                }, "Setting");
             }
             catch (Exception e)
             {

@@ -17,7 +17,7 @@ namespace ZkLauncher.ViewModels.UserControl
 
         public string Title
         {
-            get { return "Change Name Window"; }
+            get { return "Name Change"; }
         }
         private DelegateCommand<string>? _closeDialogCommand;
         public DelegateCommand<string> CloseDialogCommand =>

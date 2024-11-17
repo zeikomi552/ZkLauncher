@@ -31,8 +31,6 @@
                             <MenuItem Header="Right" Command="{Binding AjustPositionRightCommand}"/>
                         </MenuItem>
                     </MenuItem>
-
-
                     <MenuItem Name="Exit" Header="Exit" Command="{Binding AppShutdownCommand}"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
