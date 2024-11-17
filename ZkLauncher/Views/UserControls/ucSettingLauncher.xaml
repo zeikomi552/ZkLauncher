@@ -116,7 +116,9 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="1" >
-            <Button Command="{Binding CloseDialogCommand}" CommandParameter="true" Content="OK" Width="75" Height="25" IsDefault="True" />
+            <Button Margin="5" Command="{Binding OutputConfigCommand}" CommandParameter="true" Content="Output" Height="25" IsDefault="True" />
+            <Button Margin="5" Command="{Binding InputConfigCommand}" CommandParameter="true" Content="Input" Height="25" IsDefault="True" Cursor="Hand" />
+            <Button Margin="5" Command="{Binding CloseDialogCommand}" CommandParameter="true" Content="OK" Width="75" Height="25" IsDefault="True" Cursor="Hand" />
         </StackPanel>
 
     </Grid>

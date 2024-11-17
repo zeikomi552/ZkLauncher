@@ -1,4 +1,5 @@
 ﻿using Microsoft.Web.WebView2.Core;
+using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -133,7 +134,6 @@ namespace ZkLauncher.ViewModels.UserControl
         }
         #endregion
 
-
         #region フォルダの選択処理
         /// <summary>
         /// フォルダの選択処理
@@ -214,5 +214,100 @@ namespace ZkLauncher.ViewModels.UserControl
 
         }
         #endregion
+
+        #region 設定ファイルの取り出し処理
+        /// <summary>
+        /// 設定ファイルの取り出し処理
+        /// </summary>
+        public void OutputConfig()
+        {
+            try
+            {
+                // ダイアログのインスタンスを生成
+                var dialog = new SaveFileDialog();
+
+                // ファイルの種類を設定
+                dialog.Filter = "ZkLauncher 設定ファイル (*.zklconf)|*.zklconf";
+
+                // ダイアログを表示する
+                if (dialog.ShowDialog() == true)
+                {
+                    string path = PathManager.GetApplicationFolder();
+                    string config_dir = Path.Combine(path, "Config");
+
+                    this.Config.SaveXML();
+
+                    // すでにファイルが存在する場合は削除
+                    if (File.Exists(dialog.FileName))
+                    {
+                        File.Delete(dialog.FileName);
+                    }
+
+                    //ZIP書庫を作成
+                    System.IO.Compression.ZipFile.CreateFromDirectory(
+                       config_dir,
+                        dialog.FileName,
+                        System.IO.Compression.CompressionLevel.Optimal,
+                        false,
+                        System.Text.Encoding.UTF8);
+                }
+            }
+            catch(Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
+        #region 設定ファイルの保存処理
+        /// <summary>
+        /// 設定ファイルの保存処理
+        /// </summary>
+        public void InputConfig()
+        {
+            try
+            {
+                // ダイアログのインスタンスを生成
+                var dialog = new OpenFileDialog();
+
+                // ファイルの種類を設定
+                dialog.Filter = "ZkLauncher 設定ファイル (*.zklconf)|*.zklconf";
+
+                // ダイアログを表示する
+                if (dialog.ShowDialog() == true)
+                {
+                    string path = PathManager.GetApplicationFolder();
+                    string config_dir = Path.Combine(path, "Config");
+
+                    // すでにConfigフォルダが存在する場合は削除
+                    if (Directory.Exists(config_dir))
+                    {
+                        Directory.Delete(config_dir, true);
+                    }
+
+                    //ZIP書庫を展開する
+                    System.IO.Compression.ZipFile.ExtractToDirectory(
+                        dialog.FileName,
+                        config_dir);
+
+                    this.Config.LoadXML();
+                }
+
+            }
+            catch (Exception e)
+            {
+                ShowMessage.ShowErrorOK(e.Message, "Error");
+            }
+        }
+        #endregion
+
+
+        private DelegateCommand? _OutputConfigCommand;
+        public DelegateCommand? OutputConfigCommand =>
+            _OutputConfigCommand ?? (_OutputConfigCommand = new DelegateCommand(OutputConfig));
+
+        private DelegateCommand? _InputConfigCommand;
+        public DelegateCommand? InputConfigCommand =>
+            _InputConfigCommand ?? (_InputConfigCommand = new DelegateCommand(InputConfig));
     }
 }
