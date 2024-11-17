@@ -207,7 +207,8 @@ namespace ZkLauncher.ViewModels.UserControl
             {
                 if (this.DisplayElements != null && this.DisplayElements.SelectedItem != null)
                 {
-                    _dialogService.ShowDialog("ucNameChange", new DialogParameters($"CurrentName={this.DisplayElements.SelectedItem.Title}"), r =>
+                    var elem = this.DisplayElements.SelectedItem;
+                    _dialogService.Show("ucNameChange", new DialogParameters($"CurrentName={this.DisplayElements.SelectedItem.Title}"), r =>
                     {
                         if (r.Result == ButtonResult.OK)
                         {
@@ -215,12 +216,12 @@ namespace ZkLauncher.ViewModels.UserControl
                             var result = r.Parameters.GetValue<string>("AfterName");
 
                             // 結果の設定
-                            this.DisplayElements.SelectedItem.Title = result;
+                            elem.Title = result;
 
                             // 保存
                             this.DisplayElements.SaveConfig();
                         }
-                    });
+                    }, "NameChange");
                 }
             }
             catch (Exception e)

@@ -29,8 +29,9 @@ namespace ZkLauncher
             containerRegistry.RegisterSingleton<IFileElementCollection?, FileElementCollection>();
 
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>("ControlPanel");
-            containerRegistry.RegisterDialogWindow<BaseDialogWindow>("NameChange");
             containerRegistry.RegisterDialogWindow<BaseDialogWindow>("Viewer");
+            containerRegistry.RegisterDialogWindow<BaseDialogMetroWindow>("NameChange");
+            containerRegistry.RegisterDialogWindow<BaseDialogMetroWindow>("Setting");
 
             containerRegistry.RegisterDialog<ucControlPanel, ucControlPanelViewModel>();
             containerRegistry.RegisterDialog<ucSettingLauncher, ucSettingLauncherViewModel>();
