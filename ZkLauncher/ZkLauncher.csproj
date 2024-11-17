@@ -9,7 +9,7 @@
     <Authors>Zeikomi552</Authors>
     <Company>Zeikomi</Company>
     <ApplicationIcon>Common\Images\app.ico</ApplicationIcon>
-    <Version>0.9.11</Version>
+    <Version>0.9.12</Version>
   </PropertyGroup>
 
   <ItemGroup>
