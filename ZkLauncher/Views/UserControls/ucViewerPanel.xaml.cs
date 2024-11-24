@@ -25,7 +25,7 @@ namespace ZkLauncher.Views.UserControls
         {
             InitializeComponent();
 
-            RegionManager.SetRegionManager(this.content_region, regionManager);
+            //RegionManager.SetRegionManager(this.content_region, regionManager);
 
         }
     }

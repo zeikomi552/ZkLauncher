@@ -68,6 +68,7 @@ namespace ZkLauncher.ViewModels
         #endregion
 
         private IDialogService? _dialogService;
+        private IWindowPostionCollection? _windowPosition;
 
         /// <summary>
         /// コンストラクタ
@@ -80,37 +81,10 @@ namespace ZkLauncher.ViewModels
             {
                 _dialogService = dialogService;
 
-
+                _windowPosition = windowPosition;
                 this.DisplayElements = displayElements;
 
-                if (!this.DisplayElements.FileExists)
-                {
-                    this.DisplayElements.Add("https://www.yahoo.co.jp/");
-                    this.DisplayElements.Add("https://www.google.co.jp/");
-                    this.DisplayElements.SaveConfig();
-                }
-                else
-                {
-                    this.DisplayElements.LoadConfig();
-                }
-
-                // ウィンドウ位置情報の復帰
-                this.WindowPosition = windowPosition;
-
-                // ファイルの存在確認
-                if (!this.WindowPosition.FileExists)
-                {
-                    // 画面サイズの調整
-                    AjustPositionRight();
-
-                    // 位置情報を保存
-                    this.WindowPosition.SaveConfig();
-                }
-                else
-                {
-                    // ウィンドウ情報のロード
-                    this.WindowPosition.LoadConfig();
-                }
+                
             }
             catch(Exception e)
             {
@@ -125,6 +99,35 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
+                if (!this.DisplayElements!.FileExists)
+                {
+                    this.DisplayElements.Add("https://www.yahoo.co.jp/");
+                    this.DisplayElements.Add("https://www.google.co.jp/");
+                    this.DisplayElements.SaveConfig();
+                }
+                else
+                {
+                    this.DisplayElements.LoadConfig();
+                }
+
+                // ウィンドウ位置情報の復帰
+                this.WindowPosition = _windowPosition;
+
+                // ファイルの存在確認
+                if (!this.WindowPosition!.FileExists)
+                {
+                    // 画面サイズの調整
+                    AjustPositionRight();
+
+                    // 位置情報を保存
+                    this.WindowPosition.SaveConfig();
+                }
+                else
+                {
+                    // ウィンドウ情報のロード
+                    this.WindowPosition.LoadConfig();
+                }
+
                 this.DisplayElements?.SelectFirst();
             }
             catch
@@ -132,29 +135,6 @@ namespace ZkLauncher.ViewModels
 
             }
         }
-
-        #region Viewer表示画面の呼び出し
-        private DelegateCommand? _showViewerCommand;
-        public DelegateCommand? ShowViewerCommand =>
-            _showViewerCommand ?? (_showViewerCommand = new DelegateCommand(ShowViewerDialog));
-        /// <summary>
-        /// Viewer表示画面の呼び出し
-        /// </summary>
-        private void ShowViewerDialog()
-        {
-            try
-            {
-                _dialogService.Show("ucViewerPanel", new DialogParameters(), r =>
-                {
-                    string test = string.Empty;
-                }, "Viewer");
-            }
-            catch (Exception e)
-            {
-                ShowMessage.ShowErrorOK(e.Message, "Error");
-            }
-        }
-        #endregion
 
         #region ControlPanel表示画面の呼び出し
         private DelegateCommand? _showControlPanelCommand;
