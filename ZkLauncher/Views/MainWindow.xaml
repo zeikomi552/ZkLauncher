@@ -17,8 +17,8 @@
         WindowStyle="None" Title="Viewer">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
-            <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
             <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+            <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
