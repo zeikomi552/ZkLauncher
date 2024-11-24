@@ -14,7 +14,7 @@
         Width="{Binding WindowPosition.ViewerPosition.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         Height="{Binding WindowPosition.ViewerPosition.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         hlp:DragWindowHelper.DragEnable="True"
-        WindowStyle="None">
+        WindowStyle="None" Title="Viewer">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
