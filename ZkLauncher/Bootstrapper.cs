@@ -48,5 +48,6 @@ namespace ZkLauncher
         {
             moduleCatalog.AddModule<ViewerModule>();
         }
+
     }
 }
