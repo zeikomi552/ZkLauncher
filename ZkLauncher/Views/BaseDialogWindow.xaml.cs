@@ -24,7 +24,7 @@ namespace ZkLauncher.Views
         public IDialogResult? Result { get; set; }
         public BaseDialogWindow()
         {
-            this.Owner = Application.Current.MainWindow;
+            //this.Owner = Application.Current.MainWindow;
             InitializeComponent();
         }
     }

@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:ZkLauncher" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:vm="clr-namespace:ZkLauncher.ViewModels"
         mc:Ignorable="d" xmlns:tb="http://www.hardcodet.net/taskbar"
-        xmlns:prism="http://prismlibrary.com/" TitleCharacterCasing="Normal" Height="1" Width="1" WindowStyle="None" Visibility="Hidden">
+        xmlns:prism="http://prismlibrary.com/" TitleCharacterCasing="Normal" d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
+        Top="{Binding WindowPosition.ViewerPosition.Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Left="{Binding WindowPosition.ViewerPosition.Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Width="{Binding WindowPosition.ViewerPosition.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Height="{Binding WindowPosition.ViewerPosition.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding ShowControlPanelCommand}" />
-            <b:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
             <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ViewerPanelRegion"/>
         <tb:TaskbarIcon IconSource="/Common/Images/app.ico">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
