@@ -37,6 +37,7 @@ namespace ZkLauncher.ViewModels.UserControl
         #endregion
 
         private IDialogService? _dialogService;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -47,8 +48,20 @@ namespace ZkLauncher.ViewModels.UserControl
             try
             {
                 _dialogService = dialogService;
+
+                if (!displayElements!.FileExists)
+                {
+                    displayElements.Add("https://www.yahoo.co.jp/");
+                    displayElements.Add("https://www.google.co.jp/");
+                    displayElements.SaveConfig();
+                }
+                else
+                {
+                    displayElements.LoadConfig();
+                }
+
+
                 this.DisplayElements = displayElements;
-                this.DisplayElements.LoadConfig();
             }
             catch
             {

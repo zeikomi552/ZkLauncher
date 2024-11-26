@@ -16,5 +16,7 @@ namespace ZkLauncher.Models
         public void SaveConfig();
 
         public bool FileExists { get; }
+
+        public void RefreshPosition();
     }
 }
