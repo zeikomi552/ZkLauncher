@@ -198,15 +198,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZkLauncher"
-        "ProductCode" = "8:{080DEC59-F8AA-4CCE-8130-C08B505C71AE}"
-        "PackageCode" = "8:{EBCD1127-488A-41C7-A66E-F12765C1788C}"
+        "ProductCode" = "8:{E3F63E08-1D46-468D-A3AC-D48B38A5800B}"
+        "PackageCode" = "8:{036A1CA0-530B-466A-822B-DA01A5D1152D}"
         "UpgradeCode" = "8:{147FD1EF-E8E5-4E97-98AF-1E3768376D89}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.9.14"
+        "ProductVersion" = "8:0.9.15"
         "Manufacturer" = "8:Zeikomi"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -748,7 +748,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_49FF3454FC19461C82DF12172B135DC7"
             {
-            "SourcePath" = "8:..\\ZkLauncher\\obj\\Debug\\net8.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\ZkLauncher\\obj\\Release\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FACAF4771F974161BA2A46F63F24037E"
