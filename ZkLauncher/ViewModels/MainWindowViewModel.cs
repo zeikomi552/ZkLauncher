@@ -69,12 +69,13 @@ namespace ZkLauncher.ViewModels
 
         private IDialogService? _dialogService;
         private IWindowPostionCollection? _windowPosition;
+        private IDisplayEmentsCollection? _displayElement;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="regionManager">RegionManager</param>
-        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager,
+        public MainWindowViewModel(IDialogService dialogService,
             IDisplayEmentsCollection displayElements, IWindowPostionCollection windowPosition)
         {
             try
@@ -82,9 +83,24 @@ namespace ZkLauncher.ViewModels
                 _dialogService = dialogService;
 
                 _windowPosition = windowPosition;
-                this.DisplayElements = displayElements;
 
-                
+                _displayElement = displayElements;
+
+
+                // ファイルの存在確認
+                if (!_windowPosition.FileExists)
+                {
+                    // 画面サイズの調整
+                    AjustPositionRight();
+
+                    // 位置情報を保存
+                    _windowPosition.SaveConfig();
+                }
+                else
+                {
+                    // ウィンドウ情報のロード
+                    _windowPosition.LoadConfig();
+                }
             }
             catch(Exception e)
             {
@@ -99,36 +115,16 @@ namespace ZkLauncher.ViewModels
         {
             try
             {
-                if (!this.DisplayElements!.FileExists)
+                // nullチェック
+                if (_windowPosition == null)
                 {
-                    this.DisplayElements.Add("https://www.yahoo.co.jp/");
-                    this.DisplayElements.Add("https://www.google.co.jp/");
-                    this.DisplayElements.SaveConfig();
-                }
-                else
-                {
-                    this.DisplayElements.LoadConfig();
+                    return;
                 }
 
-                // ウィンドウ位置情報の復帰
+
                 this.WindowPosition = _windowPosition;
 
-                // ファイルの存在確認
-                if (!this.WindowPosition!.FileExists)
-                {
-                    // 画面サイズの調整
-                    AjustPositionRight();
-
-                    // 位置情報を保存
-                    this.WindowPosition.SaveConfig();
-                }
-                else
-                {
-                    // ウィンドウ情報のロード
-                    this.WindowPosition.LoadConfig();
-                }
-
-                this.DisplayElements?.SelectFirst();
+                this.DisplayElements = _displayElement;                
             }
             catch
             {
@@ -251,7 +247,7 @@ namespace ZkLauncher.ViewModels
             try
             {
                 // 位置情報の再読み込み
-                WindowPosition!.LoadConfig();
+                this.WindowPosition!.LoadConfig();
             }
             catch (Exception e)
             {

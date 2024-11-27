@@ -140,8 +140,16 @@ namespace ZkLauncher.Models
 
                 if (conf.Item != null)
                 {
-                    this.ViewerPosition = conf.Item.ViewerPosition;
-                    this.ControlPanelPosition = conf.Item.ControlPanelPosition;
+                    // this.ViewerPosition = conf.Item.ViewerPositionだとうまく画面に反映されないので個別にセット
+                    this.ViewerPosition.Height = conf.Item.ViewerPosition.Height;
+                    this.ViewerPosition.Width = conf.Item.ViewerPosition.Width;
+                    this.ViewerPosition.Top = conf.Item.ViewerPosition.Top;
+                    this.ViewerPosition.Left = conf.Item.ViewerPosition.Left;
+
+                    this.ControlPanelPosition.Height = conf.Item.ControlPanelPosition.Height;
+                    this.ControlPanelPosition.Width = conf.Item.ControlPanelPosition.Width;
+                    this.ControlPanelPosition.Top = conf.Item.ControlPanelPosition.Top;
+                    this.ControlPanelPosition.Left = conf.Item.ControlPanelPosition.Left;
                 }
             }
             catch
@@ -151,6 +159,17 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-
+        public void RefreshPosition()
+        {
+            try
+            {
+                this.ViewerPosition.RefreshPosition();
+                this.ControlPanelPosition.RefreshPosition();
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

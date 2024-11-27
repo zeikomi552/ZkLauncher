@@ -13,6 +13,12 @@
     <UserControl.Resources>
         <Converters:URLStringToImageSourceConverter x:Key="URLStringToImageSourceConverter"/>
     </UserControl.Resources>
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="ContentRendered">
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    
     <Border BorderThickness="5">
         <Border.BorderBrush>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -20,6 +26,7 @@
                 <GradientStop Color="#FF002EFF" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
+
         <Grid>
             <!--<MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ControlBackgroundMediaPath}" LoadedBehavior="Manual" MediaEnded="myMediaElement_MediaEnded"/>-->
             <MediaElement Name="myMediaElement" Source="{Binding DisplayElements.ControlBackgroundMediaPath}" LoadedBehavior="Manual"/>

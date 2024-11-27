@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZkLauncher.Common.Utilities;
 
 namespace ZkLauncher.Models
 {
@@ -108,6 +109,19 @@ namespace ZkLauncher.Models
         }
         #endregion
 
-
+        public void RefreshPosition()
+        {
+            try
+            {
+                RaisePropertyChanged("Top");
+                RaisePropertyChanged("Left");
+                RaisePropertyChanged("Height");
+                RaisePropertyChanged("Width");
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
